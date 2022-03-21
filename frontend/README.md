@@ -73,4 +73,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### 참고 사이트
 
-[React 프로젝트 생성하기 (tistory.com)](https://freestrokes.tistory.com/139)
+* 프로젝트 init [React 프로젝트 생성하기 (tistory.com)](https://freestrokes.tistory.com/139)
+
+* lint 와 프리티어 셋팅[[React.js\] ESLint와 Prettier를 이용한 React 환경 설정 (VSCode) (tistory.com)](https://kimdabin.tistory.com/entry/Reactjs-ESLint와-Prettier를-이용한-React-환경-설정-VSCode)
+* 프리티어 셋팅(이걸루함) [[React\] ESLint, Prettier 설치 및 설정 (velog.io)](https://velog.io/@bab_bury/React-ESLint-Prettier-설치-및-설정)
+
+
+
+### 노드 버젼
+
+* 노드 버젼 : 16.13.*
+* 리엑트 버젼 : 17.0.2
