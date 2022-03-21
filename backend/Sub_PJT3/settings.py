@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import pymysql
 
 """
 Django settings for Sub_PJT3 project.
@@ -85,6 +86,7 @@ WSGI_APPLICATION = 'Sub_PJT3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
