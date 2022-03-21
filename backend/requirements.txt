@@ -6,7 +6,6 @@ django-extensions==3.1.5
 django-imagekit==4.1.0
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.1.0
-mysqlclient==2.1.0
 pilkit==2.0
 Pillow==9.0.1
 PyJWT==1.7.1
