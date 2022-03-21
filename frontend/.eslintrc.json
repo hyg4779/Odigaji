@@ -1,5 +1,7 @@
 {
   "extends": ["react-app", "prettier"],
   "plugins": ["prettier"],
-  "rules": { "prettier/prettier": ["error", { "endOfLine": "auto" }] }
+  "rules": { "prettier/prettier": ["error", { "singleQuote": true, "endOfLine": "auto" }],
+            "quotes" : [2, "single"]
+        }
 }
