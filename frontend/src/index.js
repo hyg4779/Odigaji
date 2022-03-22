@@ -7,11 +7,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TravelDetail from './pages/Travelpage/TravelDetail';
 import Local from './pages/Travelpage/Local';
+import App from './App.js';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/">
+      <Route path="/" element={<App />}>
         <Route path="" element={<Main />} />
         <Route path="local" element={<Local />} />
         <Route path="local/travelDetail" element={<TravelDetail />} />
