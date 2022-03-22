@@ -1,6 +1,18 @@
 import csv
 import pymysql
 
+province_ids = {
+    '강원도':1,
+    '경기도':2,
+    '경상남도':3,
+    '경상북도':4,
+    '전라남도':5,
+    '전라북도':6,
+    '충청남도':7,
+    '충청북도':8,
+    '':100
+}
+
 # csv 파일 읽어들임
 f = open('여행지 데이터.csv','r',encoding='utf-8')
 rdr = csv.reader(f)
@@ -11,20 +23,21 @@ rdr = csv.reader(f)
 # conn.commit()
 
 # City 테이블에 각 컬럼을 지정해 넣는 sql문
-# sql = "INSERT into City (city_id, name, introduce, population, area, photo) values (%d, %s, %s, %d, %f, %s)"
+# sql = "INSERT into City (city_id, prv_id, name, introduce, population, area, photo) values (%d, %d, %s, %s, %d, %f, %s)"
 
 for line in rdr:
     # 각 줄에서 변수 할당
     city_id = line[0]
-    name = line[1].lstrip('')
-    introduce = line[2]
-    population = line[3]
-    area = line[4]
-    photo = line[5]
-    print(line)
+    prv_id = province_ids[line[1]]
+    name = line[2].lstrip('')
+    introduce = line[3]
+    population = line[4]
+    area = line[5]
+    photo = line[6]
+    print(name, prv_id)
     # 알맞은 변수에 매핑하여 sql문 실행
-    # curs.execute(sql, (city_id, name, introduce, population, area, photo))
+    # curs.execute(sql, (city_id, prv_id, name, introduce, population, area, photo))
 
 f.close()
 
-# id, 도시명, 소개, 인구수(명), 면적(km^2), 사진url
+# id,도명,도시명, 소개, 인구수(명), 면적(km^2), 사진url
