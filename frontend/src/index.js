@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import Main from './pages/Mainpage/Main';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import TravelDetail from './pages/Travelpage/TravelDetail';
+import Local from './pages/Travelpage/Local';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
+      <Route path="/">
         <Route path="" element={<Main />} />
+        <Route path="local" element={<Local />} />
+        <Route path="local/travelDetail" element={<TravelDetail />} />
       </Route>
     </Routes>
   </BrowserRouter>,
