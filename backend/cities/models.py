@@ -35,7 +35,8 @@ class Attraction(models.Model):
     '''
     관광도시의 세부 관광지
     '''
-    city_id = models.ForeignKey(Cities, on_delete=models.CASCADE)
+    city = models.ForeignKey(Cities, on_delete=models.CASCADE)
+    province = models.ForeignKey(Province, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
     address = models.CharField(max_length=30)
     facilities = models.TextField(max_length=100)
