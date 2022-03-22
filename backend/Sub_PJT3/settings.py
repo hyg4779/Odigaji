@@ -36,6 +36,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'cities',
+    'recommends',
+    'reviews',
 
     'django_extensions',
     'rest_framework',
