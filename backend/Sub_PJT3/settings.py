@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'rest_framework',
+    'imagekit',
     'corsheaders',
     'rest_framework_simplejwt',
 

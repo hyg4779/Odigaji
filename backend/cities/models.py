@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 # Create your models here.
@@ -22,7 +24,13 @@ class Cities(models.Model):
     info = models.TextField
     population = models.IntegerField
     area = models.IntegerField
-    photo_url = models.TextField
+    photo = ProcessedImageField(
+        blank=True,
+        upload_to='profile_images/%Y/%m/%d/',
+        # processors=[ResizeToFill(200,200)],
+        format='JPEG',
+        options={'quality':100 }
+    )
 
 
 class Visit(models.Model):
