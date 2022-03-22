@@ -1,0 +1,15 @@
+.PopularItem {
+  height: 100%;
+  margin-bottom: 2vh;
+}
+
+.PopularItem-image {
+  width: 20vw;
+  height: 30vh;
+  background-color: gray;
+}
+
+.PopularItem-text {
+  text-align: center;
+  font-weight: bold;
+}

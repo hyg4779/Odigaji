@@ -12,8 +12,8 @@ function Main() {
 
   useEffect(() => {
     function wheelHandler(event) {
-      event.preventDefault();
-      const { deltaY } = event;
+      event.preventDefault(); // wheel 이벤트에 의해 새로고침 되는 것을 막아준다
+      const { deltaY } = event; // wheel 이벤트 중 deltaY(휠 방향과 정도) 를 이용한다
       const { scrollTop } = mainRef.current;
       const pageH = window.innerHeight;
 
@@ -44,6 +44,7 @@ function Main() {
 
     const mainRefCurrent = mainRef.current;
     mainRefCurrent.addEventListener('wheel', wheelHandler);
+    // mainRef를 포함하는 DOM을 할당한 뒤, 해당 DOM에 wheel 이벤트를 부여해준다
     return function () {
       mainRefCurrent.removeEventListener('wheel', wheelHandler);
     };
