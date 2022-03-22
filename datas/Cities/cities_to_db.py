@@ -18,26 +18,27 @@ f = open('여행지 데이터.csv','r',encoding='utf-8')
 rdr = csv.reader(f)
 
 # db와 python 연결
-# conn=pymysql.connect(host='3.38.250.117', port=3333, user='root', password='ssafy103', db='db이름', charset='utf-8')
-# curs = conn.cursor()
-# conn.commit()
+conn=pymysql.connect(host='3.38.250.117', port=3333, user='root', password='ssafy103', db='test', charset='utf8')
+curs = conn.cursor()
+conn.commit()
 
 # City 테이블에 각 컬럼을 지정해 넣는 sql문
-# sql = "INSERT into City (city_id, prv_id, name, introduce, population, area, photo) values (%d, %d, %s, %s, %d, %f, %s)"
+sql = "INSERT into cities_cities (id, province_id, name, info, population, area, photo_url) values (%s, %s, %s, %s, %s, %s, %s)"
 
 for line in rdr:
     # 각 줄에서 변수 할당
     city_id = line[0]
     prv_id = province_ids[line[1]]
     name = line[2].lstrip('')
-    introduce = line[3]
+    info = line[3]
     population = line[4]
     area = line[5]
     photo = line[6]
     print(name, prv_id)
     # 알맞은 변수에 매핑하여 sql문 실행
-    # curs.execute(sql, (city_id, prv_id, name, introduce, population, area, photo))
+    curs.execute(sql, (city_id, prv_id, name, info, population, area, ''))
 
+conn.commit()
 f.close()
 
 # id,도명,도시명, 소개, 인구수(명), 면적(km^2), 사진url
