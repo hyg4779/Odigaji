@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Main from './pages/Mainpage/Main';
+import LoginPage from './components/LoginPage/LoginPage';
+import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +16,8 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="" element={<Main />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="local" element={<Local />} />
         <Route path="local/travelDetail" element={<TravelDetail />} />
       </Route>
