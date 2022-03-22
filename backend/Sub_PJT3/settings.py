@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import pymysql
 
 """
 Django settings for Sub_PJT3 project.
@@ -35,10 +36,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'cities',
+    'recommends',
+    'reviews',
 
     'django_extensions',
     'rest_framework',
     'corsheaders',
+    'rest_framework_simplejwt',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -84,10 +89,15 @@ WSGI_APPLICATION = 'Sub_PJT3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD':'ssafy103',
+        'HOST':'3.38.250.117',
+        'PORT':'3333'
     }
 }
 
@@ -159,12 +169,12 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     # 'rest_framework.permissions.IsAuthenticated',
+    #     'rest_framework.permissions.AllowAny',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
