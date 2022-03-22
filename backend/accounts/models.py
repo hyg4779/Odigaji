@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
