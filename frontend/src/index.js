@@ -1,29 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/Mainpage/Main';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import TravelDetail from './pages/Travelpage/TravelDetail';
 import Board from './pages/Travelpage/Board';
 import Local from './pages/Travelpage/Local';
 import Write from './pages/Travelpage/write';
-import App from './App.js';
+import Random from './pages/Randompage/Random';
+import Survey from './pages/Surveypage/Survey';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="" element={<Main />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
         <Route path="local" element={<Local />} />
         <Route path="local/travelDetail" element={<TravelDetail />} />
         <Route path="local/travelDetail/board" element={<Board />} />
         <Route path="local/travelDetail/board/write" element={<Write />} />
+        <Route path="random" element={<Random />} />
+        <Route path="survey" element={<Survey />} />
       </Route>
     </Routes>
   </BrowserRouter>,
