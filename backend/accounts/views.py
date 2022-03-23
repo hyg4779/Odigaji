@@ -33,7 +33,7 @@ def signup(request):
 
     # UserSerializer를 통해 사용자가 넘겨준 데이터 직렬화
     serializer = UserSerializer(data=request.data)
-
+    
     # validation (password도 같이 직렬화)
     if serializer.is_valid(raise_exception=True):
         user = serializer.save()
@@ -75,4 +75,3 @@ def profile(request):
         user_pk = request.user.pk
         request.user.delete()
         return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
-
