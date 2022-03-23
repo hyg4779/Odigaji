@@ -1,0 +1,16 @@
+.Random {
+  box-sizing: border-box;
+  padding: 10vh 10vw;
+  width: 90%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Random-header {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
