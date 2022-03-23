@@ -35,12 +35,13 @@ class User(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=20, null=False, default='', unique=True)
     nickname = models.CharField(max_length=100, unique=True)
+    
     # 유저의 리뷰 및 댓글에 따른 점수 필드
     point = models.BigIntegerField(default=0)
 
     photo = ProcessedImageField(
         blank=True,
-        upload_to='profile_images/%Y/%m/%d/',
+        upload_to='mypage_images/%Y/%m/%d/',
         processors=[ResizeToFill(200,200)],
         format='JPEG',
         options={'quality':100 }
