@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Main from './pages/Mainpage/Main';
+import Mypage from './pages/Mypage/Mypage';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
@@ -20,6 +21,7 @@ ReactDOM.render(
         <Route path="signup" element={<SignupPage />} />
         <Route path="local" element={<Local />} />
         <Route path="local/travelDetail" element={<TravelDetail />} />
+        <Route path="mypage" element={<Mypage />} />
       </Route>
     </Routes>
   </BrowserRouter>,

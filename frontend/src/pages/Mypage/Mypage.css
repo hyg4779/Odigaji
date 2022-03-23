@@ -1,0 +1,199 @@
+
+
+.My{
+  background-color: #F8F8F8;  
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.TitleContainer{  
+  height: 132px;
+  background-color: #afb3b1;    
+  
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.userContainer{
+  
+  background-color: white;  
+  padding: 21px 16px;  
+  height: 90px;
+  margin-bottom: 10px;
+}
+.userContainer .userbutton{
+  display: flex;
+  padding-left: 240px;
+}
+.userContainer .userName{
+  flex-grow: 1;
+  
+  font-size : 20px;
+}
+.userContainer .userName .Editinfo{
+  
+flex-grow: 1;
+}
+.userContainer .userPoint{
+  padding-left: 240px;
+  
+}
+
+.ActivityContainer{
+  background-color: white;  
+  display: flex;  
+  padding: 21px 16px;  
+  height: 90px;
+  margin-bottom: 10px;
+}
+
+.ActivityContainer .item{
+  flex-grow: 1
+}
+
+.ActivityContainer .number{
+  font-size: 19px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.ActivityContainer .item > div:nth-child(2){
+  font-size: 18px;
+}
+
+
+.VisitedCityContainer{
+  padding: 21px 16px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+
+.VisitedCityContainer .title{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+
+.VisitedCityContainer .status{
+  display: flex;
+  /* justify-content: space-evenly; */
+  margin-bottom: 21px;
+}
+
+.VisitedCityContainer .item{
+  display: flex;
+}
+
+.VisitedCityContainer .number{
+  width: 150px;
+  height: 200px;
+  background-color: rgb(146, 155, 155);
+  text-align: center;
+}
+.VisitedCityContainer .text{
+  font-size: 12px;
+  font-weight: normal;
+  color: #c2c2c2;
+  text-align: center;
+}
+.VisitedCityContainer .space{
+  display: flex;
+  padding: 20px;
+
+}
+
+
+.ReviewListContainer{  
+  padding: 21px 16px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.ReviewListContainer .Reviewtitle{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.ReviewListContainer .ListTitle{  
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  color: black;
+  background-color: #bbc0c5;
+  text-decoration: none;  
+  height: 20px;
+  box-sizing: border-box;
+}
+.ReviewListContainer .headRegion{  
+  padding-left: 25px;
+  flex-grow: 1;
+  margin-right: 14px;
+}
+.ReviewListContainer .headtitle{
+  flex-grow: 1;
+  font-size: 16px;
+  position: relative;
+}
+.ReviewListContainer .headtime{
+  padding-right: 25px;
+  margin-left: auto;
+}
+
+.ReviewListContainer .item{  
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  color: black;
+  text-decoration: none;  
+  height: 56px;
+  border: 1px solid #afb3b1;
+  box-sizing: border-box;
+}
+.ReviewListContainer .region{  
+  flex-grow: 1;
+  margin-right: 14px;
+}
+.ReviewListContainer .textTitle{
+
+  flex-grow: 1;
+  font-size: 16px;
+  position: relative;
+}
+.ReviewListContainer .time{
+  margin-left: auto;
+  
+}
+
+
+
+
+
+
+.profileBox{
+  margin-top: 100px;
+  width: 150px;
+  height: 150px; 
+  border-radius: 70%;
+ 
+}
+ .profileBox .profileImg{
+  
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1000px;
+
+ 
+  transform: translate(50%, 50%);
+  border: 1px solid #586064;
+  
+
+} 
+
+
+
