@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Intro from '../../components/Mainpage/Intro';
 import Popular from '../../components/Mainpage/Popular';
+import Point from '../../components/Mainpage/Point';
 import './Main.css';
 
 function Main() {
@@ -9,6 +10,7 @@ function Main() {
   const randomData = ['대전'];
   const popularData = ['이천', '여주', '대전', '제주', '서귀포', '부산'];
   const mainRef = useRef();
+  const [pageIndex, setPageIndex] = useState(1);
 
   useEffect(() => {
     function wheelHandler(event) {
@@ -27,6 +29,7 @@ function Main() {
             left: 0,
             behavior: 'smooth',
           });
+          setPageIndex(2);
         }
       } else if (deltaY < 0 && scrollTop > pageH) {
         console.log('스크롤을 올립니다');
@@ -38,6 +41,7 @@ function Main() {
             left: 0,
             behavior: 'smooth',
           });
+          setPageIndex(1);
         }
       }
     }
@@ -52,6 +56,7 @@ function Main() {
 
   return (
     <div ref={mainRef} className="Main">
+      <Point pageIndex={pageIndex} />
       <Intro randomData={randomData} />
       <div className="Divider"></div>
       <Popular popularData={popularData} />
