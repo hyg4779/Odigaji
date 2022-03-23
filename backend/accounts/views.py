@@ -1,9 +1,13 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import UserSerializer, UsermypageSerializer
 
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth import get_user_model
@@ -44,16 +48,19 @@ def signup(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def profile(request):
-    # profile 조회
+# @permission_classes([AllowAny])
+@permission_classes((IsAuthenticated, ))
+# @authentication_classes((TokenObtainPairView))
+def mypage(request):
+    # mypage 조회
     if request.method == 'GET':
-        serializer = UserProfileSerializer(request.user)
+        serializer = UsermypageSerializer(request.user)
         return Response(serializer.data)
 
-    # profile 수정
+    # mypage 수정
     elif request.method == 'PUT':
 
-        # profile 이미지 받기
+        # mypage 이미지 받기
         photo = request.data.get('photo')
         print(photo)
 
@@ -62,7 +69,7 @@ def profile(request):
             return Response({'error': '이미 존재하는 별명입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         
-        serializer = UserProfileSerializer(request.user, data=request.data)
+        serializer = UsermypageSerializer(request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             print('serializer is valid!')
             serializer.save(photo=photo)
