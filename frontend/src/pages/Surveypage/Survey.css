@@ -1,0 +1,23 @@
+.Survey {
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.Survey-bar {
+  width: 80vw;
+  height: 20px;
+  background-color: gray;
+  position: fixed;
+  top: 80px;
+  left: 15%;
+}
+
+.Survey-progress {
+  width: 5vw;
+  height: 40px;
+  background-color: black;
+  top: 70px;
+}
