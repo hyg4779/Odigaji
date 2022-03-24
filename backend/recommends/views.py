@@ -10,11 +10,9 @@ from accounts.models import User
 from cities.models import Cities, Visit
 # Create your views here.
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
 def knn_recommend(request):
     '''
-    추천 함수
+    추천 함수, url과 연결되지 않은 그냥 함수다
     '''
     K = 5   # 비슷한 유저 5명 활용(이후에 K를 인자로 받는 방식으로 변경 가능)
     user_num = User.objects.count()
@@ -59,7 +57,7 @@ def knn_recommend(request):
             city_num+taste.mor_eve,
         ]
         spr_c.extend(tastes_c)
-        # 각 취향마다 할당한 점수. 얼마의 점수를 할당해야할지는 모르겠지만 일단 다 5로 줬음.
+        # 각 취향마다 할당한 점수. 얼마의 점수를 할당해야 유의미할지는 모르겠지만 일단 다 5로 줬음.
         taste_points = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
         spr_r.extend(taste_points)
 
@@ -78,9 +76,16 @@ def knn_recommend(request):
     for i in range(user_num):
         # 유저 i와, 그와 K번째로 유사한 유저의 유사도 weight
         weights = UbyU[i, topK[i]]
-
+        # 유저 i의 행에 있는 모든 컬럼(지역)에 유저 j의 가중치 * 유저 j가 해당 지역에 준 평점을 곱해줌
         for j in range(K):
             user_city_mat[i] += weights[j] * user_city_mat[topK[i, j]]
+
+        user_city_mat[i] /= weights.sum()
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def knn_recommend(request):
 
 
 

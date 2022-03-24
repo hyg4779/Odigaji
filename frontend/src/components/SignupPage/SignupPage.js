@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
+import server from '../../API/server';
 import axios from 'axios';
 function SignupPage() {
   const [name, setName] = useState('');
@@ -81,26 +82,27 @@ function SignupPage() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(EmailErrors, PasswordErrors, PasswordConErrors);
-    await axios
-      .post('http://localhost:8000/accounts/signup/', {
-        username: email,
-        password: password,
-        passwordConfirmation: confirmPassword,
-        nickname: name,
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        navigate('/');
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    if (!EmailErrors && !PasswordConErrors && !PasswordConErrors) {
+      await axios
+        .post(server.BASE_URL + server.ROUTES.signup, {
+          username: email,
+          nickname: name,
+          password: password,
+          passwordconfirm: confirmPassword,
+          photo: fileImage,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          navigate('/');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
-  // useEffect(() => {
-  //   onSubmit();
-  // }, []);
+
   return (
     <div className="wrap">
       <div className="signup">
