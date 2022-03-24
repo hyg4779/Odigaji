@@ -3,6 +3,7 @@ const server = {
 
   ROUTES: {
     login: 'api/token/',
+    signup: 'api/accounts/signup/',
     random: 'api/rec/random',
   },
 };
