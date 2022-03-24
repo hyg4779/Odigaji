@@ -2,10 +2,10 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-
+from django.conf import settings
 
 # Create your models here.
-
+User = settings.AUTH_USER_MODEL
 
 class Province(models.Model):
     '''
@@ -17,7 +17,7 @@ class Province(models.Model):
     def __str__(self):
         return self.name
 
-class Cities(models.Model):
+class City(models.Model):
     '''
     관광도시 정보
     특별시, 광역시, 자치시, 시, 군 등
@@ -36,13 +36,14 @@ class Cities(models.Model):
         format='JPEG',
         options={'quality':100 }
     )
+    rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_movies')
 
     def __str__(self):
         return self.name
 
 class Visit(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    city = models.ForeignKey(Cities, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     rate = models.FloatField()
 
 
@@ -50,7 +51,7 @@ class Attraction(models.Model):
     '''
     관광도시의 세부 관광지
     '''
-    city = models.ForeignKey(Cities, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     province = models.ForeignKey(Province, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
     address = models.CharField(max_length=30)
