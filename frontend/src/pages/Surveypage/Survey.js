@@ -5,6 +5,8 @@ import Question from '../../components/Surveypage/Question';
 
 function Survey() {
   const [pageIndex, setPageIndex] = useState(-1);
+  const [images, setImages] = useState([]);
+
   let leftLoc = String(22.5 + pageIndex * 7.5) + 'vw';
 
   function nextPage() {
@@ -17,6 +19,24 @@ function Survey() {
 
   function startPage() {
     setPageIndex(-1);
+  }
+
+  function changeImages(pageIndex, imageNumber) {
+    if (pageIndex + 1 <= images.length) {
+      // 이미 한 번 선택했던 페이지로 돌아온 경우
+      setImages(...images.filter((image) => image.id !== pageIndex), {
+        id: pageIndex,
+        imageId: imageNumber,
+      });
+    } else {
+      console.log(images);
+      const newImage = {
+        id: pageIndex,
+        imageId: imageNumber,
+      };
+      setImages(images.concat(newImage));
+    }
+    console.log(images);
   }
 
   useEffect(() => {
@@ -37,6 +57,7 @@ function Survey() {
           nextPage={nextPage}
           beforePage={beforePage}
           startPage={startPage}
+          changeImages={changeImages}
         />
       )}
     </div>
