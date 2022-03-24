@@ -5,7 +5,7 @@ import Question from '../../components/Surveypage/Question';
 
 function Survey() {
   const [pageIndex, setPageIndex] = useState(-1);
-  const [images, setImages] = useState([]);
+  const [surveys, setSurveys] = useState([]);
 
   let leftLoc = String(22.5 + pageIndex * 7.5) + 'vw';
 
@@ -19,24 +19,22 @@ function Survey() {
 
   function startPage() {
     setPageIndex(-1);
+    setSurveys([]);
   }
 
-  function changeImages(pageIndex, imageNumber) {
-    if (pageIndex + 1 <= images.length) {
+  function changeSurveys(pageIndex, imageName) {
+    const newSurvey = {
+      id: pageIndex,
+      imageName: imageName,
+    };
+    if (pageIndex + 1 <= surveys.length) {
       // 이미 한 번 선택했던 페이지로 돌아온 경우
-      setImages(...images.filter((image) => image.id !== pageIndex), {
-        id: pageIndex,
-        imageId: imageNumber,
-      });
+      const beforeSurveys = surveys.filter((survey) => survey.id !== pageIndex);
+      setSurveys(beforeSurveys.concat(newSurvey));
     } else {
-      console.log(images);
-      const newImage = {
-        id: pageIndex,
-        imageId: imageNumber,
-      };
-      setImages(images.concat(newImage));
+      console.log('새로운 설문 추가');
+      setSurveys(surveys.concat(newSurvey));
     }
-    console.log(images);
   }
 
   useEffect(() => {
@@ -54,10 +52,11 @@ function Survey() {
       {pageIndex !== -1 && (
         <Question
           pageIndex={pageIndex}
+          surveys={surveys}
           nextPage={nextPage}
           beforePage={beforePage}
           startPage={startPage}
-          changeImages={changeImages}
+          changeSurveys={changeSurveys}
         />
       )}
     </div>
