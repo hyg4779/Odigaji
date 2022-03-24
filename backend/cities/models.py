@@ -57,7 +57,7 @@ class Attraction(models.Model):
     address = models.CharField(max_length=30)
     facilities = models.TextField(max_length=100)
     parking_lot = models.IntegerField()
-    info = models.TextField()
+    # info = models.TextField()
     tel = models.CharField(max_length=15)
     latitude = models.FloatField()
     longitude = models.FloatField()
