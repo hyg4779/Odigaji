@@ -35,7 +35,7 @@
 }
 .userContainer .userName .Editinfo{
   
-flex-grow: 1;
+  flex-grow: 1;
 }
 .userContainer .userPoint{
   padding-left: 240px;
