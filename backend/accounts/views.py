@@ -21,10 +21,10 @@ User = get_user_model()
 def signup(request):
     # 사용자에게 요청으로 넘어온 패스워드 데이터 받기
     password = request.data.get('password')
-    passwordConfirmation = request.data.get('passwordConfirmation')
+    passwordconfirm = request.data.get('passwordconfirm')
 
     # 패스워드와 확인용 패스워드 일치 여부 검사
-    if password != passwordConfirmation:
+    if password != passwordconfirm:
         return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
     # 아이디 일치여부 검사
@@ -37,7 +37,7 @@ def signup(request):
 
     # UserSerializer를 통해 사용자가 넘겨준 데이터 직렬화
     serializer = UserSerializer(data=request.data)
-    
+
     # validation (password도 같이 직렬화)
     if serializer.is_valid(raise_exception=True):
         user = serializer.save()

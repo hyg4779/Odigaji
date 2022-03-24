@@ -2,10 +2,10 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-
+from django.conf import settings
 
 # Create your models here.
-
+User = settings.AUTH_USER_MODEL
 
 class Province(models.Model):
     '''
@@ -35,6 +35,7 @@ class City(models.Model):
         format='JPEG',
         options={'quality':100 }
     )
+    rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_movies')
 
     def __str__(self):
         return self.name

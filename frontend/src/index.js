@@ -5,6 +5,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/Mainpage/Main';
+import Mypage from './pages/Mypage/Mypage';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route path="signup" element={<SignupPage />} />
         <Route path="local" element={<Local />} />
         <Route path="local/travelDetail" element={<TravelDetail />} />
+        <Route path="mypage" element={<Mypage />} />
         <Route path="local/travelDetail/board" element={<Board />} />
         <Route path="local/travelDetail/board/write" element={<Write />} />
         <Route path="random" element={<Random />} />
