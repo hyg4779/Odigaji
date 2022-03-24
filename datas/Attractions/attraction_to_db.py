@@ -26,10 +26,10 @@ curs = conn.cursor()
 conn.commit()
 
 # Attaction 테이블에 컬럼을 지정해 넣는 sql문
-insert_sql = "INSERT INTO cities_attraction (id, name, address, facilities, parking_lot, tel, latitude, longitude, city_id, province_id) values(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+insert_sql = "INSERT INTO cities_attraction (name, address, facilities, parking_lot, tel, latitude, longitude, city_id, province_id) values(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
 # Cities 테이블에서 city_id를 가져오는 sql문
-selete_sql = "SELECT id FROM cities_cities WHERE name = %s"
+selete_sql = 'SELECT id FROM cities_cities WHERE name LIKE %s'
 
 
 
@@ -41,19 +41,30 @@ for line in rdr:
     if not line:
         continue
     name = line[0]  # 관광지명
-    tmp = line[1].split()   # 주소 도, 시
+    tmp = line[1].split()   # tmp(주소): 도, 시
+    # print(curs.fetchall()[0][0])
     print(tmp)
-    prv_id = province_ids[tmp[0]] # 도 id
+    try:
+        curs.execute(selete_sql, f"%{tmp[1]}%") # 시 id 찾기
 
-    curs.execute(selete_sql, tmp[1]) # 시 id 찾기
-    city_id = curs.fetchall()
-    print(city_id)
+        if tmp[0] in province_ids:
+            prv_id = province_ids[tmp[0]] # 도 id
+            # curs.execute(selete_sql, tmp[1]) # 시 id 찾기
+            city_id = curs.fetchall()
 
-    facilites = line[2] # 공공편의시설
-    parking_lot = line[3]  # 주차가능수
-    tel = line[4]   # 전화번호
-    latitude = line[5]  # 위도
-    logitude = line[6]  # 경도
-    # curs.execute(insert_sql, name, prv_id, city_id, facilites, parking_lot, tel, latitude, logitude)
+        else:
+            prv_id = 100
+            city_id = curs.execute(selete_sql, tmp[0])
+
+        address = line[1]
+        facilites = line[2] # 공공편의시설
+        parking_lot = line[3]  # 주차가능수
+        tel = line[4]   # 전화번호
+        latitude = line[5]  # 위도
+        logitude = line[6]  # 경도
+        curs.execute(insert_sql, (name, address, facilites, parking_lot, tel, latitude, logitude, city_id, prv_id))
+        conn.commit()
+    except:
+        continue
 
 file.close()
