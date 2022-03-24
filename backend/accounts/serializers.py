@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     is_active = serializers.BooleanField(default=True)
     is_admin = serializers.BooleanField(default=False)
     is_staff = serializers.BooleanField(default=False)
-    photo = serializers.ImageField(use_url=True)
+    photo = serializers.ImageField(use_url=True, required=False)
 
     class Meta: 
         model = User
