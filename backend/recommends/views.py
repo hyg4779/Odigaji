@@ -58,15 +58,20 @@ def popular(request, n):
         city = get_object_or_404(City, id=city_id)
         ser = City_visited_serializer(city)
         populars.append(ser.data)
-    return Response(populars)
+    return Response(populars, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
 def by_random(request):
     city = random_city()
     serializer = City_serializer(city)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def by_big_data(request):
+    user = request.user
+    pass
 
 
 
