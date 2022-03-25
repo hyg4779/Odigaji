@@ -1,11 +1,15 @@
 import numpy as np
+from django.shortcuts import get_list_or_404
 from scipy.sparse import csr_matrix
+import random
 
-from .models import Taste
+from recommends.models import Taste
 from accounts.models import User
 from cities.models import City, Visit
+from cities.serializers import Visit_simple_serializer
+from apscheduler.schedulers.background import BackgroundScheduler
 
-def knn_recommend(request):
+def knn_recommend(user_id):
     '''
     추천 함수, url과 연결되지 않은 그냥 함수임.
     '''
@@ -24,9 +28,10 @@ def knn_recommend(request):
     # visit 테이블 데이터를 가져와 위의 리스트 삼대장을 채움
     visits = Visit.objects.all()
     for visit in visits:
-        spr_u.append(visit.user_id)
-        spr_c.append(visit.city_id)
-        spr_r.append(visit.rate)
+        if Taste.objects.get(user_id=visit.user_id).exists():
+            spr_u.append(visit.user_id)
+            spr_c.append(visit.city_id)
+            spr_r.append(visit.rate)
 
     # 추천에는 visit만 필요함으로 추천용 csr_matrix를 미리 만들어둔다.
     user_city_mat = csr_matrix((spr_r, (spr_u, spr_c)), shape=(user_num, city_num))
@@ -76,3 +81,22 @@ def knn_recommend(request):
             user_city_mat[i] += weights[j] * user_city_mat[topK[i, j]]
 
         user_city_mat[i] /= weights.sum()
+
+
+def popular_cities(n):
+    '''
+    n개의 인기 도시 반환
+    '''
+    visits = get_list_or_404(Visit)
+    ranks = {}
+
+    for visit in visits:
+        city_id = visit.city_id
+        rate = visit.rate
+        ranks[city_id] = ranks.get(city_id, 0) + rate
+    return sorted(ranks.items(), key= lambda x: -x[1])
+
+def random_city():
+    cities = get_list_or_404(City)
+    rand_id = random.randrange(0, len(cities))
+    return cities[rand_id]

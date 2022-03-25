@@ -4,7 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from .models import (City, Attraction)
-from .serializers import(city_list_serializer, attraction_list_serializer)
+from .serializers import(City_list_serializer, City_serializer, Attraction_serializer)
 
 
 
@@ -16,7 +16,7 @@ def all_cities(request):
     '''
     if request.method=='GET':
         cities = City.objects.all()
-        serializer = city_list_serializer(cities, many=True)
+        serializer = City_list_serializer(cities, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -29,13 +29,8 @@ def get_city(request,city_id):
     '''
     if request.method=='GET':
         city = get_object_or_404(City, pk=city_id)
-        city_serializer = city_list_serializer(city)
-
-        attractions = Attraction.objects.filter(city=city_id)
-        att_serializer = attraction_list_serializer(attractions, many=True)
-
-        data = [city_serializer.data, att_serializer.data]
-        return Response(data, status=status.HTTP_200_OK)
+        city_serializer = City_serializer(city)
+        return Response(city_serializer.data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -48,6 +43,6 @@ def get_attraction(request,attraction_id):
     '''
     if request.method=='GET':
         attraction = get_object_or_404(Attraction, pk=attraction_id)
-        attr_serializer = attraction_list_serializer(attraction)
+        attr_serializer = Attraction_serializer(attraction)
         return Response(attr_serializer.data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
