@@ -11,9 +11,11 @@ from .models import Taste
 from accounts.models import User
 from cities.models import City, Visit
 
-from cities.serializers import Visit_serializer, City_visited_serializer
+from cities.serializers import Visit_serializer, City_visited_serializer, City_serializer
 
-from .recommend import knn_recommend, popular_cities
+from .recommend import knn_recommend, popular_cities, random_city
+
+
 # Create your views here.
 
 @api_view(["GET", "POST"])
@@ -46,7 +48,7 @@ def sel_city(request):
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["GET", "POST"])
+@api_view(["GET"])
 @permission_classes([AllowAny])
 def popular(request, n):
     rank = popular_cities(n)
@@ -58,7 +60,12 @@ def popular(request, n):
         populars.append(ser.data)
     return Response(populars)
 
-
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def by_random(request):
+    city = random_city()
+    serializer = City_serializer(city)
+    return Response(serializer.data)
 
 
 

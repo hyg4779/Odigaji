@@ -1,6 +1,7 @@
 import numpy as np
 from django.shortcuts import get_list_or_404
 from scipy.sparse import csr_matrix
+import random
 
 from recommends.models import Taste
 from accounts.models import User
@@ -94,3 +95,7 @@ def popular_cities(n):
         ranks[city_id] = ranks.get(city_id, 0) + rate
     return sorted(ranks.items(), key= lambda x: -x[1])
 
+def random_city():
+    cities = get_list_or_404(City)
+    rand_id = random.randrange(0, len(cities))
+    return cities[rand_id]
