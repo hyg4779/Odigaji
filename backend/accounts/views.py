@@ -1,4 +1,5 @@
 from rest_framework import status
+from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -6,12 +7,9 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
-from .serializers import UserSerializer, UsermypageSerializer
-
+from .serializers import UserSerializer, UsermypageSerializer, UserpasswordSerializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth import get_user_model
-
 
 User = get_user_model()
 
@@ -49,7 +47,7 @@ def signup(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 # @permission_classes([AllowAny])
-@permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated,))
 # @authentication_classes((TokenObtainPairView))
 def mypage(request):
     # mypage 조회
@@ -82,3 +80,21 @@ def mypage(request):
         user_pk = request.user.pk
         request.user.delete()
         return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['PUT'])
+@permission_classes((IsAuthenticated,))
+def password(request):
+    password = request.data.get('password')
+    passwordconfirm = request.data.get('passwordconfirm')
+
+    if password != passwordconfirm:
+        return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        serializer = UserpasswordSerializer(request.user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save()
+            user.set_password(password)
+            user.save()
+            return Response(serializer.data)
+        else:
+            print('is not valid')

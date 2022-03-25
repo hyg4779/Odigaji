@@ -20,4 +20,11 @@ class UsermypageSerializer(serializers.ModelSerializer):
     photo = serializers.ImageField(use_url=True, required=False)
     class Meta:
         model = User
-        fields = ('id', 'username', 'nickname', 'point', 'photo',)
+        fields = ('id', 'username', 'nickname', 'point', 'photo')
+
+# 유저 프로필 serialier 는 이미지를 url화하여 사용
+class UserpasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ('password', )
