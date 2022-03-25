@@ -20,4 +20,10 @@ class UsermypageSerializer(serializers.ModelSerializer):
     photo = serializers.ImageField(use_url=True, required=False)
     class Meta:
         model = User
-        fields = ('id', 'username', 'nickname', 'point', 'photo',)
+        fields = ('id', 'username', 'nickname', 'point', 'photo')
+
+class UserpasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ('password', )
