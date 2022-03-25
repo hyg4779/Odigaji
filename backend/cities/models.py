@@ -3,6 +3,7 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 User = settings.AUTH_USER_MODEL
@@ -35,15 +36,15 @@ class City(models.Model):
         format='JPEG',
         options={'quality':100 }
     )
-    rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_movies')
+    rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_cities')
 
     def __str__(self):
         return self.name
 
 class Visit(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    rate = models.FloatField()
+    rate = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
 
 
 class Attraction(models.Model):
