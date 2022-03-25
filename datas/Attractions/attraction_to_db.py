@@ -16,7 +16,6 @@ province_ids = {
     '전라북도':6,
     '충청남도':7,
     '충청북도':8,
-    '제주특별자치도': 100,
     '':100
 }
 
@@ -29,7 +28,7 @@ conn.commit()
 insert_sql = "INSERT INTO cities_attraction (name, address, facilities, parking_lot, tel, latitude, longitude, city_id, province_id) values(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
 # Cities 테이블에서 city_id를 가져오는 sql문
-selete_sql = 'SELECT id FROM cities_cities WHERE name LIKE %s'
+selete_sql = 'SELECT id FROM cities_city WHERE name LIKE %s'
 
 
 
@@ -54,7 +53,8 @@ for line in rdr:
 
         else:
             prv_id = 100
-            city_id = curs.execute(selete_sql, tmp[0])
+            curs.execute(selete_sql, tmp[1])
+            city_id = curs.fetchall()
 
         address = line[1]
         facilites = line[2] # 공공편의시설

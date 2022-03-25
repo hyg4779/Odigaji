@@ -6,3 +6,27 @@
   justify-content: center;
   align-items: center;
 }
+
+.Question-img-list {
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.Question-selected-img {
+  filter: opacity(0.5) drop-shadow(0 0 0 purple);
+  width: 30%;
+  height: 30vh;
+  background-color: gray;
+  border-radius: 2rem;
+  text-align: center;
+}
+
+.Question-img {
+  width: 30%;
+  height: 30vh;
+  background-color: gray;
+  border-radius: 2rem;
+  text-align: center;
+}
