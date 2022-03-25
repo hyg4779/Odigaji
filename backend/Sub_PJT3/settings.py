@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import pymysql
+from datetime import timedelta
 
 """
 Django settings for Sub_PJT3 project.
@@ -193,11 +194,8 @@ REST_FRAMEWORK = {
 }
 
 # JWT 토큰
-import datetime
-JWT_AUTH = {
-    'JWT_SECRET_KEY': SECRET_KEY,
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
 }

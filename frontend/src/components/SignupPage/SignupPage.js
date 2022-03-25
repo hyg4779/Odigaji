@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
 import server from '../../API/server';
@@ -10,21 +10,16 @@ function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fileImage, setFileImage] = useState('');
   const [EmailErrors, setEmailErrors] = useState('');
+  const [NicknameErrors, setNicknameErrors] = useState('');
   const [PasswordErrors, setPasswordErrors] = useState('');
   const [PasswordConErrors, setPasswordConErrors] = useState('');
   // 파일 저장
-  const saveFileImage = (e) => {
-    setFileImage(URL.createObjectURL(e.target.files[0]));
+  const saveFileImage = (event) => {
+    setFileImage(event.target.files[0]);
   };
 
-  // 파일 삭제
-  // const deleteFileImage = () => {
-  //   URL.revokeObjectURL(fileImage);
-  //   setFileImage('');
-  // };
-
   const onNameHandler = (event) => {
-    console.log(event);
+    setNicknameErrors(NicknameVaildation(event.target.value));
     setName(event.currentTarget.value);
   };
   const EmailVaildation = (email) => {
@@ -33,17 +28,30 @@ function SignupPage() {
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
     if (!email) {
-      emailError = '이메일은 필수 입니다.';
+      emailError = '이메일은 필수입니다.';
     } else if (!regex.test(email)) {
       emailError = '이메일 형식이 알맞지 않습니다.';
     }
 
     return emailError;
   };
+  const NicknameVaildation = (name) => {
+    let NicknameError = '';
+    const regex = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,10}$/;
+
+    if (!name) {
+      NicknameError = '닉네임은 필수입니다.';
+    } else if (!regex.test(name)) {
+      NicknameError =
+        '닉네임은 한글, 영문, 숫자만 가능하며 2-10자리 가능합니다.';
+    }
+
+    return NicknameError;
+  };
   const PasswordValidation = (password) => {
     let passwordError = '';
     if (!password) {
-      passwordError = '비밀번호는 필수 입니다.';
+      passwordError = '비밀번호는 필수입니다.';
     } else if (password.length < 6) {
       passwordError = '비밀번호가 너무 짧습니다.';
     }
@@ -54,7 +62,6 @@ function SignupPage() {
     if (password !== value) {
       confirmPasswordError = '비밀번호가 다릅니다.';
     }
-    console.log(confirmPasswordError);
 
     return confirmPasswordError;
   };
@@ -66,13 +73,11 @@ function SignupPage() {
   };
 
   const onPasswordHandler = (event) => {
-    console.log(event);
     setPasswordErrors(PasswordValidation(event.target.value));
     setPassword(event.currentTarget.value);
   };
 
   const onConfirmPasswordHandler = (event) => {
-    console.log(event);
     setPasswordConErrors(ConPasswordValidation(password, event.target.value));
 
     setConfirmPassword(event.currentTarget.value);
@@ -83,18 +88,24 @@ function SignupPage() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    if (!EmailErrors && !PasswordConErrors && !PasswordConErrors) {
+    const formData = new FormData();
+    formData.append('username', email);
+    formData.append('nickname', name);
+    formData.append('password', password);
+    formData.append('passwordconfirm', confirmPassword);
+    formData.append('photo', fileImage);
+
+    if (
+      !EmailErrors &&
+      !PasswordConErrors &&
+      !PasswordConErrors &&
+      !NicknameErrors
+    ) {
       await axios
-        .post(server.BASE_URL + server.ROUTES.signup, {
-          username: email,
-          nickname: name,
-          password: password,
-          passwordconfirm: confirmPassword,
-          photo: fileImage,
-        })
+        .post(server.BASE_URL + server.ROUTES.signup, formData)
         .then((res) => {
           console.log(res);
-          console.log(res.data);
+
           navigate('/');
         })
         .catch((error) => {
@@ -130,7 +141,7 @@ function SignupPage() {
               autoComplete="off"
             />
           </div>
-
+          <div style={{ color: 'red', fontSize: '12px' }}>{NicknameErrors}</div>
           <div className="password">
             <input
               name="password"
