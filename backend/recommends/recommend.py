@@ -1,9 +1,12 @@
 import numpy as np
+from django.shortcuts import get_list_or_404
 from scipy.sparse import csr_matrix
 
-from .models import Taste
+from recommends.models import Taste
 from accounts.models import User
 from cities.models import City, Visit
+from cities.serializers import Visit_simple_serializer
+from apscheduler.schedulers.background import BackgroundScheduler
 
 def knn_recommend(request):
     '''
@@ -76,3 +79,18 @@ def knn_recommend(request):
             user_city_mat[i] += weights[j] * user_city_mat[topK[i, j]]
 
         user_city_mat[i] /= weights.sum()
+
+
+def popular_cities(n):
+    '''
+    n개의 인기 도시 반환
+    '''
+    visits = get_list_or_404(Visit)
+    ranks = {}
+
+    for visit in visits:
+        city_id = visit.city_id
+        rate = visit.rate
+        ranks[city_id] = ranks.get(city_id, 0) + rate
+    return sorted(ranks.items(), key= lambda x: -x[1])
+

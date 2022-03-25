@@ -81,4 +81,8 @@ class Visit_serializer(serializers.ModelSerializer):
             "rate",
         )
 
+class Visit_simple_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visit
+
         read_only_fields = ('user',)

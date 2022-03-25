@@ -2,7 +2,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -11,13 +11,13 @@ from .models import Taste
 from accounts.models import User
 from cities.models import City, Visit
 
-from cities.serializers import Visit_serializer
+from cities.serializers import Visit_serializer, City_visited_serializer
 
-from .recommend import knn_recommend
+from .recommend import knn_recommend, popular_cities
 # Create your views here.
 
 @api_view(["GET", "POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def sel_city(request):
     '''
     GET : 본인이 다녀온 지역 확인
@@ -46,8 +46,17 @@ def sel_city(request):
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
-
+@api_view(["GET", "POST"])
+@permission_classes([AllowAny])
+def popular(request, n):
+    rank = popular_cities(n)
+    populars = []
+    for r in rank:
+        city_id = r[0]
+        city = get_object_or_404(City, id=city_id)
+        ser = City_visited_serializer(city)
+        populars.append(ser.data)
+    return Response(populars)
 
 
 
