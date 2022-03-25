@@ -2,7 +2,8 @@ import React from 'react';
 import './Mypage.css';
 function Mypage() {
   const userNick = ['유저네임'];
-
+  // const jwt = sessionStorage.getItem('jwt');
+  // axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
   return (
     <div className="My">
       <div className="TitleContainer">
