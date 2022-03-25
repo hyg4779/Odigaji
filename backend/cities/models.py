@@ -28,7 +28,6 @@ class City(models.Model):
     info = models.TextField()
     population = models.IntegerField()
     area = models.IntegerField()
-    photo_url = models.TextField()
     photo = ProcessedImageField(
         blank=True,
         upload_to='profile_images/%Y/%m/%d/',
