@@ -75,7 +75,6 @@ function Question({
     } else {
       setSelectName(temp.imageName);
     }
-    console.log(surveys);
   }, [surveys, pageIndex]);
 
   return (
@@ -102,11 +101,7 @@ function Question({
       </div>
       <div>
         <button onClick={beforePage}>이전</button>
-        {pageIndex < 9 ? (
-          <button onClick={selectName ? nextPage : null}>다음</button>
-        ) : (
-          <button>결과</button>
-        )}
+        <button onClick={selectName ? nextPage : null}>다음</button>
       </div>
       <button onClick={startPage}>처음으로</button>
     </div>
