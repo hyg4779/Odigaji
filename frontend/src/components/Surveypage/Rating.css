@@ -1,0 +1,14 @@
+.Rating {
+  display: flex;
+  gap: 20px;
+}
+
+.Rating-star {
+  display: flex;
+  font-size: 30px;
+  color: yellow;
+}
+
+.Rating-star:hover {
+  cursor: pointer;
+}
