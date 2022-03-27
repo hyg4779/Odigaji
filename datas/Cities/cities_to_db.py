@@ -23,7 +23,7 @@ curs = conn.cursor()
 conn.commit()
 
 # City 테이블에 각 컬럼을 지정해 넣는 sql문
-sql = "INSERT into cities_cities (id, province_id, name, info, population, area, photo_url) values (%s, %s, %s, %s, %s, %s, %s)"
+sql = "INSERT into cities_city (id, province_id, name, info, population, area, photo) values (%s, %s, %s, %s, %s, %s, %s)"
 
 for line in rdr:
     # 각 줄에서 변수 할당
@@ -33,7 +33,7 @@ for line in rdr:
     info = line[3]
     population = line[4]
     area = line[5]
-    photo = line[6]
+    photo = ''
     print(name, prv_id)
     # 알맞은 변수에 매핑하여 sql문 실행
     curs.execute(sql, (city_id, prv_id, name, info, population, area, ''))
