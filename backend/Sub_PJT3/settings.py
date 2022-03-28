@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cities',
     'recommends',
     'reviews',
+    'drf_yasg',
 
     'django_extensions',
     'rest_framework',
