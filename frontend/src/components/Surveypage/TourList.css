@@ -6,3 +6,17 @@
   justify-content: center;
   align-items: center;
 }
+
+.Tourlist-input {
+  width: 150px;
+}
+
+.datalist {
+  width: 150px;
+  height: 100px;
+}
+
+.Tourlist-item {
+  display: flex;
+  align-items: center;
+}

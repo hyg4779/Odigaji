@@ -1,14 +1,13 @@
 .Rating {
+  box-sizing: border-box;
   display: flex;
-  gap: 20px;
+  align-items: center;
+  color: purple;
+  font-size: 21px;
+  border-radius: 1rem;
+  padding: 0px 10px 7px 10px;
 }
 
-.Rating-star {
-  display: flex;
-  font-size: 30px;
-  color: yellow;
-}
-
-.Rating-star:hover {
+.Rating:hover {
   cursor: pointer;
 }
