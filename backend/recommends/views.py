@@ -8,9 +8,9 @@ import numpy as np
 from scipy.sparse import csr_matrix
 
 from .models import Taste
+from .serializers import Taste_serializer
 from accounts.models import User
 from cities.models import City, Visit
-
 from cities.serializers import Visit_serializer, City_visited_serializer, City_serializer
 
 from .recommend import knn_recommend, popular_cities, random_city
@@ -47,6 +47,18 @@ def sel_city(request):
             serializer.save(user=request.user)
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def sel_taste(request):
+    '''
+    GET : 본인의 취향 확인
+    '''
+    user = request.user
+    taste = get_object_or_404(Taste, user_id=user.id)
+    serializer = Taste_serializer(taste)
+    return Response(serializer.data)
+
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
