@@ -9,10 +9,19 @@ from rest_framework_simplejwt.views import (
 )
 from .serializers import User_serializer, User_mypage_serializer, User_password_serializer
 from django.shortcuts import get_list_or_404, get_object_or_404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+@swagger_auto_schema(
+    methods=['POST'],
+    request_body=User_serializer,
+    responses={201: openapi.Response(''),
+               400: openapi.Response(''),
+               404: openapi.Response('')
+               })
 @api_view(['POST'])
 @permission_classes([AllowAny])
 # 회원가입시는 인증 x 
@@ -45,6 +54,9 @@ def signup(request):
         user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', User_mypage_serializer())})
 @api_view(['GET', 'PUT', 'DELETE'])
 # @permission_classes([AllowAny])
 @permission_classes((IsAuthenticated,))
