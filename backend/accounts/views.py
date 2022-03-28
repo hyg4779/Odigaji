@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .serializers import User_serializer, User_mypage_serializer, User_password_serializer
+from .serializers import User_serializer, User_swag_serializer, User_mypage_serializer, User_mypage_swag_serializer, User_password_serializer, User_password_swag_serializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -17,15 +17,17 @@ User = get_user_model()
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=User_serializer,
-    responses={201: openapi.Response(''),
-               400: openapi.Response(''),
-               404: openapi.Response('')
+    request_body=User_swag_serializer,
+    responses={201: openapi.Response('회원가입 성공'),
+               400: openapi.Response('회원가입 실패')
                })
 @api_view(['POST'])
 @permission_classes([AllowAny])
 # 회원가입시는 인증 x 
 def signup(request):
+    '''
+    회원가입
+    '''
     # 사용자에게 요청으로 넘어온 패스워드 데이터 받기
     password = request.data.get('password')
     passwordconfirm = request.data.get('passwordconfirm')
@@ -56,16 +58,32 @@ def signup(request):
 
 @swagger_auto_schema(
     methods=['GET'],
-    responses={200: openapi.Response('', User_mypage_serializer())})
+    responses={200: openapi.Response('조회 성공', User_mypage_serializer()),
+               400: openapi.Response('조회 실패')
+               })
+@swagger_auto_schema(
+    methods=['PUT'],
+    request_body=User_mypage_swag_serializer,
+    responses={201: openapi.Response('수정 성공', User_mypage_swag_serializer()),
+               400: openapi.Response('수정 실패')
+               })
+@swagger_auto_schema(
+    methods=['DELETE'],
+    responses={200: openapi.Response('삭제 성공',),
+               400: openapi.Response('삭제 실패')
+               })
 @api_view(['GET', 'PUT', 'DELETE'])
-# @permission_classes([AllowAny])
 @permission_classes((IsAuthenticated,))
-# @authentication_classes((TokenObtainPairView))
 def mypage(request):
+    '''
+    GET: 마이페이지 조회
+    PUT: 마이페이지 수정
+    DELETE: 회원 탈퇴
+    '''
     # mypage 조회
     if request.method == 'GET':
         serializer = User_mypage_serializer(request.user)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # mypage 수정
     elif request.method == 'PUT':
@@ -83,9 +101,9 @@ def mypage(request):
         if serializer.is_valid(raise_exception=True):
             print('serializer is valid!')
             serializer.save(photo=photo)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print('is not valid')
+            return Response({'error': '업로드한 파일에 문제가 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
     
     # 회원탈퇴
     elif request.method == 'DELETE':
@@ -93,9 +111,19 @@ def mypage(request):
         request.user.delete()
         return Response({ 'delete': f'{user_pk}번 회원이 탈퇴했습니다.' }, status=status.HTTP_204_NO_CONTENT)
 
+#비밀번호 변경
+@swagger_auto_schema(
+    methods=['PUT'],
+    request_body=User_password_swag_serializer,
+    responses={201: openapi.Response('변경 성공'),
+               400: openapi.Response('변경 실패')
+               })
 @api_view(['PUT'])
 @permission_classes((IsAuthenticated,))
 def password(request):
+    '''
+    비밀번호 변경
+    '''
     password = request.data.get('password')
     passwordconfirm = request.data.get('passwordconfirm')
 
@@ -107,6 +135,6 @@ def password(request):
             user = serializer.save()
             user.set_password(password)
             user.save()
-            return Response(serializer.data)
+            return Response({'access': '비밀번호가 변경되었습니다.'}, status=status.HTTP_201_CREATED)
         else:
-            print('is not valid')
+            return Response({'error': '비정상적인 접근입니다.'}, status=status.HTTP_400_BAD_REQUEST)
