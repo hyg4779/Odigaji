@@ -1,4 +1,6 @@
 from django.urls import path
+from drf_yasg.views import get_schema_view
+
 from . import views
 
 app_name = 'recommends'
