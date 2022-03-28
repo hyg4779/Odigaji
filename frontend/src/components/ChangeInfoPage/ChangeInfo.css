@@ -1,0 +1,82 @@
+.InfoChange{
+  background-color: #F8F8F8;  
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  overflow-y: auto;
+}
+.InfoPageContainer{
+  height: 132px;
+  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+}
+
+.InfouserContainer{
+  background-color: white;  
+  padding: 21px 16px;  
+  height: 120px;
+  margin-bottom: 10px;
+}
+.userContainer .userbutton{
+  display: flex;
+  padding-left: 240px;
+}
+.InfouserContainer .InfoUserName{
+  flex-grow: 1;
+  font-size : 20px;
+  margin-left: 240px;
+}
+.InfouserContainer .InfoNickName{
+  flex-grow: 1;
+  font-size : 18px;
+  margin-left: 240px;
+  color: #c7c7c7;
+}
+.InfoProfileChange{
+  margin-left: 240px;
+  border-style: none;
+}
+
+
+
+.InputInfoContainer{
+  padding: 21px 16px;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+
+.InputInfoContainer .InfoContainertitle{
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.InputInfoContainer .ChangeInputForm{
+ text-align: center;
+ 
+ 
+}
+
+
+.InfoPageProfileBox{
+  margin-top: 100px;
+  width: 150px;
+  height: 150px; 
+  border-radius: 70%;
+}
+.InfoPageProfileBox .InfoProfileImg{
+  
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1000px;
+
+ 
+  transform: translate(50%, 50%);
+
+  border-style: none;
+
+} 
+
