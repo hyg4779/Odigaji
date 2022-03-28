@@ -38,10 +38,25 @@
   margin-left: 240px;
   border-style: none;
 }
-
-
+.InfoEmail{
+ 
+    margin-top: 10px;
+}
+.InfoName{
+ 
+  margin-top: 10px;;
+}
+.InfoPassword {
+ 
+  margin-top: 10px;
+}
+.Info-confirm-password {
+  
+  margin-top: 10px;
+}
 
 .InputInfoContainer{
+  height: 500px;
   padding: 21px 16px;
   background-color: white;
   margin-bottom: 10px;
@@ -53,13 +68,67 @@
   font-weight: bold;
   margin-bottom: 15px;
 }
-.InputInfoContainer .ChangeInputForm{
- text-align: center;
- 
+.InputInfoContainer .changeInfoWrap{
+ display: flex;
+  justify-content: center;
  
 }
 
+.InfoEmail input {
+  width: 400px;
+  height: 40px;
+  border-radius: 30px;
+ 
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+ 
+}
+.InfoName input{
+  width: 400px;
+  height: 40px;
+  border-radius: 30px;
+  
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+ 
+}
+.InfoName .InputItem{
+  
+}
+.InfoPassword input{
+  width: 400px;
+  height: 40px;
+  border-radius: 30px;
+  
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+.Info-confirm-password input{
 
+  width: 400px;
+  height: 40px;
+  border-radius: 30px;
+
+  padding: 0px 20px;
+  border: 1px solid lightgray;
+  outline: none;
+}
+.InfoChangebtn button{
+    
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+  width: 400px;
+  height: 50px;
+  border: 0;
+  outline: none;
+  border-radius: 40px;
+  margin-top: 20px;
+  color: white;
+  font-size: 1.2em;
+  letter-spacing: 2px;
+}
 .InfoPageProfileBox{
   margin-top: 100px;
   width: 150px;

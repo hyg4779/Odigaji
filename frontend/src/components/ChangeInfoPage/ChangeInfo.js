@@ -125,65 +125,73 @@ function ChangeInfo() {
 
       <div className="InputInfoContainer">
         <div className="InfoContainertitle">회원정보 변경</div>
-        <form className="ChangeInputForm" onSubmit={onSubmit}>
-          <div className="Infoemail">
-            <span>아이디</span>
-            <input
-              name="email"
-              type="email"
-              placeholder="이메일"
-              defaultValue={Userdata.username}
-              required
-              autoComplete="off"
-              disabled
-            />
-          </div>
+        <div className="changeInfoWrap">
+          <form className="ChangeInputForm" onSubmit={onSubmit}>
+            <div className="InfoEmail">
+              <span className="InputItem">아이디</span>
+              <div></div>
+              <input
+                name="email"
+                type="email"
+                placeholder="이메일"
+                defaultValue={Userdata.username}
+                required
+                autoComplete="off"
+                disabled
+              />
+            </div>
 
-          <div className="Infoname">
-            <span>닉네임</span>
-            <input
-              name="name"
-              type="text"
-              placeholder="닉네임"
-              defaultValue={Userdata.nickname}
-              required
-              autoComplete="off"
-            />
-          </div>
+            <div className="InfoName">
+              <span className="InputItem">닉네임</span>
+              <div></div>
+              <input
+                name="name"
+                type="text"
+                placeholder="닉네임"
+                defaultValue={Userdata.nickname}
+                required
+                autoComplete="off"
+              />
+            </div>
 
-          <div className="Infopassword">
-            <span>비밀번호</span>
-            <input
-              name="password"
-              type="password"
-              placeholder="비밀번호"
-              value={password || ''}
-              required
-              onChange={changePassword}
-              autoComplete="off"
-            />
-          </div>
-          <div style={{ color: 'red', fontSize: '12px' }}>{PasswordErrors}</div>
+            <div className="InfoPassword">
+              <span className="InputItem">비밀번호</span>
+              <div></div>
+              <input
+                name="password"
+                type="password"
+                placeholder="비밀번호"
+                value={password || ''}
+                required
+                onChange={changePassword}
+                autoComplete="off"
+              />
+            </div>
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              {PasswordErrors}
+            </div>
 
-          <div className="Info-confirm-password">
-            <span>비밀번호 확인</span>
-            <input
-              name="confirmPassword"
-              type="password"
-              placeholder="비밀번호 확인"
-              value={confirmPassword || ''}
-              onChange={changeConfirmPassword}
-              required
-              autoComplete="off"
-            />
-          </div>
-          <div style={{ color: 'red', fontSize: '12px' }}>
-            {PasswordConErrors}
-          </div>
-          <div className="InfoChangebtn">
-            <button type="submit">회원정보 변경</button>
-          </div>
-        </form>
+            <div className="Info-confirm-password">
+              <span className="InputItem">비밀번호 변경확인</span>
+              <div></div>
+              <input
+                name="confirmPassword"
+                type="password"
+                placeholder="비밀번호 확인"
+                value={confirmPassword || ''}
+                onChange={changeConfirmPassword}
+                required
+                autoComplete="off"
+              />
+            </div>
+            <div style={{ color: 'red', fontSize: '12px' }}>
+              {PasswordConErrors}
+            </div>
+            <div className="InfoChangebtn">
+              <button type="submit">회원정보 변경</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
