@@ -22,7 +22,24 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from drf_yasg.views import get_schema_view
+from drf_yasg       import openapi
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="오디가지",
+        default_version='0.0.1',
+        description="오디가지 API 문서",
+        terms_of_service="j6b103.p.ssafy.io 였을듯",
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
+
 urlpatterns = [
+    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api/admin/', admin.site.urls),
     path('api/accounts/',include('accounts.urls')),
     path('api/reviews/',include('reviews.urls')),
