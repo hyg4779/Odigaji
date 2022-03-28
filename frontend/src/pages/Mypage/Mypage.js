@@ -1,9 +1,35 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './Mypage.css';
+import server from '../../API/server';
 function Mypage() {
   const userNick = ['유저네임'];
-  // const jwt = sessionStorage.getItem('jwt');
-  // axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
+  const [Userdata, setUserData] = useState({ hits: [] });
+  useEffect(() => {
+    async function Info() {
+      const jwt = sessionStorage.getItem('jwt');
+      // axios.defaults.headers.common['Authorization'] = jwt
+      //   ? `Bearer ${jwt}`
+      //   : '';
+      await axios
+        .get(server.BASE_URL + server.ROUTES.mypage, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          // setUserData(response.data);
+        })
+        .catch((error) => {
+          console.log(jwt);
+          console.log(error);
+        });
+    }
+
+    Info();
+  }, [Userdata]);
+
   return (
     <div className="My">
       <div className="TitleContainer">

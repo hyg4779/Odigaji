@@ -31,7 +31,6 @@ function LoginPage() {
           // //jwt decode 사용
           // setUser(jwt_decode(response.data.access));
           // //Access Token 저장
-          // sessionStorage.setItem('user', JSON.stringify(response.data.access));
           sessionStorage.setItem('jwt', response.data.access);
         }
 

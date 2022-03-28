@@ -5,6 +5,7 @@ const server = {
     login: 'api/token/',
     signup: 'api/accounts/signup/',
     random: 'api/rec/random',
+    mypage: 'api/accounts/mypage/',
   },
 };
 
