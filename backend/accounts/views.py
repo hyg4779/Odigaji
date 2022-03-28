@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .serializers import UserSerializer, UsermypageSerializer, UserpasswordSerializer
+from .serializers import User_serializer, User_mypage_serializer, User_password_serializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.contrib.auth import get_user_model
 
@@ -34,7 +34,7 @@ def signup(request):
         return Response({'error': '이미 존재하는 별명입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
     # UserSerializer를 통해 사용자가 넘겨준 데이터 직렬화
-    serializer = UserSerializer(data=request.data)
+    serializer = User_serializer(data=request.data)
 
     # validation (password도 같이 직렬화)
     if serializer.is_valid(raise_exception=True):
@@ -52,7 +52,7 @@ def signup(request):
 def mypage(request):
     # mypage 조회
     if request.method == 'GET':
-        serializer = UsermypageSerializer(request.user)
+        serializer = User_mypage_serializer(request.user)
         return Response(serializer.data)
 
     # mypage 수정
@@ -67,7 +67,7 @@ def mypage(request):
             return Response({'error': '이미 존재하는 별명입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         
-        serializer = UsermypageSerializer(request.user, data=request.data)
+        serializer = User_mypage_serializer(request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             print('serializer is valid!')
             serializer.save(photo=photo)
@@ -90,7 +90,7 @@ def password(request):
     if password != passwordconfirm:
         return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        serializer = UserpasswordSerializer(request.user, data=request.data)
+        serializer = User_password_serializer(request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             user.set_password(password)

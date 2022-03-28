@@ -42,7 +42,6 @@ for line in rdr:
     name = line[0]  # 관광지명
     tmp = line[1].split()   # tmp(주소): 도, 시
     # print(curs.fetchall()[0][0])
-    print(tmp)
     try:
         curs.execute(selete_sql, f"%{tmp[1]}%") # 시 id 찾기
 
@@ -53,7 +52,7 @@ for line in rdr:
 
         else:
             prv_id = 100
-            curs.execute(selete_sql, tmp[1])
+            curs.execute(selete_sql, tmp[0])
             city_id = curs.fetchall()
 
         address = line[1]
@@ -64,6 +63,7 @@ for line in rdr:
         logitude = line[6]  # 경도
         curs.execute(insert_sql, (name, address, facilites, parking_lot, tel, latitude, logitude, city_id, prv_id))
         conn.commit()
+        print(tmp)
     except:
         continue
 

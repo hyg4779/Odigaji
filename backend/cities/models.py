@@ -28,12 +28,11 @@ class City(models.Model):
     name = models.CharField(max_length=30)
     info = models.TextField()
     population = models.IntegerField()
-    area = models.IntegerField()
+    area = models.FloatField()
     photo = ProcessedImageField(
         blank=True,
         upload_to='city_images/',
         # processors=[ResizeToFill(200,200)],
-        format='JPEG',
         options={'quality':100 }
     )
     rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_cities')

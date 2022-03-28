@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import (
-    review_list_serializer,
-    review_serializer
+    Review_list_serializer,
+    Review_serializer
 )
 from .models import CityReview
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ def all_reviews(request):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.all()
-        serializer = review_list_serializer(reviews, many=True)
+        serializer = Review_list_serializer(reviews, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
@@ -35,10 +35,10 @@ def city_reviews(request, city_id):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.filter(city=city_id)
-        serializer = review_list_serializer(reviews, many=True)
+        serializer = Review_list_serializer(reviews, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
     elif request.method=='POST':
-        serializer = review_serializer(data = request.data)
+        serializer = Review_serializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=HTTP_201_CREATED)
@@ -56,7 +56,7 @@ def user_reviews(request):
     print(request)
     if request.method=='GET':
         reviews = CityReview.objects.filter(user=request.user.pk)
-        serializer = review_list_serializer(reviews, many=True)
+        serializer = Review_list_serializer(reviews, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
@@ -72,12 +72,12 @@ def review_info(request, review_id):
     '''
     review = get_object_or_404(CityReview, pk=review_id)
     if request.method=='GET':
-        serializer = review_serializer(review)
+        serializer = Review_serializer(review)
         return Response(serializer.data, status=HTTP_200_OK)
 
     elif request.method=='PUT':
         if request.user.is_authenticated and review.user.id == request.user.pk:
-            serializer = review_serializer(review, data=request.data)
+            serializer = Review_serializer(review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=HTTP_200_OK)
