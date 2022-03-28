@@ -45,6 +45,7 @@ def all_reviews(request):
     })
 @swagger_auto_schema(
     methods=['POST'],
+    request_body=Review_serializer,
     responses={201: openapi.Response('', Review_list_serializer),
                400: openapi.Response(''),
                404: openapi.Response('')
@@ -100,11 +101,12 @@ def user_reviews(request):
     })
 @swagger_auto_schema(
     methods=['PUT'],
+    request_body=Review_serializer,
     responses={200: openapi.Response('', Review_serializer),
                400: openapi.Response(''),
                401: openapi.Response(''),
-               404: openapi.Response('')
-    })
+               404: openapi.Response('')}
+    )
 @swagger_auto_schema(
     methods=['DELETE'],
     responses={200: openapi.Response(''),
