@@ -25,7 +25,10 @@ ReactDOM.render(
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
         <Route path="local/:cityId" element={<Local />} />
-        <Route path="local/travelDetail/" element={<TravelDetail />} />
+        <Route
+          path="local/travelDetail/:attractionId"
+          element={<TravelDetail />}
+        />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mypage/userinfo" element={<ChangeInfo />} />
         <Route path="local/travelDetail/board" element={<Board />} />

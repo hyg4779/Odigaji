@@ -3,7 +3,11 @@ import { Container, Image, Row, Table, Col, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import server from '../../API/server';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+
+function MovetravelPage(id) {
+  window.location.href = 'travelDetail/' + id + '/';
+}
 
 function Local() {
   let params = useParams();
@@ -15,6 +19,7 @@ function Local() {
   const [province, setProvince] = useState(null); // 도 명
   const [area, setArea] = useState(null); // 시 넓이
   const [travelList, setTravelList] = useState(null); // 시 내 관광지목록
+
   useEffect(() => {
     //렌더링 이후에 실행되는 함수
     //
@@ -66,7 +71,8 @@ function Local() {
           {travelList &&
             travelList.map((data, idx) => {
               return (
-                <tr key={idx}>
+                //무명함수 호출안하면 강제로 이동한다....
+                <tr key={idx} onClick={() => MovetravelPage(data.id)}>
                   <td className="m-2">{data.name}</td>
                 </tr>
               );
