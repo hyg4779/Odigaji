@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/accounts/',include('accounts.urls')),
     path('api/reviews/',include('reviews.urls')),
     path('api/cities/',include('cities.urls')),
-   # path('api/recommends/',include('recommends.urls')),
+    path('api/recommends/',include('recommends.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
