@@ -78,7 +78,9 @@ class Visit_serializer(serializers.ModelSerializer):
         fields = (
             "user",
             "city_data",
+            "city",
             "rate",
+            "taste",
         )
 
 class Visit_simple_serializer(serializers.ModelSerializer):
