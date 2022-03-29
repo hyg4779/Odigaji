@@ -48,7 +48,13 @@ def all_reviews(request):
     })
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=Review_serializer,
+        request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'title': openapi.Schema(type=openapi.TYPE_STRING, description='리뷰제목'),
+            'content': openapi.Schema(type=openapi.TYPE_STRING, description='리뷰내용'),
+        }
+    ),
     responses={201: openapi.Response('', Review_list_serializer),
                400: openapi.Response(''),
                404: openapi.Response('')
@@ -65,6 +71,7 @@ def city_reviews(request, city_id):
         serializer = Review_list_serializer(reviews, many=True)
         return Response(serializer.data, status=HTTP_200_OK)
     elif request.method=='POST':
+        request.data['city'] = city_id
         serializer = Review_serializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
