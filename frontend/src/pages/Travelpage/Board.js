@@ -1,4 +1,4 @@
-import { Row, Table, Col, Button } from 'react-bootstrap';
+import { Row, Table, Col, Button, Pagination, PageItem } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -7,6 +7,9 @@ import './Board.css';
 function Board() {
   let navigate = useNavigate();
   let params = useParams();
+  let active = 2;
+  let items = [];
+
   const [reviewdata, setReviewdata] = useState([]);
 
   const writeReview = () => {
@@ -23,76 +26,63 @@ function Board() {
         console.log(error);
       });
   };
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number === active}>
+        {number}
+      </Pagination.Item>
+    );
+  }
+  const paginationBasic = (
+    <div>
+      <Pagination>{items}</Pagination>
+    </div>
+  );
   console.log(reviewdata);
   useEffect(() => {
     getLoadReviews(params.cityId);
   }, []);
   return (
-    <div className="BoardWrap">
-      <ul>
-        <li>관광지 리뷰 </li>
+    <div className="Board">
+      <div className="BoardWrap">
+        <div className="BoardContainer">
+          <Row>
+            <Col md={12}>
+              <h3>관광지 리뷰 </h3>
+            </Col>
 
-        <li>
-          Table
-          <ul id="ulTable">
-            <li>
-              <ul>
-                <li>No</li>
-                <li>제목</li>
-                <li>작성일</li>
-                <li>작성자</li>
-                <li>조회수</li>
-              </ul>
-            </li>
-            <div>
-              {reviewdata.map((data) => {
-                return (
-                  <li key={data.id}>
-                    <ul key={data.id}>
-                      <li>{data.id}</li>
-                      <li className="left">{data.title}</li>
-                      <li>{data.updated}</li>
-                      <li>{data.city}</li>
-                    </ul>
-                  </li>
-                );
-              })}
-            </div>
-          </ul>
-        </li>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>제목</th>
+                  <th>작성일</th>
+                  <th>작성자</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reviewdata.map((data) => {
+                  return (
+                    <tr key={data.id}>
+                      <td>{data.id}</td>
+                      <td className="left">{data.title}</td>
+                      <td>{data.updated}</td>
+                      <td>{data.city}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+            {paginationBasic}
+          </Row>
+        </div>
 
-        <li>
-          <div id="divPaging">
-            <div>◀</div>
-            <div>
-              <b>1</b>
-            </div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>▶</div>
-          </div>
-        </li>
-
-        {/* <li id="liSearchOption">
-          <div>
-            <select id="selSearchOption">
-              <option value="A">제목+내용</option>
-              <option value="T">제목</option>
-              <option value="C">내용</option>
-            </select>
-            <input id="txtKeyWord" />
-            <input type="button" value="검색" />
-          </div>
-        </li> */}
-      </ul>
-
-      <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end" onClick={writeReview}>
-          <Button variant="secondary">글쓰기</Button>{' '}
-        </Col>
-      </Row>
+        <Row className="align-self-end ">
+          <Col className=" m-5 text-lg-end" onClick={writeReview}>
+            <Button variant="secondary">글쓰기</Button>{' '}
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }
