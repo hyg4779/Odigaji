@@ -1,12 +1,15 @@
 import React from 'react';
 import './PopularItem.css';
+import server from '../../API/server';
 
 function PopularItem({ data }) {
   return (
-    <div className="PopularItem">
-      <div className="PopularItem-image"></div>
-      <div className="PopularItem-text">{data}</div>
-    </div>
+    <img
+      className="PopularItem"
+      alt={data.name}
+      src={server.BASE_URL + data.photo}
+      loading="lazy"
+    />
   );
 }
 

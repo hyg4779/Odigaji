@@ -48,6 +48,7 @@ function Question({
               key={idx}
               alt={data.name}
               src={process.env.PUBLIC_URL + data.img}
+              loading="lazy"
             />
           );
         })}
