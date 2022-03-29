@@ -1,11 +1,13 @@
 import React from 'react';
-import './Question.css';
+import './Intro.css';
 
 function Intro({ nextPage }) {
   return (
-    <div className="Question">
-      <div>오디가지</div>
-      <button onClick={nextPage}>시작하기</button>
+    <div className="Survey-intro">
+      <div className="Survey-intro-header">오디가지</div>
+      <button className="Survey-intro-button" onClick={nextPage}>
+        시작하기
+      </button>
     </div>
   );
 }

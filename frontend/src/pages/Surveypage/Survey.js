@@ -18,57 +18,57 @@ function Survey() {
   };
   const surveyData = [
     [
-      { name: '봄', img: 'logo192.png' },
-      { name: '여름', img: 'logo192.png' },
-      { name: '가을', img: 'logo192.png' },
-      { name: '겨울', img: 'logo192.png' },
+      { id: 1, name: '봄', img: 'img/spring.jpg' },
+      { id: 2, name: '여름', img: 'img/summer.jpg' },
+      { id: 3, name: '가을', img: 'img/autumn.jpg' },
+      { id: 4, name: '겨울', img: 'img/winter.jpg' },
     ],
     [
-      { name: '산', img: 'logo192.png' },
-      { name: '바다', img: 'logo192.png' },
+      { id: 5, name: '산', img: 'img/mountain.jpg' },
+      { id: 6, name: '바다', img: 'img/sea.jpg' },
     ],
     [
-      { name: '도시', img: 'logo192.png' },
-      { name: '시골', img: 'logo192.png' },
+      { id: 7, name: '도시', img: 'img/city.jpg' },
+      { id: 8, name: '시골', img: 'img/country.jpg' },
     ],
     [
-      { name: '혼자', img: 'logo192.png' },
-      { name: '친구', img: 'logo192.png' },
-      { name: '연인', img: 'logo192.png' },
-      { name: '가족', img: 'logo192.png' },
+      { id: 9, name: '혼자', img: 'img/alone.jpg' },
+      { id: 10, name: '친구', img: 'img/friends.jpg' },
+      { id: 11, name: '연인', img: 'img/couple.jpg' },
+      { id: 12, name: '가족', img: 'img/family.jpg' },
     ],
     [
-      { name: '풍경', img: 'logo192.png' },
-      { name: '음식', img: 'logo192.png' },
-      { name: '액티비티', img: 'logo192.png' },
-      { name: '힐링', img: 'logo192.png' },
+      { id: 13, name: '풍경', img: 'img/nature.jpg' },
+      { id: 14, name: '음식', img: 'img/food.jpg' },
+      { id: 15, name: '액티비티', img: 'img/activity.jpg' },
+      { id: 16, name: '힐링', img: 'img/relax.jpg' },
     ],
     [
-      { name: '별이 빛나는 밤', img: 'logo192.png' },
-      { name: '그랑드자트섬의 일요일 오후', img: 'logo192.png' },
-      { name: '메모리 지속성의 붕괴', img: 'logo192.png' },
-      { name: '민중을 이끄는 자유의 여신', img: 'logo192.png' },
+      { id: 17, name: '별이 빛나는 밤', img: 'img/starrynight.jpg' },
+      { id: 18, name: '그랑드자트섬의 일요일 오후', img: 'img/grande.jpg' },
+      { id: 19, name: '메모리 지속성의 붕괴', img: 'img/memory.jpg' },
+      { id: 20, name: '민중을 이끄는 자유의 여신', img: 'img/liberty.jpg' },
     ],
     [
-      { name: '기생충', img: 'logo192.png' },
-      { name: '토이스토리', img: 'logo192.png' },
-      { name: '인터스텔라', img: 'logo192.png' },
-      { name: '건축학개론', img: 'logo192.png' },
-      { name: '분노의 질주', img: 'logo192.png' },
-      { name: '극한직업', img: 'logo192.png' },
+      { id: 21, name: '기생충', img: 'img/parasite.jpg' },
+      { id: 22, name: '토이스토리', img: 'img/toystory.jpg' },
+      { id: 23, name: '인터스텔라', img: 'img/interstellar.jpg' },
+      { id: 24, name: '건축학개론', img: 'img/건축학개론.jpg' },
+      { id: 25, name: '분노의 질주', img: 'img/분노의질주.jpg' },
+      { id: 26, name: '극한직업', img: 'img/극한직업.jpg' },
     ],
     [
-      { name: '자가용', img: 'logo192.png' },
-      { name: '대중교통', img: 'logo192.png' },
-      { name: '도보', img: 'logo192.png' },
+      { id: 27, name: '자가용', img: 'img/car.jpg' },
+      { id: 28, name: '대중교통', img: 'img/bus.jpg' },
+      { id: 29, name: '도보', img: 'img/walking.jpg' },
     ],
     [
-      { name: '즉흥', img: 'logo192.png' },
-      { name: '계획', img: 'logo192.png' },
+      { id: 30, name: '계획', img: 'img/plan.jpg' },
+      { id: 31, name: '즉흥', img: 'img/생각없음.jpg' },
     ],
     [
-      { name: '아침형 인간', img: 'logo192.png' },
-      { name: '저녁형 인간', img: 'logo192.png' },
+      { id: 32, name: '아침형 인간', img: 'img/early.jpg' },
+      { id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
     ],
   ];
   const tourData = [
@@ -84,39 +84,42 @@ function Survey() {
     { id: 10, name: '구미', province: 4 },
     { id: 11, name: '광주', province: 100 },
   ];
-
   const [pageIndex, setPageIndex] = useState(-1);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
 
-  let leftLoc = String(15 + pageIndex * 7.5) + 'vw';
+  let leftLoc = String(13 + pageIndex * 7.7) + 'vw';
+  // survey-bar 의 left 값이 15vw 로 되어 있다
+  // 10개의 취향 설문 + 1개의 지역 설문이 진행되니까
+  // 11번째 페이지에서 진행도가 맨 끝으로 가 있어야 한다
 
   function nextPage() {
     setPageIndex(pageIndex + 1);
   }
 
   function beforePage() {
-    setPageIndex(pageIndex - 1);
+    if (pageIndex >= 1) {
+      setPageIndex(pageIndex - 1);
+    }
   }
 
   function startPage() {
-    setPageIndex(-1);
-    setTastes([]);
+    setPageIndex(0);
   }
 
-  function tasteSurveys(pageIndex, imageName) {
+  function tasteSurveys(pageIndex, imageId, imageName) {
     // 취향 질문의 답변을 배열 형태로 저장하는 함수
     const newTaste = {
-      id: pageIndex,
-      imageName: imageName,
+      id: imageId,
+      name: imageName,
     };
-    if (pageIndex + 1 <= tastes.length) {
-      // 이미 한 번 선택했던 페이지로 돌아온 경우
-      console.log('기존 설문 수정');
-      const beforeTastes = tastes.filter((taste) => taste.id !== pageIndex);
-      setTastes(beforeTastes.concat(newTaste));
+    if (pageIndex < tastes.length) {
+      // 한 번 진행한 취향을 바꾸는 경우
+      const tempTastes = [...tastes];
+      tempTastes[pageIndex] = newTaste;
+      setTastes(tempTastes);
     } else {
-      console.log('새로운 설문 추가');
+      // 새로운 취향 설문을 진행한 경우
       setTastes(tastes.concat(newTaste));
     }
   }
@@ -129,14 +132,16 @@ function Survey() {
 
   return (
     <div className="Survey">
-      {pageIndex !== -1 && (
-        <div>
+      {pageIndex >= 0 && (
+        <>
           <div className="Survey-bar" />
-          <div
+          <img
             className="Survey-progress"
             style={{ position: 'absolute', left: leftLoc }}
+            alt="오디가지"
+            src={process.env.PUBLIC_URL + 'img/오디가지.png'}
           />
-        </div>
+        </>
       )}
       {pageIndex === -1 && <Intro nextPage={nextPage} />}
       {pageIndex >= 0 && pageIndex <= 9 && (
@@ -152,8 +157,11 @@ function Survey() {
       )}
       {pageIndex >= 10 && (
         <TourList
+          pageIndex={pageIndex}
           tourData={tourData}
           tours={tours}
+          beforePage={beforePage}
+          startPage={startPage}
           setTours={setTours}
           provinceData={provinceData}
         />

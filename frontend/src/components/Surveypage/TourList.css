@@ -1,22 +1,91 @@
 .Tourlist {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin-top: 8vw;
+  margin-bottom: 2vw;
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
-.Tourlist-input {
-  width: 150px;
+.Tourlist-header {
+  color: #FFFFFF;
+  font-size: 3vw;
+  text-align: center;
+  font-weight: bold;
 }
 
-.datalist {
-  width: 150px;
-  height: 100px;
-}
-
-.Tourlist-item {
+.Tourlist-content {
   display: flex;
+  flex-direction: column;
+  width: 80vw;
+  height: 70%;
+  justify-content: flex-start;
+  column-gap: 5vw;
+}
+
+.Tourlist-content-input {
+  height: 30px;
+  border-radius: 2rem;
+  border-style: none;
+  margin-bottom: 1rem;
+  padding: 0rem 1rem;
+}
+
+.Tourlist-content-button {
+  color: #FFFFFF;
+  background-color: transparent;
+  border-style: none;
+  font-weight: bold;
+}
+
+.Tourlist-content-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: 60vh;
+  overflow-y: auto;
+  row-gap: 1rem;
+  align-items: flex-start;
+}
+
+.Tourlist-content-item {
+  min-width: 300px;
+  width: 30%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  border: 2px solid white;
+  padding: 0rem 1rem;
+  border-radius: 2rem;
+}
+
+.Tourlist-content-item-rate {
+  display: flex;
+  
+}
+
+.Tourlist-button-group {
+  display: flex;
+  width: 80vw;
+  justify-content: center;
+  column-gap: 5vw;
+}
+
+.Tourlist-button {
+  width: auto;
+  height: auto;
+  background-color: #A177FA;
+  font-size: 3vw;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-style: none;
+}
+
+.Tourlist-button:hover {
+  color: yellowgreen;
 }

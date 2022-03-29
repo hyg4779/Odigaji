@@ -2,7 +2,14 @@ import React from 'react';
 import './TourList.css';
 import Rating from './Rating';
 
-function TourList({ tourData, tours, setTours, provinceData }) {
+function TourList({
+  tourData,
+  tours,
+  beforePage,
+  startPage,
+  setTours,
+  provinceData,
+}) {
   function isVisit(name, province) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
     return tours.find(
@@ -68,24 +75,41 @@ function TourList({ tourData, tours, setTours, provinceData }) {
 
   return (
     <div className="Tourlist">
-      <div>다녀온 지역과 평점을 자유롭게 등록해주세요</div>
-      <form onSubmit={(event) => addTour(event)}>
-        <input list="tourInput" className="Tourlist-input" />
-        <datalist id="tourInput">{makeList()}</datalist>
-        <button>추가하기</button>
-      </form>
-      <div>
-        {tours.map((tour, idx) => {
-          return (
-            <div className="Tourlist-item" key={idx}>
-              <div>
-                {tour.name} - {provinceData[tour.province]}
+      <div className="Tourlist-header">
+        다녀온 지역을 등록하고 평점을 입력해주세요
+      </div>
+      <div className="Tourlist-content">
+        <form onSubmit={(event) => addTour(event)}>
+          <input list="tourInput" className="Tourlist-content-input" />
+          <datalist id="tourInput">{makeList()}</datalist>
+          <button className="Tourlist-content-button">추가하기</button>
+        </form>
+        <div className="Tourlist-content-items">
+          {tours.map((tour, idx) => {
+            return (
+              <div className="Tourlist-content-item" key={idx}>
+                <div>
+                  {tour.name} - {provinceData[tour.province]}
+                </div>
+                <div className="Tourlist-content-item-rate">
+                  <Rating tour={tour} tours={tours} setTours={setTours} />
+                  <button
+                    onClick={() => deleteTour(tour)}
+                    className="Tourlist-content-button"
+                  >
+                    X
+                  </button>
+                </div>
               </div>
-              <Rating tour={tour} tours={tours} setTours={setTours} />
-              <button onClick={() => deleteTour(tour)}>X</button>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      </div>
+      <div className="Tourlist-button-group">
+        <button onClick={beforePage} className="Tourlist-button">
+          이전
+        </button>
+        <button className="Tourlist-button">제출</button>
       </div>
     </div>
   );
