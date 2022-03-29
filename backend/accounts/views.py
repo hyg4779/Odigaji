@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .serializers import User_serializer, User_swag_serializer, User_mypage_serializer, User_mypage_swag_serializer, User_password_serializer, User_password_swag_serializer
+from .serializers import User_serializer, User_mypage_serializer, User_password_serializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
