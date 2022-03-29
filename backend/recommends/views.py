@@ -25,14 +25,20 @@ from .recommend import knn_recommend, popular_cities, random_city
                })
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=Visit_serializer,
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'city': openapi.Schema(type=openapi.TYPE_INTEGER, description='도시id'),
+            'rate': openapi.Schema(type=openapi.TYPE_INTEGER, description='별점')
+        }
+    ),
     responses={201: openapi.Response(''),
                400: openapi.Response(''),
                404: openapi.Response('')
                })
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
-def sel_city(self, request):
+def sel_city(request):
     '''
     GET : 본인이 다녀온 지역 확인
     POST : 새로운 지역에 대한 평점 추가
@@ -45,15 +51,27 @@ def sel_city(self, request):
 
     elif request.method == "POST":
         city_id = request.data.get("city")
+        if not Taste.objects.filter(user_id=user.id).exists():
+            taste_ser = Taste_serializer(data=request.data)
+            if taste_ser.is_valid(raise_exception=True):
+                taste = taste_ser.save(user=user)
+        else:
+            taste = get_object_or_404(Taste, user_id=user.id)
+
+        dic = {'user':user.id,
+               'city':request.data['city'],
+               'taste':taste.id,
+               'rate':request.data['rate']
+               }
 
         if not user.rate_cities.filter(pk=city_id).exists():
-            serializer = Visit_serializer(data=request.data)
+            serializer = Visit_serializer(data=dic)
         else:
             visit = get_object_or_404(Visit, user_id=user.id, city_id=city_id)
             if not request.data.get('rate'):
                 visit.delete()
                 return Response(status=status.HTTP_205_RESET_CONTENT)
-            serializer = Visit_serializer(instance=visit, data=request.data)
+            serializer = Visit_serializer(instance=visit, data=dic)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
