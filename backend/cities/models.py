@@ -32,7 +32,7 @@ class City(models.Model):
     area = models.FloatField()
     photo = ProcessedImageField(
         blank=True,
-        upload_to='profile_images/%Y/%m/%d/',
+        upload_to='city_images/',
         # processors=[ResizeToFill(200,200)],
         options={'quality':100 }
     )
