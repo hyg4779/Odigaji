@@ -12,6 +12,9 @@
   align-items: flex-end;
   padding: 16px;
 }
+.ChangeInputForm{
+  margin-top: 40px;
+}
 
 .InfouserContainer{
   background-color: white;  

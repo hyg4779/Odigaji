@@ -124,8 +124,11 @@ function ChangeInfo() {
       </div>
 
       <div className="InputInfoContainer">
-        <div className="InfoContainertitle">회원정보 변경</div>
         <div className="changeInfoWrap">
+          <div className="InfoContainertitle">
+            <h5>회원정보</h5>
+          </div>
+          <div className="InfoSpace"></div>
           <form className="ChangeInputForm" onSubmit={onSubmit}>
             <div className="InfoEmail">
               <span className="InputItem">아이디</span>
