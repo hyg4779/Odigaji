@@ -10,8 +10,7 @@
 
 .TitleContainer{  
   height: 132px;
-  background-color: #afb3b1;    
-  
+  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
   display: flex;
   align-items: flex-end;
   padding: 16px;
@@ -21,7 +20,7 @@
   
   background-color: white;  
   padding: 21px 16px;  
-  height: 90px;
+  height: 120px;
   margin-bottom: 10px;
 }
 .userContainer .userbutton{
@@ -37,9 +36,14 @@
   
   flex-grow: 1;
 }
+.userContainer .userNick{
+  padding-left: 240px;
+  font-size : 18px;
+  color: #afb3b1;
+}
 .userContainer .userPoint{
   padding-left: 240px;
-  
+  color: #afb3b1;
 }
 
 .ActivityContainer{
@@ -190,10 +194,33 @@
 
  
   transform: translate(50%, 50%);
-  border: 1px solid #586064;
-  
+
+  border-style: none;
 
 } 
 
 
 
+  
+.Editinfo {background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);}
+.Editinfo {
+  margin-right: 80px;
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  background-size: 200% auto;
+  color: white;            
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  border-style: none;
+  display: inline;
+  
+ 
+}
+
+.Editinfo:hover {
+ 
+  color: #fff;
+  text-decoration: none;
+}
+  
