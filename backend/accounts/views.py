@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from .serializers import User_serializer, User_swag_serializer, User_mypage_serializer, User_mypage_swag_serializer, User_password_serializer, User_password_swag_serializer
+from .serializers import User_serializer, User_mypage_serializer, User_password_serializer
 from django.shortcuts import get_list_or_404, get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -17,7 +17,16 @@ User = get_user_model()
 
 @swagger_auto_schema(
     methods=['POST'],
-    request_body=User_swag_serializer,
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'username': openapi.Schema(type=openapi.TYPE_STRING, description='아이디'),
+            'nickname': openapi.Schema(type=openapi.TYPE_STRING, description='닉네임'),
+            'password': openapi.Schema(type=openapi.TYPE_STRING, description='비밀번호'),
+            'passwordconfirm': openapi.Schema(type=openapi.TYPE_STRING, description='비밀번호확인'),
+            'photo': openapi.Schema(type=openapi.TYPE_FILE, description='프로필사진'),
+        }
+    ),
     responses={201: openapi.Response('회원가입 성공'),
                400: openapi.Response('회원가입 실패')
                })
@@ -63,8 +72,15 @@ def signup(request):
                })
 @swagger_auto_schema(
     methods=['PUT'],
-    request_body=User_mypage_swag_serializer,
-    responses={201: openapi.Response('수정 성공', User_mypage_swag_serializer()),
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'username': openapi.Schema(type=openapi.TYPE_STRING, description='아이디'),
+            'nickname': openapi.Schema(type=openapi.TYPE_STRING, description='닉네임'),
+            'photo': openapi.Schema(type=openapi.TYPE_FILE, description='프로필사진'),
+        }
+    ),
+    responses={201: openapi.Response('수정 성공', User_mypage_serializer()),
                400: openapi.Response('수정 실패')
                })
 @swagger_auto_schema(
@@ -114,7 +130,13 @@ def mypage(request):
 #비밀번호 변경
 @swagger_auto_schema(
     methods=['PUT'],
-    request_body=User_password_swag_serializer,
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'password': openapi.Schema(type=openapi.TYPE_STRING, description='비밀번호'),
+            'passwordconfirm': openapi.Schema(type=openapi.TYPE_STRING, description='비밀번호확인'),
+        }
+    ),
     responses={201: openapi.Response('변경 성공'),
                400: openapi.Response('변경 실패')
                })
