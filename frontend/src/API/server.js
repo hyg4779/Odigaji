@@ -7,6 +7,8 @@ const server = {
     random: '/api/rec/random',
     mypage: '/api/accounts/mypage/',
     password: '/api/accounts/mypage/password/',
+    cities: '/api/cities/',
+    attraction: '/get-attraction/',
   },
 };
 
