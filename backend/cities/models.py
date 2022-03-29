@@ -45,7 +45,7 @@ class Visit(models.Model):
     '''
     user가 방문한 도시 및 평점
     '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     rate = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
     taste = models.ForeignKey(Taste, on_delete=models.CASCADE)
