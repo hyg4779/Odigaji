@@ -9,6 +9,7 @@ const server = {
     password: '/api/accounts/mypage/password/',
     cities: '/api/cities/',
     attraction: '/get-attraction/',
+    writeReview: '/api/reviews/',
   },
 };
 

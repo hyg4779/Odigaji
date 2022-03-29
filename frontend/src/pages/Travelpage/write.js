@@ -3,12 +3,35 @@ import { React, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './write.css';
+import axios from 'axios';
+import server from '../../API/server';
+// import ReactHtmlParser from 'react-html-parser';
+
 function Write() {
   const [reviewContent, setReviewContent] = useState({
     // 입력한 내용 userState에 저장하기위한 변수
     title: '',
     content: '',
   });
+
+  function setDate() {
+    const cityId = 21;
+    let data = {
+      title: reviewContent.title,
+      content: reviewContent.content,
+      city: cityId,
+    };
+
+    console.log(data);
+    const jwt = sessionStorage.getItem('jwt');
+    axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
+
+    axios
+      .post(server.BASE_URL + server.ROUTES.writeReview + cityId + '/', data)
+      .then(() => {
+        console.log('then active');
+      });
+  }
 
   // 입력내용 누르면 저장 시키는 변수 현재는 화면 위에 띄어주기만함,,
   const [viewContent, setViewContent] = useState([]);
@@ -68,7 +91,8 @@ function Write() {
       <button
         className="submit-button"
         onClick={() => {
-          setViewContent(viewContent.concat({ ...reviewContent }));
+          // setViewContent(viewContent.concat({ ...reviewContent }));
+          setDate();
         }}
       >
         입력

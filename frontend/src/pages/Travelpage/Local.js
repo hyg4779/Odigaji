@@ -15,7 +15,8 @@ function MoveBoardPage(id) {
 
 function visited() {
   console.log('visited button clicked');
-  axios.get();
+  // 나중에 방문처리 할것!!!
+  // axios.get();
 }
 
 function Local() {
