@@ -1,11 +1,11 @@
 import { Row, Table, Col, Button } from 'react-bootstrap';
-import React from 'react';
-
-function MoveWrite() {
-  window.location.href = '/local/travelDetail/board/write';
-}
-
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import server from '../../API/server';
 function Board() {
+  let navigate = useNavigate();
+  let params = useParams();
   let tmpdata = [
     '임진각여행기',
     '임진각여행기',
@@ -14,6 +14,23 @@ function Board() {
     '임진각여행기',
     '임진각여행기',
   ];
+  const writeReview = () => {
+    navigate('/local/travelDetail/board/write');
+  };
+  const getLoadReviews = async (cityId) => {
+    await axios
+      .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getLoadReviews(params.cityId);
+  }, []);
   return (
     <div>
       <Row>
@@ -22,7 +39,7 @@ function Board() {
         </Col>
       </Row>
       <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end" onClick={() => MoveWrite()}>
+        <Col className=" m-5 text-lg-end" onClick={writeReview}>
           <Button variant="secondary">글쓰기</Button>{' '}
         </Col>
       </Row>
