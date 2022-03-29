@@ -4,6 +4,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from recommends.models import Taste
 
 # Create your models here.
 User = settings.AUTH_USER_MODEL
@@ -31,7 +32,7 @@ class City(models.Model):
     area = models.FloatField()
     photo = ProcessedImageField(
         blank=True,
-        upload_to='profile_images/%Y/%m/%d/',
+        upload_to='city_images/',
         # processors=[ResizeToFill(200,200)],
         options={'quality':100 }
     )
@@ -44,9 +45,10 @@ class Visit(models.Model):
     '''
     user가 방문한 도시 및 평점
     '''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     rate = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    taste = models.ForeignKey(Taste, on_delete=models.CASCADE)
 
 
 class Attraction(models.Model):

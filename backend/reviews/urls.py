@@ -14,4 +14,14 @@ urlpatterns = [
     
     # GET: 리뷰 상세내용/PUT: 리뷰수정 /DELETE: 리뷰삭제
     path('<int:review_id>/review_info/', views.review_info, name='review_info'),
+
+    # GET: 특정 유저가 쓴 댓글 전체 목록 (마이페이지에서 사용됨)
+    path('comment/', views.all_comment, name='all_comment'),
+
+    # GET: 특정 리뷰의 댓글 전체 / POST: 특정 리뷰의 댓글 작성
+    path('comment/<int:review_id>/', views.comment_list, name='comment_list'),
+
+    # PUT: 특정 댓글 수정 / DELETE: 특정 댓글 삭제
+    path('comment/edit/<int:comment_id>/', views.comment_detail, name='comment_detail'),
+    
 ]

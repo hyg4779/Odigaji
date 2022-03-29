@@ -1,6 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Row, Col, Container, Table, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import server from '../../API/server';
+function goback() {
+  window.history.back();
+}
 function TravelDetail() {
+  let params = useParams();
+  const attractionId = params.attractionId;
+
+  const [name, setName] = useState();
+  const [address, setAddress] = useState();
+  const [facilities, setFacilities] = useState();
+  const [parking_lot, setParking_lot] = useState();
+  const [tel, setTel] = useState();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+  const [city, setCity] = useState();
+  const [province, setProvince] = useState();
+  let attractionDetail;
+  //랜더링 이후 실행되는 함수
+  useEffect(() => {
+    axios
+      .get(
+        server.BASE_URL +
+          server.ROUTES.cities +
+          attractionId +
+          '/' +
+          server.ROUTES.attraction
+      )
+      .then((res) => {
+        console.log(res);
+        setName(res.data.name);
+        setAddress(res.data.address);
+        setFacilities(res.data.facilities);
+        setParking_lot(res.data.parking_lot);
+        setTel(res.data.tel);
+        setLatitude(res.data.latitude);
+        setLongitude(res.data.longitude);
+        setCity(res.data.city);
+        setProvince(res.data.province);
+        attractionDetail = res.data;
+      });
+  }, []);
+
   let tempdata = [
     '임진각 관광지',
     '경기도 파주시 문산읍 임진각로 177',
@@ -22,18 +66,33 @@ function TravelDetail() {
       <Container>
         <Table striped bordered hover>
           <tbody>
-            {tempdata.map((data, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>{data}</td>
-                </tr>
-              );
-            })}
+            <tr>
+              <td>관광지명</td>
+              <td>{name}</td>
+            </tr>
+            <tr>
+              <td>주소</td>
+              <td>{address}</td>
+            </tr>
+            <tr>
+              <td>편의시설</td>
+              <td>{facilities}</td>
+            </tr>
+            <tr>
+              <td>주차가능수</td>
+              <td>{parking_lot}</td>
+            </tr>
+            <tr>
+              <td>전화번호</td>
+              <td>{tel}</td>
+            </tr>
           </tbody>
         </Table>
       </Container>
       <Container>
-        <Button variant="secondary">**시목록으로</Button>{' '}
+        <Button variant="secondary" onClick={() => goback()}>
+          **시목록으로
+        </Button>{' '}
       </Container>
     </div>
     // end TravelDetail div
