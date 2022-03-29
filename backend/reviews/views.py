@@ -1,11 +1,12 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import (
     Review_list_serializer,
-    Review_serializer
+    Review_serializer,
+    Comment_list_serializer,
 )
-from .models import CityReview
+from .models import CityReview, Comment
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -139,4 +140,22 @@ def review_info(request, review_id):
             review.delete()
             return Response({'message': '삭제되었습니다.'}, status=HTTP_200_OK)
 
-    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
+    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('조회 성공'),
+               400: openapi.Response('조회 실패')
+               })
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def all_comment(request):
+    '''
+    특정 유저가 작성한 관광지 리뷰 댓글 목록을 반환하는 함수
+    '''
+    if request.method=='GET':
+        comments = Comment.objects.all()
+        serializer = Comment_list_serializer(comments, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
