@@ -9,6 +9,15 @@ function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
 }
 
+function MoveBoardPage(id) {
+  window.location.href = 'travelDetail/board/' + id + '/';
+}
+
+function visited() {
+  console.log('visited button clicked');
+  axios.get();
+}
+
 function Local() {
   let params = useParams();
   const cityId = params.cityId; // 시 아이디를 url에서 받아옴
@@ -80,7 +89,12 @@ function Local() {
         </tbody>
       </Table>
       <Container>
-        <Button variant="secondary">리뷰 게시판 이동</Button>{' '}
+        <Button variant="secondary" onClick={() => MoveBoardPage(id)}>
+          리뷰 게시판 이동
+        </Button>{' '}
+        <Button variant="success" onClick={() => visited()}>
+          방문
+        </Button>
       </Container>
     </div>
 

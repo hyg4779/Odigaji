@@ -6,6 +6,7 @@ const server = {
     signup: 'api/accounts/signup/',
     random: 'api/rec/random',
     cities: 'api/cities/',
+    attraction: 'get-attraction/',
   },
 };
 

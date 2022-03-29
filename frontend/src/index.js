@@ -31,7 +31,7 @@ ReactDOM.render(
         />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mypage/userinfo" element={<ChangeInfo />} />
-        <Route path="local/travelDetail/board" element={<Board />} />
+        <Route path="local/travelDetail/board/:cityId" element={<Board />} />
         <Route path="local/travelDetail/board/write" element={<Write />} />
         <Route path="random" element={<Random />} />
         <Route path="survey" element={<Survey />} />
