@@ -12,6 +12,20 @@ function Main() {
   const mainRef = useRef();
   const [pageIndex, setPageIndex] = useState(1);
 
+  function resizeHandler() {
+    if (
+      mainRef.current.scrollTop > 0 &&
+      mainRef.current.scrollTop < window.innerHeight
+    ) {
+      console.log('2페이지에서 페이지가 커졌습니다');
+      mainRef.current.scrollTo({
+        top: window.innerHeight + 5,
+        left: 0,
+      });
+      setPageIndex(2);
+    }
+  }
+
   useEffect(() => {
     function wheelHandler(event) {
       event.preventDefault(); // wheel 이벤트에 의해 새로고침 되는 것을 막아준다
@@ -48,9 +62,12 @@ function Main() {
 
     const mainRefCurrent = mainRef.current;
     mainRefCurrent.addEventListener('wheel', wheelHandler);
+    window.addEventListener('resize', resizeHandler);
     // mainRef를 포함하는 DOM을 할당한 뒤, 해당 DOM에 wheel 이벤트를 부여해준다
+    // window DOM에 resize 이벤트를 부여해준다 => 화면의 크기 변화를 감지해준다
     return function () {
       mainRefCurrent.removeEventListener('wheel', wheelHandler);
+      window.removeEventListener('resize', resizeHandler);
     };
   }, []);
 

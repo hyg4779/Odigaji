@@ -4,20 +4,21 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #A177FA;
 }
 
 .Survey-bar {
   width: 80vw;
-  height: 20px;
-  background-color: gray;
+  height: 2vw;
+  background-color: #FFFFFF;
+  border-radius: 2rem;
   position: fixed;
-  top: 80px;
-  left: 15%;
+  top: 5vw;
+  left: 15vw;
 }
 
 .Survey-progress {
-  width: 5vw;
-  height: 40px;
-  background-color: black;
-  top: 70px;
+  width: 6vw;
+  height: 6vw;
+  top: 2.5vw;
 }
