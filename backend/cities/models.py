@@ -4,6 +4,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from recommends.models import Taste
 
 # Create your models here.
 User = settings.AUTH_USER_MODEL
@@ -47,6 +48,7 @@ class Visit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     rate = models.IntegerField(null=True, validators=[MinValueValidator(0), MaxValueValidator(10)])
+    taste = models.ForeignKey(Taste, on_delete=models.CASCADE)
 
 
 class Attraction(models.Model):

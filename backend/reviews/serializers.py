@@ -24,7 +24,7 @@ class Review_serializer(serializers.ModelSerializer):
     class Meta:
         model = CityReview
         fields = '__all__'
-        read_only_fields = ('user', )
+        read_only_fields = ('user', 'city' )
 
 class Comment_list_serializer(serializers.ModelSerializer):
     '''
@@ -39,4 +39,4 @@ class Comment_list_serializer(serializers.ModelSerializer):
             "content",
             "created",
         )
-        read_only_fields = ('user', )
+        read_only_fields = ('review_id', 'user')

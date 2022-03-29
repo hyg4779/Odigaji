@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from cities.models import City, Province
+from cities.models import City
 
 
 class CityReview(models.Model):
@@ -21,7 +21,6 @@ class Comment(models.Model):
     '''
     특정 유저가 작성한 관광지 리뷰 댓글 목록 테이블
     '''
-    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_commnets', on_delete=models.CASCADE)
     review = models.ForeignKey(CityReview, related_name='review', on_delete=models.CASCADE)
     content = models.TextField()

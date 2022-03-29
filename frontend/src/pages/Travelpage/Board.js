@@ -1,6 +1,10 @@
 import { Row, Table, Col, Button } from 'react-bootstrap';
 import React from 'react';
 
+function MoveWrite() {
+  window.location.href = '/local/travelDetail/board/write';
+}
+
 function Board() {
   let tmpdata = [
     '임진각여행기',
@@ -18,7 +22,7 @@ function Board() {
         </Col>
       </Row>
       <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end">
+        <Col className=" m-5 text-lg-end" onClick={() => MoveWrite()}>
           <Button variant="secondary">글쓰기</Button>{' '}
         </Col>
       </Row>
