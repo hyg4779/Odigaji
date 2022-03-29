@@ -1,8 +1,45 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import './Mypage.css';
-function Mypage() {
-  const userNick = ['유저네임'];
+import server from '../../API/server';
+import { useNavigate } from 'react-router-dom';
 
+function Mypage() {
+  let imageCondition = false;
+  const Defaultimg =
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+  const [Userdata, setUserData] = useState({ hits: [] });
+
+  if (Userdata.photo) {
+    imageCondition = true;
+  }
+  const getUserInfo = async () => {
+    const jwt = sessionStorage.getItem('jwt');
+    // axios.defaults.headers.common['Authorization'] = jwt
+    //   ? `Bearer ${jwt}`
+    //   : '';
+    await axios
+      .get(server.BASE_URL + server.ROUTES.mypage, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  let navigate = useNavigate();
+  const InfoClick = () => {
+    navigate('/mypage/userinfo', { state: Userdata });
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  console.log(Userdata);
   return (
     <div className="My">
       <div className="TitleContainer">
@@ -10,32 +47,36 @@ function Mypage() {
           <div className="profileBox">
             <img
               className="profileImg"
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              src={
+                imageCondition ? server.BASE_URL + Userdata.photo : Defaultimg
+              }
             />
           </div>
         </div>
       </div>
       <div className="userContainer">
         <div className="userbutton">
-          <div className="userName">유저네임</div>
-          <button className="Editinfo">회원수정</button>
+          <div className="userName">{Userdata.username}</div>
+          <button onClick={InfoClick} className="Editinfo">
+            회원수정
+          </button>
         </div>
-
-        <div className="userPoint">포인트</div>
+        <div className="userNick">{Userdata.nickname}</div>
+        <div className="userPoint">포인트 {Userdata.point}</div>
       </div>
 
       <div className="ActivityContainer">
         <div className="item">
           <div className="number">다녀온 도시수</div>
-          <div>10</div>
+          <div>X</div>
         </div>
         <div className="item">
           <div className="number">관광지 리뷰수</div>
-          <div>20</div>
+          <div>X</div>
         </div>
         <div className="item">
           <div className="number">작성한 댓글수</div>
-          <div>5</div>
+          <div>X</div>
         </div>
       </div>
 
@@ -45,22 +86,23 @@ function Mypage() {
           <div className="item">
             <div>
               <div className="number"></div>
-              <div className="text">대전</div>
+              <div className="text">X</div>
             </div>
             <div className="space"></div>
           </div>
           <div className="item">
             <div>
-              <div className="green number"></div>
-              <div className="text">대구</div>
+              <div className="number"></div>
+              <div className="text">X</div>
             </div>
             <div className="space"> </div>
           </div>
           <div className="item">
             <div>
-              <div className="green number"></div>
-              <div className="text">부산</div>
+              <div className="number"></div>
+              <div className="text">X</div>
             </div>
+            <div className="space"> </div>
           </div>
         </div>
       </div>

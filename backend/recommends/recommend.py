@@ -1,5 +1,5 @@
 import numpy as np
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 from scipy.sparse import csr_matrix
 import random
 
@@ -14,8 +14,9 @@ def knn_recommend(user_id):
     추천 함수, url과 연결되지 않은 그냥 함수임.
     '''
     K = 5   # 비슷한 유저 5명 활용(이후에 K를 인자로 받는 방식으로 변경 가능)
-    user_num = User.objects.count()
-    city_num = City.objects.count()
+    row_of_request_user = get_object_or_404(Taste, user_id=user_id).id
+    user_num = Taste.objects.last().id+1
+    city_num = City.objects.last().id+1
 
     # 전체 visit, taste 데이터를 가져와 csr matrix를 만들것
     # visit은 유사한 유저 찾기, 추천에 다 사용할 것이고, taste는 유사한 유저 찾기에만 사용
@@ -28,8 +29,11 @@ def knn_recommend(user_id):
     # visit 테이블 데이터를 가져와 위의 리스트 삼대장을 채움
     visits = Visit.objects.all()
     for visit in visits:
-        if Taste.objects.get(user_id=visit.user_id).exists():
-            spr_u.append(visit.user_id)
+        # 한 visit 데이터의 유저가 취향데이터도 있으면
+        if Taste.objects.filter(user_id=visit.user_id).exists():
+            # user의 행은 userid로 찾은 taste의 Id
+            user_row_in_taste = Taste.objects.get(user_id=visit.user_id).id
+            spr_u.append(user_row_in_taste)
             spr_c.append(visit.city_id)
             spr_r.append(visit.rate)
 
@@ -40,7 +44,7 @@ def knn_recommend(user_id):
     tastes = Taste.objects.all()
     for taste in tastes:
         # 한 컬럼에 들어갈 10개의 값 다 row는 같은 유저이기 때문에 row에 유저 id 10개
-        u_id = taste.user_id
+        u_id = taste.id
         spr_u.extend([u_id]*10)
         # 들어갈 컬럼은 취향에 따라 위치가 달라지기 때문에 하나하나 작성, 도시 데이터 뒤에 붙기위해 city_num을 붙이고,
         # db에 저장된 taste의 값은 1부터 시작하는 값임. 값 정보는 Taste모델 참조
@@ -62,14 +66,13 @@ def knn_recommend(user_id):
         spr_r.extend(taste_points)
 
     # 삼대장을 활용해서 mat를 만듦. shape에 col은 전체 도시수 + 취향의 총 컬럼 수인 33
-    mat = csr_matrix((spr_r, (spr_u, spr_c)), shape=(user_num, city_num+33))
+    mat = csr_matrix((spr_r, (spr_u, spr_c)), shape=(user_num, city_num+34))
     # 코사인 유사도를 활용해서 유저간 유사도를 나타내는 UbyU dense 행렬을 만든다.
     UbyU = (mat*mat.transpose()).toarray()
     # 자기 자신과의 유사도를 0으로 고정.
     UbyU[range(user_num), range(user_num)] = 0
     # 여기까지가 visit과 taste를 knn알고리즘을 통해 유저별 유사도와 유사한 K명의 유저를 구하는 단계
     topK = UbyU.argsort(axis=1)[:,-K:]
-
     # 유저-도시의 예상 선호도(추천결과)를 저장할 배열
     predicted_mat = np.zeros((user_num, city_num))
 
@@ -80,8 +83,10 @@ def knn_recommend(user_id):
         for j in range(K):
             user_city_mat[i] += weights[j] * user_city_mat[topK[i, j]]
 
-        user_city_mat[i] /= weights.sum()
+        user_city_mat[i] = user_city_mat[i] / weights.sum()
 
+    print(user_city_mat.toarray()[row_of_request_user])
+    return user_city_mat[row_of_request_user]
 
 def popular_cities(n):
     '''

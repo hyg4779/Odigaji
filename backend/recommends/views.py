@@ -65,7 +65,7 @@ def sel_city(self, request):
     responses={200: openapi.Response('', Taste_serializer(many=True))})
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def sel_taste(request):
+def taste(request):
     '''
     GET : 본인의 취향 확인
     '''
@@ -74,15 +74,21 @@ def sel_taste(request):
     serializer = Taste_serializer(taste)
     return Response(serializer.data)
 
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def by_big_data(self, request):
-    user = request.user
-    pass
 
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def popular(self, request, n):
+def by_big_data(request):
+    user_id = request.user.id
+    result = knn_recommend(user_id)
+    print(result)
+    pass
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', City_visited_serializer(many=True))})
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def popular(request, n):
     rank = popular_cities(n)
     populars = []
     for r in rank:
@@ -92,9 +98,12 @@ def popular(self, request, n):
         populars.append(ser.data)
     return Response(populars, status=status.HTTP_200_OK)
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', City_serializer)})
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def by_random(self, request):
+def by_random(request):
     city = random_city()
     serializer = City_serializer(city)
     return Response(serializer.data, status=status.HTTP_200_OK)
