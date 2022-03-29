@@ -22,8 +22,7 @@ class Comment(models.Model):
     관광지 리뷰 댓글 테이블
     '''
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_commnets', on_delete=models.CASCADE)
-    city = models.ForeignKey(City, related_name='city_commnets', on_delete=models.CASCADE)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE)
+    review = models.ForeignKey(CityReview, on_delete=models.CASCADE)
     content = models.TextField()
     created = models.DateField(auto_now_add=True)
 
