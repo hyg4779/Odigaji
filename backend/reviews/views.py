@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from .serializers import (
     Review_list_serializer,
     Review_serializer
@@ -11,9 +11,19 @@ from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST,
-    HTTP_401_UNAUTHORIZED
+    HTTP_401_UNAUTHORIZED,
+    HTTP_404_NOT_FOUND
     )
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', Review_list_serializer(many=True)),
+               404: openapi.Response('')
+    })
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def all_reviews(request):
@@ -26,6 +36,20 @@ def all_reviews(request):
         return Response(serializer.data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', Review_list_serializer(many=True)),
+               404: openapi.Response('')
+    })
+@swagger_auto_schema(
+    methods=['POST'],
+    request_body=Review_serializer,
+    responses={201: openapi.Response('', Review_list_serializer),
+               400: openapi.Response(''),
+               404: openapi.Response('')
+    })
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def city_reviews(request, city_id):
@@ -42,11 +66,18 @@ def city_reviews(request, city_id):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(status=HTTP_400_BAD_REQUEST)
         
-    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
+    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
 
 
 
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', Review_list_serializer(many=True)),
+               404: openapi.Response('')
+    })
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def user_reviews(request):
@@ -62,6 +93,25 @@ def user_reviews(request):
 
 
 
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', Review_list_serializer),
+               404: openapi.Response('')
+    })
+@swagger_auto_schema(
+    methods=['PUT'],
+    request_body=Review_serializer,
+    responses={200: openapi.Response('', Review_serializer),
+               400: openapi.Response(''),
+               401: openapi.Response(''),
+               404: openapi.Response('')}
+    )
+@swagger_auto_schema(
+    methods=['DELETE'],
+    responses={200: openapi.Response(''),
+               404: openapi.Response('')
+    })
 @api_view(['GET','PUT','DELETE'])
 @permission_classes([AllowAny])
 def review_info(request, review_id):
@@ -81,10 +131,12 @@ def review_info(request, review_id):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=HTTP_200_OK)
+            return Response(status=HTTP_400_BAD_REQUEST)
+        return Response(status=HTTP_401_UNAUTHORIZED)
 
     elif request.method=='DELETE':
         if request.user.is_authenticated and review.user.id == request.user.pk:
             review.delete()
             return Response({'message': '삭제되었습니다.'}, status=HTTP_200_OK)
 
-    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
+    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)

@@ -79,7 +79,6 @@ function SignupPage() {
 
   const onConfirmPasswordHandler = (event) => {
     setPasswordConErrors(ConPasswordValidation(password, event.target.value));
-
     setConfirmPassword(event.currentTarget.value);
   };
 
@@ -97,7 +96,7 @@ function SignupPage() {
 
     if (
       !EmailErrors &&
-      !PasswordConErrors &&
+      !PasswordErrors &&
       !PasswordConErrors &&
       !NicknameErrors
     ) {

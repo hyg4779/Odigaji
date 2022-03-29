@@ -5,9 +5,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import (City, Attraction)
 from .serializers import(City_list_serializer, City_serializer, Attraction_serializer)
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
 
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', City_serializer(many=True)),
+    404: openapi.Response('')}
+)
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def all_cities(request):
@@ -21,6 +28,13 @@ def all_cities(request):
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', City_serializer),
+    404: openapi.Response('')}
+)
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_city(request,city_id):
@@ -62,6 +76,13 @@ def get_city_photo(request, city_id):
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', Attraction_serializer),
+    404: openapi.Response('')}
+)
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def get_attraction(request,attraction_id):

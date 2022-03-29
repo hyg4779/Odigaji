@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './pages/Mainpage/Main';
 import Mypage from './pages/Mypage/Mypage';
-import ChangeInfo from './components/Mypage/ChangeInfo';
+import ChangeInfo from './components/ChangeInfoPage/ChangeInfo';
 import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
