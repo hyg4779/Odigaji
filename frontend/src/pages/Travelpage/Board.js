@@ -12,14 +12,18 @@ function Board() {
   const [reviewdata, setReviewdata] = useState([]);
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
-
+  const [offsetValue, setOffsetValue] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
+
   const getLoadReviews = async (cityId) => {
+    console.log(
+      server.BASE_URL + server.ROUTES.review + cityId + '/1/?page_num=1'
+    );
     await axios
-      .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
+      .get(server.BASE_URL + server.ROUTES.review + cityId + '/1/?page_num=1')
       .then((response) => {
         console.log(response);
         setReviewdata(response.data);
@@ -35,7 +39,8 @@ function Board() {
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(reviewdata.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(reviewdata.length / itemsPerPage));
-  }, [currentItems, itemOffset, itemsPerPage]);
+    setOffsetValue(endOffset);
+  }, [itemOffset, itemsPerPage]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % reviewdata.length;
@@ -44,7 +49,7 @@ function Board() {
   };
   let items = [];
   let active = 1;
-  for (let number = 1; number <= 5; number++) {
+  for (let number = 1; number <= offsetValue; number++) {
     items.push(
       <Pagination.Item key={number} active={number === active}>
         {number}
@@ -101,16 +106,6 @@ function Board() {
           <Pagination.Next />
           <Pagination.Last />
         </Pagination>
-        {/* 
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-        /> */}
       </div>
     </div>
   );
