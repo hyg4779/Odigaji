@@ -5,15 +5,15 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8vw;
-  margin-bottom: 2vw;
+  margin-top: 10vh;
+  margin-bottom: 1vh;
   color: #FFFFFF;
   font-weight: bold;
 }
 
 .Tourlist-header {
   color: #FFFFFF;
-  font-size: 3vw;
+  font-size: 2vw;
   text-align: center;
   font-weight: bold;
 }
@@ -22,12 +22,13 @@
   display: flex;
   flex-direction: column;
   width: 80vw;
-  height: 70%;
+  height: 80vh;
   justify-content: flex-start;
   column-gap: 5vw;
 }
 
 .Tourlist-content-input {
+  min-width: 250px;
   height: 30px;
   border-radius: 2rem;
   border-style: none;
@@ -46,15 +47,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  max-height: 60vh;
+  max-height: 70vh;
   overflow-y: auto;
   row-gap: 1rem;
   align-items: flex-start;
 }
 
 .Tourlist-content-item {
-  min-width: 300px;
-  width: 30%;
+  min-width: 400px;
+  width: 40%;
   height: 40px;
   display: flex;
   justify-content: space-between;
@@ -66,10 +67,10 @@
 
 .Tourlist-content-item-rate {
   display: flex;
-  
 }
 
 .Tourlist-button-group {
+  position: relative;
   display: flex;
   width: 80vw;
   justify-content: center;
@@ -80,12 +81,24 @@
   width: auto;
   height: auto;
   background-color: #A177FA;
-  font-size: 3vw;
   font-weight: bold;
   color: #FFFFFF;
   border-style: none;
+  font-size: 20px;
 }
 
 .Tourlist-button:hover {
   color: yellowgreen;
+}
+
+.Tourlist-button-reset {
+  position: absolute;
+  right: 0px;
+  width: auto;
+  height: auto;
+  background-color: #A177FA;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-radius: 2rem;
+  border-style: none;
 }

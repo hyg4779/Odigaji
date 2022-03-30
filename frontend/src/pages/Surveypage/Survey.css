@@ -9,16 +9,28 @@
 
 .Survey-bar {
   width: 80vw;
-  height: 2vw;
+  height: 3vh;
   background-color: #FFFFFF;
   border-radius: 2rem;
   position: fixed;
-  top: 5vw;
+  top: 5vh;
   left: 15vw;
 }
 
 .Survey-progress {
   width: 6vw;
-  height: 6vw;
-  top: 2.5vw;
+  height: 10vh;
+  top: 5vh;
+  transform: translate(0, -40%);
+  z-index: 1;
+}
+
+.Survey-progress-bg {
+  height: 3vh;
+  background-color: #7535FE;
+  border-radius: 2rem 0 0 2rem;
+  /* 왼쪽 위부터 시계방향으로 돌면서 border-radius 적용한다 => 왼쪽면만 둥글게 */
+  position: fixed;
+  top: 5vh;
+  left: 15vw;
 }
