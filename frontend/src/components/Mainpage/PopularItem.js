@@ -2,13 +2,14 @@ import React from 'react';
 import './PopularItem.css';
 import server from '../../API/server';
 
-function PopularItem({ data }) {
+function PopularItem({ data, moveCity }) {
   return (
     <img
       className="PopularItem"
       alt={data.name}
       src={server.BASE_URL + data.photo}
       loading="lazy"
+      onClick={() => moveCity(data.id)}
     />
   );
 }

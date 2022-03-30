@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Intro from '../../components/Mainpage/Intro';
 import Popular from '../../components/Mainpage/Popular';
 import Point from '../../components/Mainpage/Point';
@@ -12,6 +13,7 @@ function Main() {
   const [popularData, setPopularData] = useState([]);
   const mainRef = useRef();
   const [pageIndex, setPageIndex] = useState(1);
+  const navigate = useNavigate();
 
   function resizeHandler() {
     if (
@@ -60,6 +62,11 @@ function Main() {
     }
   }
 
+  function moveCity(cityId) {
+    const moveUrl = '/local/' + String(cityId);
+    navigate(moveUrl);
+  }
+
   useEffect(() => {
     RandomCity()
       .then((response) => {
@@ -93,9 +100,11 @@ function Main() {
   return (
     <div ref={mainRef} className="Main">
       <Point pageIndex={pageIndex} />
-      {randomData.name && <Intro randomData={randomData} />}
+      {randomData.name && <Intro randomData={randomData} moveCity={moveCity} />}
       <div className="Divider"></div>
-      {popularData.length === 6 && <Popular popularData={popularData} />}
+      {popularData.length === 6 && (
+        <Popular popularData={popularData} moveCity={moveCity} />
+      )}
     </div>
   );
 }

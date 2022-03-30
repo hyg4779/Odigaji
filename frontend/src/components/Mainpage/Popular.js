@@ -2,7 +2,7 @@ import React from 'react';
 import PopularItem from './PopularItem';
 import './Popular.css';
 
-function Popular({ popularData }) {
+function Popular({ popularData, moveCity }) {
   console.log('인기있는 여행지 컴포넌트 렌더');
   return (
     <div className="Popular">
@@ -11,7 +11,7 @@ function Popular({ popularData }) {
       <div className="Popular-bg-item-2"></div>
       <div className="Popular-content">
         {popularData.map((data) => {
-          return <PopularItem key={data.id} data={data} />;
+          return <PopularItem key={data.id} data={data} moveCity={moveCity} />;
         })}
       </div>
     </div>

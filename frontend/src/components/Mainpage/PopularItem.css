@@ -6,3 +6,7 @@
   border-radius: 2rem;
   padding: 20px;
 }
+
+.PopularItem:hover {
+  cursor: pointer;
+}
