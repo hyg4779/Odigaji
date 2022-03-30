@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Question.css';
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from 'react-icons/fa';
 
 function Question({
   surveyData,
@@ -9,6 +15,7 @@ function Question({
   nextPage,
   beforePage,
   startPage,
+  lastPage,
   tasteSurveys,
 }) {
   const [selectName, setSelectName] = useState();
@@ -62,18 +69,13 @@ function Question({
         })}
       </div>
       <div className="Question-button-group">
-        <button onClick={beforePage} className="Question-button">
-          이전
-        </button>
-        <button
+        <FaAngleDoubleLeft onClick={startPage} className="Question-button" />
+        <FaAngleLeft onClick={beforePage} className="Question-button" />
+        <FaAngleRight
           onClick={selectName ? nextPage : alertMessage}
           className="Question-button"
-        >
-          다음
-        </button>
-        <button onClick={startPage} className="Question-button-reset">
-          처음으로
-        </button>
+        />
+        <FaAngleDoubleRight onClick={lastPage} className="Question-button" />
       </div>
     </div>
   );

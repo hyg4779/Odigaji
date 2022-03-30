@@ -4,6 +4,7 @@ import Intro from '../../components/Surveypage/Intro';
 import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
 import { AllCitiesList } from '../../components/Surveypage/SurveyAxios';
+import axios from 'axios';
 
 function Survey() {
   const surveyData = [
@@ -97,6 +98,10 @@ function Survey() {
     setPageIndex(0);
   }
 
+  function lastPage() {
+    setPageIndex(tastes.length);
+  }
+
   function tasteSurveys(pageIndex, imageId, imageName) {
     // 취향 질문의 답변을 배열 형태로 저장하는 함수
     const newTaste = {
@@ -115,6 +120,7 @@ function Survey() {
   }
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     AllCitiesList()
       .then((response) => {
         console.log('여행지 전체 목록 가져오기 성공', response.data);
@@ -126,6 +132,9 @@ function Survey() {
     setPageIndex(-1);
     setTastes([]);
     setTours([]);
+    return function () {
+      source.cancel();
+    };
   }, []);
 
   return (
@@ -155,6 +164,7 @@ function Survey() {
           nextPage={nextPage}
           beforePage={beforePage}
           startPage={startPage}
+          lastPage={lastPage}
           tasteSurveys={tasteSurveys}
         />
       )}

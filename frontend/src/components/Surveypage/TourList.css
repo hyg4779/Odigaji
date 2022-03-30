@@ -28,6 +28,7 @@
 }
 
 .Tourlist-content-input {
+  min-width: 250px;
   height: 30px;
   border-radius: 2rem;
   border-style: none;
@@ -83,6 +84,7 @@
   font-weight: bold;
   color: #FFFFFF;
   border-style: none;
+  font-size: 20px;
 }
 
 .Tourlist-button:hover {

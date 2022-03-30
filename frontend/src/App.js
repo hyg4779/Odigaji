@@ -1,7 +1,6 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import Nav from './pages/Mainpage/Nav';
-import axios from 'axios';
 
 function App() {
   return (

@@ -1,8 +1,21 @@
 import React from 'react';
 import './TourList.css';
 import Rating from './Rating';
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from 'react-icons/fa';
 
-function TourList({ tourData, tours, beforePage, startPage, setTours }) {
+function TourList({
+  tourData,
+  tours,
+  beforePage,
+  startPage,
+  lastPage,
+  setTours,
+}) {
   function isVisit(name, provinceName) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
     return tours.find(
@@ -94,13 +107,10 @@ function TourList({ tourData, tours, beforePage, startPage, setTours }) {
         </div>
       </div>
       <div className="Tourlist-button-group">
-        <button onClick={beforePage} className="Tourlist-button">
-          이전
-        </button>
-        <button className="Tourlist-button">제출</button>
-        <button onClick={startPage} className="Tourlist-button-reset">
-          처음으로
-        </button>
+        <FaAngleDoubleLeft onClick={startPage} className="Tourlist-button" />
+        <FaAngleLeft onClick={beforePage} className="Tourlist-button" />
+        <FaAngleRight className="Tourlist-button" />
+        <FaAngleDoubleRight onClick={lastPage} className="Tourlist-button" />
       </div>
     </div>
   );
