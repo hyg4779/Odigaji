@@ -1,11 +1,15 @@
 import { Row, Table, Col, Button } from 'react-bootstrap';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+let cityId;
 
 function MoveWrite() {
-  window.location.href = '/local/travelDetail/board/write';
+  window.location.href = '/local/travelDetail/board/write/' + cityId;
 }
 
 function Board() {
+  let params = useParams();
+  cityId = params.cityId;
   let tmpdata = [
     '임진각여행기',
     '임진각여행기',

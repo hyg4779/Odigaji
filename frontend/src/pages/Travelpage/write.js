@@ -5,21 +5,24 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './write.css';
 import axios from 'axios';
 import server from '../../API/server';
+import { useParams } from 'react-router-dom';
 // import ReactHtmlParser from 'react-html-parser';
 
+let cityId;
 function Write() {
   const [reviewContent, setReviewContent] = useState({
     // 입력한 내용 userState에 저장하기위한 변수
     title: '',
     content: '',
   });
+  let params = useParams();
 
   function setDate() {
-    const cityId = 21;
+    // 글 작성 완료 버튼을 눌렀을때 동작
+    cityId = params.cityId;
     let data = {
       title: reviewContent.title,
       content: reviewContent.content,
-      city: cityId,
     };
 
     console.log(data);
@@ -31,6 +34,8 @@ function Write() {
       .then(() => {
         console.log('then active');
       });
+    alert('글작성완료');
+    window.location.href = '/local/travelDetail/board/' + cityId + '/';
   }
 
   // 입력내용 누르면 저장 시키는 변수 현재는 화면 위에 띄어주기만함,,
