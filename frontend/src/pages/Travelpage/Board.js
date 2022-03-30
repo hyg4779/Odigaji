@@ -4,14 +4,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import server from '../../API/server';
 import './Board.css';
+
 function Board() {
   let navigate = useNavigate();
   let params = useParams();
-  let active = 2;
-  let items = [];
-
+  const itemsPerPage = 5;
   const [reviewdata, setReviewdata] = useState([]);
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
 
+  const [itemOffset, setItemOffset] = useState(0);
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
@@ -26,6 +28,22 @@ function Board() {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    getLoadReviews(params.cityId);
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(reviewdata.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(reviewdata.length / itemsPerPage));
+  }, [currentItems, itemOffset, itemsPerPage]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % reviewdata.length;
+
+    setItemOffset(newOffset);
+  };
+  let items = [];
+  let active = 1;
   for (let number = 1; number <= 5; number++) {
     items.push(
       <Pagination.Item key={number} active={number === active}>
@@ -33,15 +51,7 @@ function Board() {
       </Pagination.Item>
     );
   }
-  const paginationBasic = (
-    <div>
-      <Pagination>{items}</Pagination>
-    </div>
-  );
-  console.log(reviewdata);
-  useEffect(() => {
-    getLoadReviews(params.cityId);
-  }, []);
+
   return (
     <div className="Board">
       <div className="BoardWrap">
@@ -61,19 +71,19 @@ function Board() {
                 </tr>
               </thead>
               <tbody>
-                {reviewdata.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.id}</td>
-                      <td className="left">{data.title}</td>
-                      <td>{data.updated}</td>
-                      <td>{data.city}</td>
-                    </tr>
-                  );
-                })}
+                {reviewdata &&
+                  reviewdata.map((data) => {
+                    return (
+                      <tr key={data.id}>
+                        <td>{data.id}</td>
+                        <td className="left">{data.title}</td>
+                        <td>{data.updated}</td>
+                        <td>{data.city}</td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </Table>
-            {paginationBasic}
           </Row>
         </div>
 
@@ -82,6 +92,25 @@ function Board() {
             <Button variant="secondary">글쓰기</Button>{' '}
           </Col>
         </Row>
+        <Pagination>
+          <Pagination.First />
+          <Pagination.Prev />
+
+          {items}
+
+          <Pagination.Next />
+          <Pagination.Last />
+        </Pagination>
+        {/* 
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        /> */}
       </div>
     </div>
   );
