@@ -4,58 +4,65 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import server from '../../API/server';
 import './Board.css';
-
+const ITEMS_PER_PAGE = 10;
+const PAGES_PER_LIST = 5;
 function Board() {
   let navigate = useNavigate();
   let params = useParams();
-  const itemsPerPage = 5;
-  const [reviewdata, setReviewdata] = useState([]);
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [offsetValue, setOffsetValue] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
+
+  const [totalLength, setTotalLength] = useState();
+  const [totalPage, setTotalPage] = useState([]);
+  const [reviewData, setReviewdata] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isClick, setIsClick] = useState(true);
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
 
+  const makePageArray = () => {
+    let pageArray = [];
+    for (let i = 1; i <= totalLength; i++) {
+      pageArray.push(i);
+    }
+    setTotalPage(pageArray);
+  };
+
   const getLoadReviews = async (cityId) => {
-    console.log(
-      server.BASE_URL + server.ROUTES.review + cityId + '/1/?page_num=1'
-    );
     await axios
-      .get(server.BASE_URL + server.ROUTES.review + cityId + '/1/?page_num=1')
+      .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
       .then((response) => {
-        console.log(response);
-        setReviewdata(response.data);
+        setTotalLength(response.data[response.data.length - 1].total_pages);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  console.log(reviewData);
   useEffect(() => {
     getLoadReviews(params.cityId);
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(reviewdata.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(reviewdata.length / itemsPerPage));
-    setOffsetValue(endOffset);
-  }, [itemOffset, itemsPerPage]);
+    if (isClick) {
+      axios
+        .get(
+          server.BASE_URL +
+            server.ROUTES.review +
+            params.cityId +
+            '/?page_num=' +
+            currentPage
+        )
+        .then((response) => {
+          setReviewdata(response.data);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % reviewdata.length;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setIsClick(!isClick);
+    }
 
-    setItemOffset(newOffset);
-  };
-  let items = [];
-  let active = 1;
-  for (let number = 1; number <= offsetValue; number++) {
-    items.push(
-      <Pagination.Item key={number} active={number === active}>
-        {number}
-      </Pagination.Item>
-    );
-  }
+    makePageArray();
+  }, [totalLength, isClick]);
 
   return (
     <div className="Board">
@@ -76,14 +83,14 @@ function Board() {
                 </tr>
               </thead>
               <tbody>
-                {reviewdata &&
-                  reviewdata.map((data) => {
+                {reviewData &&
+                  reviewData.map((data, key) => {
                     return (
-                      <tr key={data.id}>
+                      <tr key={key}>
                         <td>{data.id}</td>
                         <td className="left">{data.title}</td>
                         <td>{data.updated}</td>
-                        <td>{data.city}</td>
+                        <td>{data.user}</td>
                       </tr>
                     );
                   })}
@@ -97,16 +104,36 @@ function Board() {
             <Button variant="secondary">글쓰기</Button>{' '}
           </Col>
         </Row>
-        <Pagination>
-          <Pagination.First />
-          <Pagination.Prev />
-
-          {items}
-
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
       </div>
+      <Pagination size="md">
+        <Pagination.Prev
+          onClick={() => {
+            if (currentPage > 1) {
+              setCurrentPage(currentPage - 1);
+              setIsClick(true);
+            }
+          }}
+        ></Pagination.Prev>
+        {totalPage.map((num) => (
+          <Pagination.Item
+            key={num}
+            onClick={() => {
+              setCurrentPage(num);
+              setIsClick(true);
+            }}
+          >
+            {num}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => {
+            if (currentPage < totalLength) {
+              setCurrentPage(currentPage + 1);
+              setIsClick(true);
+            }
+          }}
+        ></Pagination.Next>
+      </Pagination>
     </div>
   );
 }
