@@ -6,7 +6,9 @@ from .serializers import (
     Review_serializer,
     Comment_list_serializer,
 )
+from accounts.serializers import User_mypage_serializer
 from .models import CityReview, Comment
+from accounts.models import User
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -41,8 +43,19 @@ def all_reviews(request):
         reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
+        # for i in range(len(data)):
+        #     # print(serializer.data[i]['user'])
+        #     user = User.objects.filter(id=serializer.data[i]['user'])
+        #     userserializer = User_mypage_serializer(user, many=True)
+        #     # print(userserializer.data[0]['id'])
+        #     # print(userserializer.data[0]['username'])
+        #     # print(userserializer.data[0]['nickname'])
+        #     data[i].update({'username': userserializer.data[0]['username']})
+        #     data[i].update({'nickname': userserializer.data[0]['nickname']})
+        #     data[i].update({'photo': userserializer.data[0]['photo']})
+        #     # print(data)
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -81,7 +94,7 @@ def city_reviews(request, city_id):
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     elif request.method=='POST':
         request.data['city'] = city_id
         serializer = Review_serializer(data = request.data)
@@ -113,7 +126,7 @@ def user_reviews(request):
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -146,7 +159,8 @@ def review_info(request, review_id):
     review = get_object_or_404(CityReview, pk=review_id)
     if request.method=='GET':
         serializer = Review_serializer(review)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        return Response(data, status=HTTP_200_OK)
 
     elif request.method=='PUT':
         if request.user.is_authenticated and review.user.id == request.user.pk:
