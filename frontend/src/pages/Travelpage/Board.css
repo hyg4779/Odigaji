@@ -1,0 +1,20 @@
+.Board{
+  background-color: #F8F8F8;  
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  overflow-y: auto;
+ 
+}
+
+.BoardWrap{
+  padding: 50px;
+}
+
+.BoardContainer{
+
+}
+.PageNation{
+
+
+}

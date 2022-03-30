@@ -90,7 +90,10 @@ function Local() {
         </tbody>
       </Table>
       <Container>
-        <Button variant="secondary" onClick={() => MoveBoardPage(id)}>
+        <Button
+          variant="secondary"
+          onClick={() => MoveBoardPage(params.cityId)}
+        >
           리뷰 게시판 이동
         </Button>{' '}
         <Button variant="success" onClick={() => visited()}>

@@ -1,49 +1,135 @@
-import { Row, Table, Col, Button } from 'react-bootstrap';
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-let cityId;
-
-function MoveWrite() {
-  window.location.href = '/local/travelDetail/board/write/' + cityId;
-}
+import { Row, Table, Col, Button, Pagination, PageItem } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import server from '../../API/server';
+import './Board.css';
 
 function Board() {
+  let navigate = useNavigate();
   let params = useParams();
-  cityId = params.cityId;
-  let tmpdata = [
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-  ];
+
+  const [totalLength, setTotalLength] = useState();
+  const [totalPage, setTotalPage] = useState([]);
+  const [reviewData, setReviewdata] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isClick, setIsClick] = useState(true);
+  const writeReview = () => {
+    navigate('/local/travelDetail/board/write');
+  };
+  let data = reviewData.splice(-1, 1);
+
+  const makePageArray = () => {
+    let pageArray = [];
+    for (let i = 1; i <= totalLength; i++) {
+      pageArray.push(i);
+    }
+    setTotalPage(pageArray);
+  };
+
+  const getLoadReviews = async (cityId) => {
+    await axios
+      .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
+      .then((response) => {
+        setTotalLength(response.data[response.data.length - 1].total_pages);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  console.log(reviewData);
+  useEffect(() => {
+    getLoadReviews(params.cityId);
+    if (isClick) {
+      axios
+        .get(
+          server.BASE_URL +
+            server.ROUTES.review +
+            params.cityId +
+            '/?page_num=' +
+            currentPage
+        )
+        .then((response) => {
+          setReviewdata(response.data);
+        })
+        .catch((error) => {});
+      setIsClick(!isClick);
+    }
+
+    makePageArray();
+  }, [totalLength, isClick]);
+
   return (
-    <div>
-      <Row>
-        <Col className="text-lg-end">
-          <h1>관광지 리뷰게시판</h1>
-        </Col>
-      </Row>
+    <div className="Board">
       <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end" onClick={() => MoveWrite()}>
+        <Col className=" m-5 text-lg-end" onClick={writeReview}>
           <Button variant="secondary">글쓰기</Button>{' '}
         </Col>
       </Row>
-      <div>
-        <Table striped bordered hover className="m-5 ">
-          <tbody className="bg-secondary m-5">
-            {tmpdata.map((data, idx) => {
-              return (
-                <tr key={idx} className="m-5">
-                  <td className="bg-secondary m-5 p-3 align-self-center border-5">
-                    {data} {idx + 1}
-                  </td>
+      <div className="BoardWrap">
+        <div className="BoardContainer">
+          <Row>
+            <Col md={12}>
+              <h3>관광지 리뷰 </h3>
+            </Col>
+
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>제목</th>
+                  <th>작성일</th>
+                  <th>작성자</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+              </thead>
+              <tbody>
+                {reviewData &&
+                  reviewData.map((data, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{data.id}</td>
+                        <td className="left">{data.title}</td>
+                        <td>{data.updated}</td>
+                        <td>{data.user}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </Table>
+          </Row>
+        </div>
+      </div>
+      <div className="PageNation">
+        <Pagination size="md">
+          <Pagination.Prev
+            onClick={() => {
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+                setIsClick(true);
+              }
+            }}
+          ></Pagination.Prev>
+          {totalPage.map((num) => (
+            <Pagination.Item
+              key={num}
+              onClick={() => {
+                setCurrentPage(num);
+                setIsClick(true);
+              }}
+            >
+              {num}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => {
+              if (currentPage < totalLength) {
+                setCurrentPage(currentPage + 1);
+                setIsClick(true);
+              }
+            }}
+          ></Pagination.Next>
+        </Pagination>
       </div>
     </div>
   );
