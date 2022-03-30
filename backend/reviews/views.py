@@ -42,7 +42,7 @@ def all_reviews(request):
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -81,7 +81,7 @@ def city_reviews(request, city_id):
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     elif request.method=='POST':
         request.data['city'] = city_id
         serializer = Review_serializer(data = request.data)
