@@ -1,5 +1,6 @@
 // import { Row, Table, Col, Button } from 'react-bootstrap';
-import { React, useState } from 'react';
+
+import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './write.css';

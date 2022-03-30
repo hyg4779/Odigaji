@@ -19,8 +19,8 @@ from rest_framework.status import (
     )
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-
 from django.core.paginator import Paginator
+
 
 
 @swagger_auto_schema(
@@ -36,8 +36,13 @@ def all_reviews(request):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.all()
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        data.append({'total_pages': paginator.num_pages})
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -76,7 +81,7 @@ def city_reviews(request, city_id):
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
-        return Response(serializer.data, status=HTTP_200_OK)
+        return Response(data, status=HTTP_200_OK)
     elif request.method=='POST':
         request.data['city'] = city_id
         serializer = Review_serializer(data = request.data)
@@ -86,8 +91,6 @@ def city_reviews(request, city_id):
         return Response(status=HTTP_400_BAD_REQUEST)
         
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
-
-
 
 
 @swagger_auto_schema(
@@ -104,11 +107,14 @@ def user_reviews(request):
     print(request)
     if request.method=='GET':
         reviews = CityReview.objects.filter(user=request.user.pk)
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
+        data = serializer.data
+        data.append({'total_pages': paginator.num_pages})
         return Response(serializer.data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
-
-
 
 
 @swagger_auto_schema(
@@ -160,6 +166,7 @@ def review_info(request, review_id):
 
 
 # 댓글 -------------------------------------------------------------------------------
+
 
 @swagger_auto_schema(
     methods=['GET'],
