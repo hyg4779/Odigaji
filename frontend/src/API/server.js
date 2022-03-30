@@ -10,6 +10,9 @@ const server = {
     cities: '/api/cities/',
     attraction: '/get-attraction/',
     writeReview: '/api/reviews/',
+    getReview: '/api/reviews/',
+    reviewInfo: 'review_info/',
+    comment: '/api/reviews/comment/',
   },
 };
 
