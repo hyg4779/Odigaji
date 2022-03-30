@@ -4,8 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import server from '../../API/server';
 import './Board.css';
-const ITEMS_PER_PAGE = 10;
-const PAGES_PER_LIST = 5;
+
 function Board() {
   let navigate = useNavigate();
   let params = useParams();
@@ -18,6 +17,7 @@ function Board() {
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
+  let data = reviewData.splice(-1, 1);
 
   const makePageArray = () => {
     let pageArray = [];
@@ -52,12 +52,8 @@ function Board() {
         )
         .then((response) => {
           setReviewdata(response.data);
-
-          console.log(response);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch((error) => {});
       setIsClick(!isClick);
     }
 
@@ -66,6 +62,11 @@ function Board() {
 
   return (
     <div className="Board">
+      <Row className="align-self-end ">
+        <Col className=" m-5 text-lg-end" onClick={writeReview}>
+          <Button variant="secondary">글쓰기</Button>{' '}
+        </Col>
+      </Row>
       <div className="BoardWrap">
         <div className="BoardContainer">
           <Row>
@@ -98,42 +99,38 @@ function Board() {
             </Table>
           </Row>
         </div>
-
-        <Row className="align-self-end ">
-          <Col className=" m-5 text-lg-end" onClick={writeReview}>
-            <Button variant="secondary">글쓰기</Button>{' '}
-          </Col>
-        </Row>
       </div>
-      <Pagination size="md">
-        <Pagination.Prev
-          onClick={() => {
-            if (currentPage > 1) {
-              setCurrentPage(currentPage - 1);
-              setIsClick(true);
-            }
-          }}
-        ></Pagination.Prev>
-        {totalPage.map((num) => (
-          <Pagination.Item
-            key={num}
+      <div className="PageNation">
+        <Pagination size="md">
+          <Pagination.Prev
             onClick={() => {
-              setCurrentPage(num);
-              setIsClick(true);
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+                setIsClick(true);
+              }
             }}
-          >
-            {num}
-          </Pagination.Item>
-        ))}
-        <Pagination.Next
-          onClick={() => {
-            if (currentPage < totalLength) {
-              setCurrentPage(currentPage + 1);
-              setIsClick(true);
-            }
-          }}
-        ></Pagination.Next>
-      </Pagination>
+          ></Pagination.Prev>
+          {totalPage.map((num) => (
+            <Pagination.Item
+              key={num}
+              onClick={() => {
+                setCurrentPage(num);
+                setIsClick(true);
+              }}
+            >
+              {num}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => {
+              if (currentPage < totalLength) {
+                setCurrentPage(currentPage + 1);
+                setIsClick(true);
+              }
+            }}
+          ></Pagination.Next>
+        </Pagination>
+      </div>
     </div>
   );
 }
