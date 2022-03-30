@@ -7,8 +7,9 @@ urlpatterns = [
     path('', views.all_reviews, name='all_reviews'),
 
     # GET: 해당도시의 리뷰 전체 / POST: 리뷰 작성
+    # path('<int:city_id>/<int:page_number>/', views.city_reviews, name='city_reviews'),
     path('<int:city_id>/', views.city_reviews, name='city_reviews'),
-    
+
     # 유저가 작성한 리뷰 전체
     path('user_reviews/', views.user_reviews, name='user_reviews'),
     

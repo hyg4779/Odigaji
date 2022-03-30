@@ -20,6 +20,7 @@ from rest_framework.status import (
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
+from django.core.paginator import Paginator
 
 
 @swagger_auto_schema(
@@ -61,6 +62,7 @@ def all_reviews(request):
     })
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
+# def city_reviews(request, city_id, page_number):
 def city_reviews(request, city_id):
     '''
     GET: 관광지에 달린 리뷰를 반환
@@ -68,7 +70,12 @@ def city_reviews(request, city_id):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.filter(city=city_id)
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
+        data = serializer.data
+        data.append({'total_pages': paginator.num_pages})
         return Response(serializer.data, status=HTTP_200_OK)
     elif request.method=='POST':
         request.data['city'] = city_id
