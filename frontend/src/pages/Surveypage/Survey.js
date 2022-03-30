@@ -3,19 +3,9 @@ import './Survey.css';
 import Intro from '../../components/Surveypage/Intro';
 import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
+import { AllCitiesList } from '../../components/Surveypage/SurveyAxios';
 
 function Survey() {
-  const provinceData = {
-    1: '강원도',
-    2: '경기도',
-    3: '경상남도',
-    4: '경상북도',
-    5: '전라남도',
-    6: '전라북도',
-    7: '충청남도',
-    8: '충청북도',
-    100: '자치시도',
-  };
   const surveyData = [
     [
       { id: 1, name: '봄', img: 'img/spring.jpg' },
@@ -71,19 +61,19 @@ function Survey() {
       { id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
     ],
   ];
-  const tourData = [
-    { id: 1, name: '이천', province: 2 },
-    { id: 2, name: '인천', province: 100 },
-    { id: 3, name: '광주', province: 2 },
-    { id: 4, name: '강릉', province: 1 },
-    { id: 5, name: '대전', province: 100 },
-    { id: 6, name: '대구', province: 100 },
-    { id: 7, name: '부산', province: 100 },
-    { id: 8, name: '양양', province: 1 },
-    { id: 9, name: '양구', province: 1 },
-    { id: 10, name: '구미', province: 4 },
-    { id: 11, name: '광주', province: 100 },
+  const questionList = [
+    '가장 좋아하는 계절',
+    '산과 바다 중에 더 좋아하는 장소',
+    '도시와 시골 중 더 좋은 곳',
+    '여행갈 때 같이갈 사람',
+    '여행지를 선정할 때 가장 중요한 것',
+    '가장 마음에 드는 그림',
+    '가장 마음에 드는 영화',
+    '여행지에서 사용하는 교통수단',
+    '여행을 준비할 때',
+    '일상 스타일',
   ];
+  const [tourData, setTourData] = useState([]);
   const [pageIndex, setPageIndex] = useState(-1);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
@@ -125,6 +115,14 @@ function Survey() {
   }
 
   useEffect(() => {
+    AllCitiesList()
+      .then((response) => {
+        console.log('여행지 전체 목록 가져오기 성공', response.data);
+        setTourData(response.data);
+      })
+      .catch((error) => {
+        console.log('여행지 전체 목록 가져오기 실패', error);
+      });
     setPageIndex(-1);
     setTastes([]);
     setTours([]);
@@ -141,12 +139,17 @@ function Survey() {
             alt="오디가지"
             src={process.env.PUBLIC_URL + 'img/오디가지.png'}
           />
+          <div
+            className="Survey-progress-bg"
+            style={{ width: `${String(pageIndex * 7.7)}vw` }}
+          ></div>
         </>
       )}
       {pageIndex === -1 && <Intro nextPage={nextPage} />}
       {pageIndex >= 0 && pageIndex <= 9 && (
         <Question
           surveyData={surveyData}
+          questionList={questionList}
           pageIndex={pageIndex}
           tastes={tastes}
           nextPage={nextPage}
@@ -163,7 +166,6 @@ function Survey() {
           beforePage={beforePage}
           startPage={startPage}
           setTours={setTours}
-          provinceData={provinceData}
         />
       )}
     </div>
