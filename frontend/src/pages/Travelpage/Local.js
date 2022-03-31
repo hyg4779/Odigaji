@@ -34,7 +34,9 @@ function Local() {
     //렌더링 이후에 실행되는 함수
     //
     axios
-      .get(server.BASE_URL + server.ROUTES.cities + cityId + '/' + 'get-city/')
+      .get(
+        server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/'
+      )
       .then((res) => {
         console.log(res);
         setId(res.data.id);
