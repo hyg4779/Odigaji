@@ -18,7 +18,7 @@ function Board() {
   const [color, setColor] = useState('white');
 
   const writeReview = () => {
-    navigate('/local/travelDetail/board/write');
+    navigate('/local/travelDetail/board/write/' + params.cityId);
   };
   const movePost = (Postid) => {
     navigate('/local/travelDetail/board/post/' + Postid);
