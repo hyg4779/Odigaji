@@ -94,3 +94,20 @@ def get_attraction(request,attraction_id):
         attr_serializer = Attraction_serializer(attraction)
         return Response(attr_serializer.data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@swagger_auto_schema(
+    methods = ['GET'],
+    responses={
+        200: openapi.Response('', City_list_serializer),
+        404: openapi.Response('')
+    }
+)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def roulette(request, province_id):
+    if request.method=='GET':
+        cities = City.objects.filter(province=province_id)
+        serializer = City_list_serializer(cities, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
