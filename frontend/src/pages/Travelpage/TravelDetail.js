@@ -29,7 +29,7 @@ function TravelDetail() {
     axios
       .get(
         server.BASE_URL +
-          server.ROUTES.cities +
+          server.ROUTES.allCities +
           attractionId +
           server.ROUTES.attraction
       )
