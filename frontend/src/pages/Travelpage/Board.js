@@ -57,6 +57,7 @@ function Board() {
           console.log(response.data);
           let data = response.data;
           data.splice(-1, 1);
+          data.reverse();
           setReviewdata(data);
         })
         .catch((error) => {});
@@ -83,7 +84,7 @@ function Board() {
               글쓰기
             </button>
             <table className="board-table">
-              <thead style={{ background: 'grey' }}>
+              <thead className="tableHead">
                 <tr>
                   <th className="th-num">No</th>
                   <th className="th-title">제목</th>
@@ -99,7 +100,7 @@ function Board() {
                         <td>{data.id}</td>
                         <td className="left">{data.title}</td>
                         <td>{data.updated}</td>
-                        <td>{data.user}</td>
+                        <td>{data.user.nickname}</td>
                       </tr>
                     );
                   })}
@@ -128,9 +129,10 @@ function Board() {
               onClick={(e) => {
                 e.preventDefault();
                 setIsClick(true);
-
+                // currentPage == num ? setColor('red') : setColor('white')
                 // if (!isClick) {
-                //   e.target.style.backgroundColor = 'red';
+                console.log(e.view);
+                // e.target.style.backgroundColor = 'red';
                 // }
 
                 setCurrentPage(num);
