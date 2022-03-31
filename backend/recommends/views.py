@@ -36,12 +36,25 @@ from .recommend import knn_recommend, popular_cities, random_city
                400: openapi.Response(''),
                404: openapi.Response('')
                })
-@api_view(["GET", "POST"])
+@swagger_auto_schema(
+    methods=['DELETE'],
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'city': openapi.Schema(type=openapi.TYPE_INTEGER, description='도시id'),
+        }
+    ),
+    responses={201: openapi.Response(''),
+               400: openapi.Response(''),
+               404: openapi.Response('')
+               })
+@api_view(["GET", "POST", "DELETE"])
 @permission_classes([IsAuthenticated])
 def sel_city(request):
     '''
     GET : 본인이 다녀온 지역 확인
     POST : 새로운 지역에 대한 평점 추가
+    DELETE : 평점 삭제
     '''
     user = request.user
     if request.method == "GET":
@@ -50,7 +63,7 @@ def sel_city(request):
         return Response(data=serializer.data)
 
     elif request.method == "POST":
-        city_id = request.data.get("city")
+
         if not Taste.objects.filter(user_id=user.id).exists():
             taste_ser = Taste_serializer(data=request.data)
             if taste_ser.is_valid(raise_exception=True):
@@ -58,8 +71,9 @@ def sel_city(request):
         else:
             taste = get_object_or_404(Taste, user_id=user.id)
 
+        city_id = request.data.get("city")
         dic = {'user':user.id,
-               'city':request.data['city'],
+               'city':city_id,
                'taste':taste.id,
                'rate':request.data['rate']
                }
@@ -77,21 +91,36 @@ def sel_city(request):
             serializer.save(user=request.user)
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "DELETE":
+        visit = get_object_or_404(Visit, user_id=user.id, city_id=request.data.city)
+        visit.delete()
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+
 
 @swagger_auto_schema(
     methods=['GET'],
     responses={200: openapi.Response('', Taste_serializer(many=True))})
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([AllowAny])
 def taste(request):
     '''
     GET : 본인의 취향 확인
+    POST : 취향
     '''
     user = request.user
-    taste = get_object_or_404(Taste, user_id=user.id)
-    serializer = Taste_serializer(taste)
-    return Response(serializer.data)
+    if request.method == "GET":
+        taste = get_object_or_404(Taste, user_id=user.id)
+        serializer = Taste_serializer(taste)
+        return Response(serializer.data)
 
+    elif request.method == "POST":
+        taste = get_object_or_404(Taste, user_id=user.id)
+        serializer = Taste_serializer(instance=taste, data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
 @permission_classes([AllowAny])

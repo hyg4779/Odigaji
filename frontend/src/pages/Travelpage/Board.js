@@ -1,4 +1,4 @@
-import { Row, Table, Col, Button, Pagination, PageItem } from 'react-bootstrap';
+import { Row, Table, Col, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -8,16 +8,18 @@ import './Board.css';
 function Board() {
   let navigate = useNavigate();
   let params = useParams();
-
+  let count = 1;
   const [totalLength, setTotalLength] = useState();
+  const [cntLength, setCntLength] = useState();
   const [totalPage, setTotalPage] = useState([]);
   const [reviewData, setReviewdata] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isClick, setIsClick] = useState(true);
+  const [color, setColor] = useState('white');
+
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
-  let data = reviewData.splice(-1, 1);
 
   const makePageArray = () => {
     let pageArray = [];
@@ -32,6 +34,7 @@ function Board() {
       .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
       .then((response) => {
         setTotalLength(response.data[response.data.length - 1].total_pages);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -51,39 +54,45 @@ function Board() {
             currentPage
         )
         .then((response) => {
-          setReviewdata(response.data);
+          console.log(response.data);
+          let data = response.data;
+          data.splice(-1, 1);
+          data.reverse();
+          setReviewdata(data);
         })
         .catch((error) => {});
       setIsClick(!isClick);
+      setColor('white');
     }
+    setCntLength(totalLength);
 
     makePageArray();
-  }, [totalLength, isClick]);
+  }, [totalLength, isClick, count]);
 
   return (
     <div className="Board">
-      <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end" onClick={writeReview}>
-          <Button variant="secondary">글쓰기</Button>{' '}
-        </Col>
-      </Row>
       <div className="BoardWrap">
-        <div className="BoardContainer">
-          <Row>
-            <Col md={12}>
-              <h3>관광지 리뷰 </h3>
-            </Col>
+        <div className="page-title">
+          <div className="container">
+            <h3>관광지 리뷰</h3>
+          </div>
+        </div>
 
-            <Table striped bordered hover>
-              <thead>
+        <div className="board-list">
+          <div className="container">
+            <button className="WriteButton" onClick={writeReview}>
+              글쓰기
+            </button>
+            <table className="board-table">
+              <thead className="tableHead">
                 <tr>
-                  <th>No</th>
-                  <th>제목</th>
-                  <th>작성일</th>
-                  <th>작성자</th>
+                  <th className="th-num">No</th>
+                  <th className="th-title">제목</th>
+                  <th className="th-date">작성일</th>
+                  <th className="th-user">작성자</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{ background: 'white' }}>
                 {reviewData &&
                   reviewData.map((data, key) => {
                     return (
@@ -91,45 +100,62 @@ function Board() {
                         <td>{data.id}</td>
                         <td className="left">{data.title}</td>
                         <td>{data.updated}</td>
-                        <td>{data.user}</td>
+                        <td>{data.user.nickname}</td>
                       </tr>
                     );
                   })}
               </tbody>
-            </Table>
-          </Row>
+            </table>
+          </div>
         </div>
       </div>
       <div className="PageNation">
-        <Pagination size="md">
-          <Pagination.Prev
-            onClick={() => {
+        <ul className="pageItems">
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+
               if (currentPage > 1) {
                 setCurrentPage(currentPage - 1);
                 setIsClick(true);
               }
             }}
-          ></Pagination.Prev>
+          >
+            <button className="PrevButton">Prev</button>
+          </li>
           {totalPage.map((num) => (
-            <Pagination.Item
+            <li
               key={num}
-              onClick={() => {
-                setCurrentPage(num);
+              onClick={(e) => {
+                e.preventDefault();
                 setIsClick(true);
+                // currentPage == num ? setColor('red') : setColor('white')
+                // if (!isClick) {
+                console.log(e.view);
+                // e.target.style.backgroundColor = 'red';
+                // }
+
+                setCurrentPage(num);
               }}
             >
-              {num}
-            </Pagination.Item>
+              <button style={{ backgroundColor: color }} className="ItemButton">
+                {num}
+              </button>
+            </li>
           ))}
-          <Pagination.Next
-            onClick={() => {
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+
               if (currentPage < totalLength) {
                 setCurrentPage(currentPage + 1);
                 setIsClick(true);
               }
             }}
-          ></Pagination.Next>
-        </Pagination>
+          >
+            <button className="NextButton">Next</button>
+          </li>
+        </ul>
       </div>
     </div>
   );
