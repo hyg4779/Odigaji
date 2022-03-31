@@ -48,7 +48,7 @@ class Taste(models.Model):
         (32, '아침형 인간'),
         (33, '저녁형 인간'))
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name="taste")
     seasons = models.IntegerField(choices=seasons_ch, null=True)
     mnt_sea = models.IntegerField(choices=mnt_sea_ch, null=True)
     urb_rur = models.IntegerField(choices=urb_rur_ch, null=True)
