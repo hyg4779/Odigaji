@@ -32,6 +32,8 @@ function TravelDetail() {
           server.ROUTES.allCities +
           attractionId +
           server.ROUTES.attraction
+
+        // 'http://127.0.0.1:8000/api/cities/505/get-attraction/'
       )
       .then((res) => {
         console.log(res);
