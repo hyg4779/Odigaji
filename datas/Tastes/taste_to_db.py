@@ -64,8 +64,8 @@ curs = conn.cursor()
 conn.commit()
 
 # db insert sql
-insert_sql = "INSERT INTO recommends_taste (seasons, mnt_sea, urb_rur, comp, impo, paint, movie, trans, plan, mor_eve) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-
+insert_taste_sql = "INSERT INTO recommends_taste (seasons, mnt_sea, urb_rur, comp, impo, paint, movie, trans, plan, mor_eve) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+insert_visit_sql = "INSERT INTO cities_visit (rate, city_id, taste_id, user_id) values(%s, %s, %s, %s)"
 
 for line in rdr:
     if line[0] == '타임스탬프':
@@ -80,7 +80,7 @@ for line in rdr:
     trans = trans_ch[line[7]]
     plan = plan_ch[line[8]]
     mor_eve = random.randrange(32,34)
-    curs.execute(insert_sql, (
+    curs.execute(insert_taste_sql, (
         season,
         mnt_sea,
         urb_rur,
@@ -92,6 +92,17 @@ for line in rdr:
         plan,
         mor_eve,
         ))
+    curs.execute("select last_insert_id()")
+    conn.commit()
+    last_id = curs.fetchall()[0][0]
+    cities = line[9:]
+    for i in range(3):
+        city = cities[i].split(':')[0]
+        print(city)
+        taste_id = last_id
+        rate = 5 - i
+        # rate, city_id, taste_id, user_id
+        curs.execute(insert_visit_sql, (rate, city, taste_id, None))
 
 conn.commit()
 file.close()
