@@ -2,49 +2,118 @@ import React, { useState } from 'react';
 import './Random.css';
 import RouletteDo from '../../components/Randompage/RouletteDo';
 import RouletteSi from '../../components/Randompage/RouletteSi';
+import RandomButton from '../../components/Randompage/RandomButton';
+import RandomModal from '../../components/Randompage/RandomModal';
 import { provinceCities } from '../../components/Randompage/Randomaxios';
+import { useNavigate } from 'react-router-dom';
 
 function Random() {
-  const [randomResult, setRandomResult] = useState(['어디로', '갈까요']);
+  const [randomResult, setRandomResult] = useState([]);
   const [cities, setCities] = useState([]);
   const [provinceSpin, setProvinceSpin] = useState(false);
   const [citySpin, setCitySpin] = useState(false);
+  const [provinceNumber, setProvinceNumber] = useState(0);
+  const [cityNumber, setCityNumber] = useState(0);
+  const [textShow, setTextShow] = useState(false);
+  const [cityShow, setCityShow] = useState(false);
+  const navigate = useNavigate();
+  const provinceData = [
+    { option: '강원도', id: 1 },
+    { option: '경기도', id: 2 },
+    { option: '경상남도', id: 3 },
+    { option: '경상북도', id: 4 },
+    { option: '전라남도', id: 5 },
+    { option: '전라북도', id: 6 },
+    { option: '충청남도', id: 7 },
+    { option: '충청북도', id: 8 },
+    { option: '자치시도', id: 100 },
+  ];
+
+  function moveCity(cityId) {
+    const moveUrl = `/local/${cityId}`;
+    navigate(moveUrl);
+  }
 
   function selectProvince(provinceId) {
     provinceCities(provinceId)
       .then((response) => {
         console.log(response.data);
         setCities(response.data);
-        console.log(cities);
       })
       .catch((error) => {
         console.log(error);
       });
-    setCities(provinceId);
+  }
+
+  function provinceStart() {
+    setCityShow(false);
+    const newProvinceNumber = Math.floor(Math.random() * provinceData.length);
+    setRandomResult([]);
+    setProvinceNumber(newProvinceNumber);
+    selectProvince(provinceData[newProvinceNumber].id);
+    setProvinceSpin(true);
+  }
+
+  function cityStart() {
+    const newCityNumber = Math.floor(Math.random() * cities.length);
+    setCityNumber(newCityNumber);
+    setCitySpin(true);
+  }
+
+  function stopProvinceSpin() {
+    setProvinceSpin(false);
+    const newRandomResult = provinceData[provinceNumber].option;
+    setRandomResult(randomResult.concat(newRandomResult));
+    setTextShow(true);
+    setTimeout(() => {
+      setTextShow(false);
+      setTimeout(() => {
+        cityStart();
+      }, 10);
+      setCityShow(true);
+    }, 1500);
   }
 
   return (
     <div className="Random">
       <div className="Random-header">랜덤랜덤</div>
-      <div className="Random-content">
-        <RouletteDo
-          selectProvince={selectProvince}
-          provinceSpin={provinceSpin}
-          setProvinceSpin={setProvinceSpin}
-          setRandomResult={setRandomResult}
-        />
-        <RouletteSi
-          cities={cities}
-          provinceSpin={provinceSpin}
-          citySpin={citySpin}
-          setCitySpin={setCitySpin}
-          randomResult={randomResult}
-          setRandomResult={setRandomResult}
-        />
-      </div>
-      <div>
+      <button
+        className="Random-result"
+        style={{ visibility: randomResult.length >= 2 ? 'visible' : 'hidden' }}
+        onClick={() => moveCity(randomResult[2])}
+      >
         {randomResult[0]} {randomResult[1]}
+      </button>
+      <div className="Random-content">
+        {!cityShow && (
+          <RouletteDo
+            cityShow={cityShow}
+            textShow={textShow}
+            provinceData={provinceData}
+            provinceNumber={provinceNumber}
+            provinceSpin={provinceSpin}
+            stopProvinceSpin={stopProvinceSpin}
+          />
+        )}
+        {cityShow && (
+          <RouletteSi
+            cities={cities}
+            citySpin={citySpin}
+            cityNumber={cityNumber}
+            setCitySpin={setCitySpin}
+            randomResult={randomResult}
+            setRandomResult={setRandomResult}
+          />
+        )}
+        <RandomModal textShow={textShow} randomResult={randomResult} />
       </div>
+      <RandomButton
+        provinceSpin={provinceSpin}
+        citySpin={citySpin}
+        cityShow={cityShow}
+        textShow={textShow}
+        provinceStart={provinceStart}
+      />
     </div>
   );
 }
