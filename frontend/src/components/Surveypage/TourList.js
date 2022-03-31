@@ -1,6 +1,7 @@
 import React from 'react';
 import './TourList.css';
 import Rating from './Rating';
+import { AddSelCity } from './SurveyAxios';
 import {
   FaAngleLeft,
   FaAngleRight,
@@ -12,15 +13,14 @@ function TourList({
   tourData,
   tours,
   beforePage,
+  nextPage,
   startPage,
   lastPage,
   setTours,
 }) {
-  function isVisit(name, provinceName) {
+  function isVisit(id) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
-    return tours.find(
-      (tour) => tour.name === name && tour.provinceName === provinceName
-    );
+    return tours.find((tour) => tour.id === id);
   }
 
   function isInTourData(name, provinceName) {
@@ -35,39 +35,43 @@ function TourList({
     const inputWords = event.target[0].value.split('(');
     const inputName = inputWords[0];
     const inputProvince = String(inputWords[1]).slice(0, -1);
-    const newTour = {
-      name: inputName,
-      provinceName: inputProvince,
-      rate: 1,
-    };
+    const inputData = isInTourData(inputName, inputProvince);
 
-    if (isInTourData(inputName, inputProvince) === undefined) {
+    if (inputData === undefined) {
       // 지역 데이터에 없는 입력값을 사용한 경우
       alert('서비스에 정보가 없거나 입력 양식이 잘못되었습니다');
     } else {
+      const newTour = {
+        id: inputData.id,
+        name: inputName,
+        provinceName: inputProvince,
+        rate: 1,
+      };
       setTours(tours.concat(newTour));
+      AddSelCity(newTour)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       event.target[0].value = '';
     }
   }
 
   function deleteTour(target) {
-    const newTours = tours.filter(
-      (tour) =>
-        !(
-          tour.name === target.name && tour.provinceName === target.provinceName
-        )
-    );
+    const newTours = tours.filter((tour) => !(tour.id === target.id));
     setTours(newTours);
+  }
+
+  function alertMessage() {
+    alert('다녀온 지역은 한 개 이상 추가해줘야 합니다!');
   }
 
   function makeList() {
     return tourData.map((data) => {
       return (
-        <option
-          key={data.id}
-          id={data.id}
-          disabled={isVisit(data.name, data.province_data.name)}
-        >
+        <option key={data.id} id={data.id} disabled={isVisit(data.id)}>
           {data.name}({data.province_data.name})
         </option>
       );
@@ -109,7 +113,10 @@ function TourList({
       <div className="Tourlist-button-group">
         <FaAngleDoubleLeft onClick={startPage} className="Tourlist-button" />
         <FaAngleLeft onClick={beforePage} className="Tourlist-button" />
-        <FaAngleRight className="Tourlist-button" />
+        <FaAngleRight
+          onClick={tours.length >= 1 ? nextPage : alertMessage}
+          className="Tourlist-button"
+        />
         <FaAngleDoubleRight onClick={lastPage} className="Tourlist-button" />
       </div>
     </div>

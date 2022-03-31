@@ -41,6 +41,14 @@ class City_list_serializer(serializers.ModelSerializer):
         province = get_object_or_404(Province, id=obj.province.id)
         serializer = Province_serializer(province)
         return serializer.data
+    
+    option = serializers.SerializerMethodField()
+    def get_option(self, obj):
+        # option = get_object_or_404(City, id=obj.id)
+        # serializer = City_serializer(option)
+        # return serializer.data['name']
+        return obj.name
+
     class Meta:
         model = City
         fields = (
@@ -48,6 +56,7 @@ class City_list_serializer(serializers.ModelSerializer):
             "name",
             "photo",
             "province_data",
+            "option",
         )
 
 class City_visited_serializer(serializers.ModelSerializer):
