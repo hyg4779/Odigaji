@@ -1,7 +1,9 @@
+/*global kakao*/
 import React, { useEffect, useState } from 'react';
 import { Image, Row, Col, Container, Table, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import './TravelDetail.css';
 import server from '../../API/server';
 function goback() {
   window.history.back();
@@ -9,7 +11,6 @@ function goback() {
 function TravelDetail() {
   let params = useParams();
   const attractionId = params.attractionId;
-
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [facilities, setFacilities] = useState();
@@ -22,12 +23,30 @@ function TravelDetail() {
   let attractionDetail;
   //랜더링 이후 실행되는 함수
   useEffect(() => {
+    var container = document.getElementById('map');
+    var options = {
+      center: new kakao.maps.LatLng(latitude, longitude),
+      level: 3,
+    };
+    var map = new kakao.maps.Map(container, options);
+    var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+    var marker = new kakao.maps.Marker({ position: markerPosition });
+    marker.setMap(map);
+    var iwContent = '<div style="padding:5px;">' + name + '</div>';
+    var infowindow = new kakao.maps.InfoWindow({
+      content: iwContent,
+    });
+    kakao.maps.event.addListener(marker, 'mouseover', function () {
+      infowindow.open(map, marker);
+    });
+    kakao.maps.event.addListener(marker, 'mouseout', function () {
+      infowindow.close();
+    });
     axios
       .get(
         server.BASE_URL +
           server.ROUTES.cities +
           attractionId +
-          '/' +
           server.ROUTES.attraction
       )
       .then((res) => {
@@ -60,7 +79,7 @@ function TravelDetail() {
           <Image src="/img/수원시.jpg" roundedCircle />
         </Col>
         <Col>
-          <Image src="/img/수원시.jpg" roundedCircle />
+          <div id="map"></div>
         </Col>
       </Row>
       <Container>
