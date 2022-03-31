@@ -2,10 +2,13 @@
 from rest_framework import serializers
 from .models import CityReview, Comment
 
+from accounts.serializers import User_mypage_serializer
+
 class Review_list_serializer(serializers.ModelSerializer):
     '''
     review들 읽어서 반환하는 serializer
     '''
+    user = User_mypage_serializer(read_only=True)
     class Meta:
         model = CityReview
         fields = (
@@ -21,6 +24,7 @@ class Review_serializer(serializers.ModelSerializer):
     '''
     review 생성하는 serializer
     '''
+    user = User_mypage_serializer(read_only=True)
     class Meta:
         model = CityReview
         fields = '__all__'
@@ -30,6 +34,7 @@ class Comment_list_serializer(serializers.ModelSerializer):
     '''
     review에 대한 comment 목록을 반환 serializer
     '''
+    user = User_mypage_serializer(read_only=True)
     class Meta:
         model = Comment
         fields = (
