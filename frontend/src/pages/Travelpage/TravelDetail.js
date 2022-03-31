@@ -21,27 +21,11 @@ function TravelDetail() {
   const [city, setCity] = useState();
   const [province, setProvince] = useState();
   let attractionDetail;
+  console.log(attractionId);
+  console.log(latitude);
+  console.log(longitude);
   //랜더링 이후 실행되는 함수
   useEffect(() => {
-    var container = document.getElementById('map');
-    var options = {
-      center: new kakao.maps.LatLng(latitude, longitude),
-      level: 3,
-    };
-    var map = new kakao.maps.Map(container, options);
-    var markerPosition = new kakao.maps.LatLng(latitude, longitude);
-    var marker = new kakao.maps.Marker({ position: markerPosition });
-    marker.setMap(map);
-    var iwContent = '<div style="padding:5px;">' + name + '</div>';
-    var infowindow = new kakao.maps.InfoWindow({
-      content: iwContent,
-    });
-    kakao.maps.event.addListener(marker, 'mouseover', function () {
-      infowindow.open(map, marker);
-    });
-    kakao.maps.event.addListener(marker, 'mouseout', function () {
-      infowindow.close();
-    });
     axios
       .get(
         server.BASE_URL +
@@ -61,9 +45,30 @@ function TravelDetail() {
         setCity(res.data.city);
         setProvince(res.data.province);
         attractionDetail = res.data;
+        var container = document.getElementById('map');
+        var options = {
+          center: new kakao.maps.LatLng(res.data.latitude, res.data.longitude),
+          level: 3,
+        };
+        var map = new kakao.maps.Map(container, options);
+        var markerPosition = new kakao.maps.LatLng(
+          res.data.latitude,
+          res.data.longitude
+        );
+        var marker = new kakao.maps.Marker({ position: markerPosition });
+        marker.setMap(map);
+        var iwContent = '<div style="padding:5px;">' + res.data.name + '</div>';
+        var infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
+        });
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          infowindow.open(map, marker);
+        });
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          infowindow.close();
+        });
       });
   }, []);
-
   let tempdata = [
     '임진각 관광지',
     '경기도 파주시 문산읍 임진각로 177',
