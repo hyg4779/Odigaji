@@ -17,6 +17,9 @@ function Board() {
   const writeReview = () => {
     navigate('/local/travelDetail/board/write');
   };
+  const movePost = (Postid) => {
+    navigate('/local/travelDetail/board/post/' + Postid);
+  };
   let data = reviewData.splice(-1, 1);
 
   const makePageArray = () => {
@@ -87,7 +90,12 @@ function Board() {
                 {reviewData &&
                   reviewData.map((data, key) => {
                     return (
-                      <tr key={key}>
+                      <tr
+                        key={key}
+                        onClick={() => {
+                          movePost(data.id);
+                        }}
+                      >
                         <td>{data.id}</td>
                         <td className="left">{data.title}</td>
                         <td>{data.updated}</td>
