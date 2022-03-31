@@ -6,7 +6,9 @@ from .serializers import (
     Review_serializer,
     Comment_list_serializer,
 )
+from accounts.serializers import User_mypage_serializer
 from .models import CityReview, Comment
+from accounts.models import User
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -19,6 +21,7 @@ from rest_framework.status import (
     )
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from django.core.paginator import Paginator
 
 
 
@@ -35,8 +38,24 @@ def all_reviews(request):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.all()
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        # for i in range(len(data)):
+        #     # print(serializer.data[i]['user'])
+        #     user = User.objects.filter(id=serializer.data[i]['user'])
+        #     userserializer = User_mypage_serializer(user, many=True)
+        #     # print(userserializer.data[0]['id'])
+        #     # print(userserializer.data[0]['username'])
+        #     # print(userserializer.data[0]['nickname'])
+        #     data[i].update({'username': userserializer.data[0]['username']})
+        #     data[i].update({'nickname': userserializer.data[0]['nickname']})
+        #     data[i].update({'photo': userserializer.data[0]['photo']})
+        #     # print(data)
+        data.append({'total_pages': paginator.num_pages})
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -61,6 +80,7 @@ def all_reviews(request):
     })
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
+# def city_reviews(request, city_id, page_number):
 def city_reviews(request, city_id):
     '''
     GET: 관광지에 달린 리뷰를 반환
@@ -68,8 +88,13 @@ def city_reviews(request, city_id):
     '''
     if request.method=='GET':
         reviews = CityReview.objects.filter(city=city_id)
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        data.append({'total_pages': paginator.num_pages})
+        return Response(data, status=HTTP_200_OK)
     elif request.method=='POST':
         request.data['city'] = city_id
         serializer = Review_serializer(data = request.data)
@@ -79,8 +104,6 @@ def city_reviews(request, city_id):
         return Response(status=HTTP_400_BAD_REQUEST)
         
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
-
-
 
 
 @swagger_auto_schema(
@@ -97,11 +120,14 @@ def user_reviews(request):
     print(request)
     if request.method=='GET':
         reviews = CityReview.objects.filter(user=request.user.pk)
+        paginator = Paginator(reviews, 10)
+        page_number = request.GET.get('page_num')
+        reviews = paginator.get_page(page_number)
         serializer = Review_list_serializer(reviews, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        data.append({'total_pages': paginator.num_pages})
+        return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
-
-
 
 
 @swagger_auto_schema(
@@ -133,7 +159,8 @@ def review_info(request, review_id):
     review = get_object_or_404(CityReview, pk=review_id)
     if request.method=='GET':
         serializer = Review_serializer(review)
-        return Response(serializer.data, status=HTTP_200_OK)
+        data = serializer.data
+        return Response(data, status=HTTP_200_OK)
 
     elif request.method=='PUT':
         if request.user.is_authenticated and review.user.id == request.user.pk:
@@ -153,6 +180,7 @@ def review_info(request, review_id):
 
 
 # 댓글 -------------------------------------------------------------------------------
+
 
 @swagger_auto_schema(
     methods=['GET'],

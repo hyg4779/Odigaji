@@ -1,10 +1,10 @@
 import axios from 'axios';
 import server from '../../API/server';
 
-const allTourUrl = server.BASE_URL + server.ROUTES.allTour;
+const allCitiesUrl = server.BASE_URL + server.ROUTES.allCities;
 
-function AllTourList() {
-  return axios.get(allTourUrl);
+function AllCitiesList() {
+  return axios.get(allCitiesUrl);
 }
 
-export { AllTourList };
+export { AllCitiesList };

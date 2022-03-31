@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'recommends',
     'reviews',
     'drf_yasg',
+    'sslserver',
 
     'django_extensions',
     'rest_framework',

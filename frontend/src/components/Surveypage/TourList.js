@@ -1,44 +1,43 @@
 import React from 'react';
 import './TourList.css';
 import Rating from './Rating';
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from 'react-icons/fa';
 
 function TourList({
   tourData,
   tours,
   beforePage,
   startPage,
+  lastPage,
   setTours,
-  provinceData,
 }) {
-  function isVisit(name, province) {
+  function isVisit(name, provinceName) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
     return tours.find(
-      (tour) => tour.name === name && tour.province === province
+      (tour) => tour.name === name && tour.provinceName === provinceName
     );
   }
 
-  function isInTourData(name, province) {
+  function isInTourData(name, provinceName) {
     // 지역 데이터로 가지고 있는 지역인지 판단하는 함수
     return tourData.find(
-      (tour) => tour.name === name && tour.province === province
-    );
-  }
-
-  function provinceKey(province) {
-    // 행정구역 기준을 숫자로 바꿔주는 함수
-    return Number(
-      Object.keys(provinceData).find((key) => provinceData[key] === province)
+      (tour) => tour.name === name && tour.province_data.name === provinceName
     );
   }
 
   function addTour(event) {
     event.preventDefault();
-    const inputWords = event.target[0].value.split(' - ');
+    const inputWords = event.target[0].value.split('(');
     const inputName = inputWords[0];
-    const inputProvince = provinceKey(inputWords[1]);
+    const inputProvince = String(inputWords[1]).slice(0, -1);
     const newTour = {
       name: inputName,
-      province: inputProvince,
+      provinceName: inputProvince,
       rate: 1,
     };
 
@@ -54,7 +53,9 @@ function TourList({
   function deleteTour(target) {
     const newTours = tours.filter(
       (tour) =>
-        !(tour.name === target.name && tour.province === target.province)
+        !(
+          tour.name === target.name && tour.provinceName === target.provinceName
+        )
     );
     setTours(newTours);
   }
@@ -65,9 +66,9 @@ function TourList({
         <option
           key={data.id}
           id={data.id}
-          disabled={isVisit(data.name, data.province)}
+          disabled={isVisit(data.name, data.province_data.name)}
         >
-          {data.name} - {provinceData[data.province]}
+          {data.name}({data.province_data.name})
         </option>
       );
     });
@@ -89,7 +90,7 @@ function TourList({
             return (
               <div className="Tourlist-content-item" key={idx}>
                 <div>
-                  {tour.name} - {provinceData[tour.province]}
+                  {tour.name}({[tour.provinceName]})
                 </div>
                 <div className="Tourlist-content-item-rate">
                   <Rating tour={tour} tours={tours} setTours={setTours} />
@@ -106,10 +107,10 @@ function TourList({
         </div>
       </div>
       <div className="Tourlist-button-group">
-        <button onClick={beforePage} className="Tourlist-button">
-          이전
-        </button>
-        <button className="Tourlist-button">제출</button>
+        <FaAngleDoubleLeft onClick={startPage} className="Tourlist-button" />
+        <FaAngleLeft onClick={beforePage} className="Tourlist-button" />
+        <FaAngleRight className="Tourlist-button" />
+        <FaAngleDoubleRight onClick={lastPage} className="Tourlist-button" />
       </div>
     </div>
   );

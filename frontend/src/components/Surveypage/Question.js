@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './Question.css';
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from 'react-icons/fa';
 
 function Question({
   surveyData,
+  questionList,
   pageIndex,
   tastes,
   nextPage,
   beforePage,
   startPage,
+  lastPage,
   tasteSurveys,
 }) {
   const [selectName, setSelectName] = useState();
@@ -30,41 +38,44 @@ function Question({
 
   return (
     <div className="Question">
-      <div
-        className={'Question-img-list'}
-        style={{ columnGap: imgCnt === 4 ? '5vw' : '3vw' }}
-      >
+      <div className="Question-header">{questionList[pageIndex]}</div>
+      <div className={'Question-img-list'}>
         {surveyData[pageIndex].map((data, idx) => {
           return (
-            <img
-              className={
-                selectName === data.name
-                  ? 'Question-selected-img'
-                  : 'Question-img'
-              }
-              onClick={() => tasteSurveys(pageIndex, data.id, data.name)}
-              // onClick={selectImage(idx)} 를 했을 때는 무한 루프에 빠진다
-              // 위의 경우에는 함수를 호출하는 동작이 되어버리므로 호출 => 동작하여 state 변경 => 렌더링 후 또 호출 => 동작하여 state 변경 ...
-              key={idx}
-              alt={data.name}
-              src={process.env.PUBLIC_URL + data.img}
-            />
+            <div
+              style={{
+                width: imgCnt === 6 ? '33%' : '50%',
+                height: imgCnt === 2 ? '60vh' : '40vh',
+                position: 'relative',
+              }}
+            >
+              <img
+                className={
+                  selectName === data.name
+                    ? 'Question-selected-img'
+                    : 'Question-img'
+                }
+                onClick={() => tasteSurveys(pageIndex, data.id, data.name)}
+                // onClick={selectImage(idx)} 를 했을 때는 무한 루프에 빠진다
+                // 위의 경우에는 함수를 호출하는 동작이 되어버리므로 호출 => 동작하여 state 변경 => 렌더링 후 또 호출 => 동작하여 state 변경 ...
+                key={idx}
+                alt={data.name}
+                src={process.env.PUBLIC_URL + data.img}
+                loading="lazy"
+              />
+              <div className="Question-img-name">{data.name}</div>
+            </div>
           );
         })}
       </div>
       <div className="Question-button-group">
-        <button onClick={beforePage} className="Question-button">
-          이전
-        </button>
-        <button
+        <FaAngleDoubleLeft onClick={startPage} className="Question-button" />
+        <FaAngleLeft onClick={beforePage} className="Question-button" />
+        <FaAngleRight
           onClick={selectName ? nextPage : alertMessage}
           className="Question-button"
-        >
-          다음
-        </button>
-        <button onClick={startPage} className="Question-button-reset">
-          처음으로
-        </button>
+        />
+        <FaAngleDoubleRight onClick={lastPage} className="Question-button" />
       </div>
     </div>
   );

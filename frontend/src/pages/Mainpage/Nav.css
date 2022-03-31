@@ -20,6 +20,7 @@
 }
 
 .Nav-item {
+  border-style: none;
   width: 70%;
   background-color: white;
   text-decoration: none;
@@ -27,4 +28,5 @@
   padding: 10px;
   font-weight: bold;
   text-align: center;
+  font-size: 1vw;
 }

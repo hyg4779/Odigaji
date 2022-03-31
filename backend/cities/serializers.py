@@ -36,12 +36,18 @@ class City_serializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'name', 'info', 'population', 'area')
 
 class City_list_serializer(serializers.ModelSerializer):
+    province_data = serializers.SerializerMethodField()
+    def get_province_data(self, obj):
+        province = get_object_or_404(Province, id=obj.province.id)
+        serializer = Province_serializer(province)
+        return serializer.data
     class Meta:
         model = City
         fields = (
             "id",
             "name",
             "photo",
+            "province_data",
         )
 
 class City_visited_serializer(serializers.ModelSerializer):
