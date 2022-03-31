@@ -13,6 +13,12 @@
   color: #ffffff;
 }
 
+.Survey-spinner {
+  font-size: 40px;
+  width: 100px;
+  height: 100px;
+}
+
 .Survey-intro-button {
   background-color: #7535FE;
   width: 20vw;
