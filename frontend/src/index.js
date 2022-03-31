@@ -14,6 +14,7 @@ import TravelDetail from './pages/Travelpage/TravelDetail';
 import Board from './pages/Travelpage/Board';
 import Local from './pages/Travelpage/Local';
 import Write from './pages/Travelpage/write';
+import Post from './pages/Travelpage/Post';
 import Random from './pages/Randompage/Random';
 import Survey from './pages/Surveypage/Survey';
 
@@ -29,10 +30,17 @@ ReactDOM.render(
           path="local/travelDetail/:attractionId"
           element={<TravelDetail />}
         />
+        <Route
+          path="local/travelDetail/board/post/:postId"
+          element={<Post />}
+        />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mypage/userinfo" element={<ChangeInfo />} />
         <Route path="local/travelDetail/board/:cityId" element={<Board />} />
-        <Route path="local/travelDetail/board/write" element={<Write />} />
+        <Route
+          path="local/travelDetail/board/write/:cityId"
+          element={<Write />}
+        />
         <Route path="random" element={<Random />} />
         <Route path="survey" element={<Survey />} />
       </Route>

@@ -1,7 +1,7 @@
 
 .wrap {
   display: grid;
-  width: 100%;
+  width: 90%;
   height: 100vh;
   display: flex;
   align-items: center;

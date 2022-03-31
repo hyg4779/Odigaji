@@ -15,12 +15,13 @@ function MoveBoardPage(id) {
 
 function visited() {
   console.log('visited button clicked');
-  axios.get();
+  // 나중에 방문처리 할것!!!
+  // axios.get();
 }
-
+let cityId;
 function Local() {
   let params = useParams();
-  const cityId = params.cityId; // 시 아이디를 url에서 받아옴
+  cityId = params.cityId; // 시 아이디를 url에서 받아옴
   const [id, setId] = useState(null); //시 아이디
   const [info, setInfo] = useState(null); // 시 정보
   const [name, setName] = useState(null); // 시 명
@@ -33,7 +34,9 @@ function Local() {
     //렌더링 이후에 실행되는 함수
     //
     axios
-      .get(server.BASE_URL + server.ROUTES.cities + cityId + '/' + 'get-city/')
+      .get(
+        server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/'
+      )
       .then((res) => {
         console.log(res);
         setId(res.data.id);
@@ -89,7 +92,10 @@ function Local() {
         </tbody>
       </Table>
       <Container>
-        <Button variant="secondary" onClick={() => MoveBoardPage(id)}>
+        <Button
+          variant="secondary"
+          onClick={() => MoveBoardPage(params.cityId)}
+        >
           리뷰 게시판 이동
         </Button>{' '}
         <Button variant="success" onClick={() => visited()}>

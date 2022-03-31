@@ -1,45 +1,161 @@
 import { Row, Table, Col, Button } from 'react-bootstrap';
-import React from 'react';
-
-function MoveWrite() {
-  window.location.href = '/local/travelDetail/board/write';
-}
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import server from '../../API/server';
+import './Board.css';
 
 function Board() {
-  let tmpdata = [
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-    '임진각여행기',
-  ];
+  let navigate = useNavigate();
+  let params = useParams();
+  let count = 1;
+  const [totalLength, setTotalLength] = useState();
+  const [cntLength, setCntLength] = useState();
+  const [totalPage, setTotalPage] = useState([]);
+  const [reviewData, setReviewdata] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isClick, setIsClick] = useState(true);
+  const [color, setColor] = useState('white');
+
+  const writeReview = () => {
+    navigate('/local/travelDetail/board/write');
+  };
+
+  const makePageArray = () => {
+    let pageArray = [];
+    for (let i = 1; i <= totalLength; i++) {
+      pageArray.push(i);
+    }
+    setTotalPage(pageArray);
+  };
+
+  const getLoadReviews = async (cityId) => {
+    await axios
+      .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
+      .then((response) => {
+        setTotalLength(response.data[response.data.length - 1].total_pages);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  console.log(reviewData);
+  useEffect(() => {
+    getLoadReviews(params.cityId);
+    if (isClick) {
+      axios
+        .get(
+          server.BASE_URL +
+            server.ROUTES.review +
+            params.cityId +
+            '/?page_num=' +
+            currentPage
+        )
+        .then((response) => {
+          console.log(response.data);
+          let data = response.data;
+          data.splice(-1, 1);
+          data.reverse();
+          setReviewdata(data);
+        })
+        .catch((error) => {});
+      setIsClick(!isClick);
+      setColor('white');
+    }
+    setCntLength(totalLength);
+
+    makePageArray();
+  }, [totalLength, isClick, count]);
+
   return (
-    <div>
-      <Row>
-        <Col className="text-lg-end">
-          <h1>관광지 리뷰게시판</h1>
-        </Col>
-      </Row>
-      <Row className="align-self-end ">
-        <Col className=" m-5 text-lg-end" onClick={() => MoveWrite()}>
-          <Button variant="secondary">글쓰기</Button>{' '}
-        </Col>
-      </Row>
-      <div>
-        <Table striped bordered hover className="m-5 ">
-          <tbody className="bg-secondary m-5">
-            {tmpdata.map((data, idx) => {
-              return (
-                <tr key={idx} className="m-5">
-                  <td className="bg-secondary m-5 p-3 align-self-center border-5">
-                    {data} {idx + 1}
-                  </td>
+    <div className="Board">
+      <div className="BoardWrap">
+        <div className="page-title">
+          <div className="container">
+            <h3>관광지 리뷰</h3>
+          </div>
+        </div>
+
+        <div className="board-list">
+          <div className="container">
+            <button className="WriteButton" onClick={writeReview}>
+              글쓰기
+            </button>
+            <table className="board-table">
+              <thead className="tableHead">
+                <tr>
+                  <th className="th-num">No</th>
+                  <th className="th-title">제목</th>
+                  <th className="th-date">작성일</th>
+                  <th className="th-user">작성자</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+              </thead>
+              <tbody style={{ background: 'white' }}>
+                {reviewData &&
+                  reviewData.map((data, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{data.id}</td>
+                        <td className="left">{data.title}</td>
+                        <td>{data.updated}</td>
+                        <td>{data.user.nickname}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div className="PageNation">
+        <ul className="pageItems">
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+                setIsClick(true);
+              }
+            }}
+          >
+            <button className="PrevButton">Prev</button>
+          </li>
+          {totalPage.map((num) => (
+            <li
+              key={num}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsClick(true);
+                // currentPage == num ? setColor('red') : setColor('white')
+                // if (!isClick) {
+                console.log(e.view);
+                // e.target.style.backgroundColor = 'red';
+                // }
+
+                setCurrentPage(num);
+              }}
+            >
+              <button style={{ backgroundColor: color }} className="ItemButton">
+                {num}
+              </button>
+            </li>
+          ))}
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (currentPage < totalLength) {
+                setCurrentPage(currentPage + 1);
+                setIsClick(true);
+              }
+            }}
+          >
+            <button className="NextButton">Next</button>
+          </li>
+        </ul>
       </div>
     </div>
   );

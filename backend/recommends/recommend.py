@@ -129,7 +129,7 @@ def popular_cities(n):
         city_id = visit.city_id
         rate = visit.rate
         ranks[city_id] = ranks.get(city_id, 0) + rate
-    return sorted(ranks.items(), key= lambda x: -x[1])
+    return sorted(ranks.items(), key= lambda x: -x[1])[:n]
 
 def random_city():
     cities = get_list_or_404(City)
