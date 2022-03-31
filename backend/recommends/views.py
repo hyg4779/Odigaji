@@ -101,7 +101,7 @@ def sel_city(request):
     methods=['GET'],
     responses={200: openapi.Response('', Taste_serializer(many=True))})
 @api_view(["GET", "POST"])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def taste(request):
     '''
     GET : 본인의 취향 확인
