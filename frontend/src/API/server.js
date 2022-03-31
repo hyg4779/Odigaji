@@ -1,5 +1,5 @@
 const server = {
-  BASE_URL: 'https://3.38.250.117:8000',
+  BASE_URL: 'https://j6b103.p.ssafy.io:8000',
 
   ROUTES: {
     login: '/api/token/',
