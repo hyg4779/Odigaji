@@ -35,7 +35,6 @@ function LoginPage() {
         }
 
         navigate('/');
-        window.location.reload();
       })
       .catch((error) => {
         alert(error.response.data.detail);

@@ -5,12 +5,16 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  overflow: hidden;
 }
 
 .Random-header {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 2rem;
+}
+
+.Random-content {
+  display: flex;
 }

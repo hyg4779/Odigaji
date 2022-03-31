@@ -179,12 +179,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = [
-#        "http://localhost:8000",
-#        "http://localhost:3000",
-#        "http://127.0.0.1:8000",
-#        "http://127.0.0.1:3000",
-# ]
+CORS_ORIGIN_WHITELIST = [
+        "http://localhost:8000",
+        "http://localhost:3000",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:3000",
+        "https://j6b103.p.ssafy.io",
+        "https://j6b103.p.ssafy.io:3000",
+        "http://3.38.250.117",
+]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
