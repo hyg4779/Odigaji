@@ -75,17 +75,19 @@ function Survey() {
     '일상 스타일',
   ];
   const [tourData, setTourData] = useState([]);
-  const [pageIndex, setPageIndex] = useState(-1);
+  const [pageIndex, setPageIndex] = useState(-2);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
 
-  let leftLoc = String(13 + pageIndex * 7.7) + 'vw';
+  let leftLoc = String(13 + (pageIndex + 1) * 7.7) + 'vw';
   // survey-bar 의 left 값이 15vw 로 되어 있다
   // 10개의 취향 설문 + 1개의 지역 설문이 진행되니까
   // 11번째 페이지에서 진행도가 맨 끝으로 가 있어야 한다
 
   function nextPage() {
-    setPageIndex(pageIndex + 1);
+    if (pageIndex <= 8) {
+      setPageIndex(pageIndex + 1);
+    }
   }
 
   function beforePage() {
@@ -95,11 +97,11 @@ function Survey() {
   }
 
   function startPage() {
-    setPageIndex(0);
+    setPageIndex(-1);
   }
 
   function lastPage() {
-    setPageIndex(tastes.length);
+    setPageIndex(tastes.length - 1);
   }
 
   function tasteSurveys(pageIndex, imageId, imageName) {
@@ -129,7 +131,7 @@ function Survey() {
       .catch((error) => {
         console.log('여행지 전체 목록 가져오기 실패', error);
       });
-    setPageIndex(-1);
+    setPageIndex(-2);
     setTastes([]);
     setTours([]);
     return function () {
@@ -139,7 +141,7 @@ function Survey() {
 
   return (
     <div className="Survey">
-      {pageIndex >= 0 && (
+      {pageIndex >= -1 && (
         <>
           <div className="Survey-bar" />
           <img
@@ -150,12 +152,24 @@ function Survey() {
           />
           <div
             className="Survey-progress-bg"
-            style={{ width: `${String(pageIndex * 7.7)}vw` }}
+            style={{ width: `${String((pageIndex + 1) * 7.7)}vw` }}
           ></div>
         </>
       )}
-      {pageIndex === -1 && <Intro nextPage={nextPage} />}
-      {pageIndex >= 0 && pageIndex <= 9 && (
+      {pageIndex === -2 && <Intro nextPage={nextPage} tourData={tourData} />}
+      {pageIndex === -1 && (
+        <TourList
+          pageIndex={pageIndex}
+          tourData={tourData}
+          tours={tours}
+          beforePage={beforePage}
+          nextPage={nextPage}
+          startPage={startPage}
+          lastPage={lastPage}
+          setTours={setTours}
+        />
+      )}
+      {pageIndex >= 0 && (
         <Question
           surveyData={surveyData}
           questionList={questionList}
@@ -166,16 +180,6 @@ function Survey() {
           startPage={startPage}
           lastPage={lastPage}
           tasteSurveys={tasteSurveys}
-        />
-      )}
-      {pageIndex >= 10 && (
-        <TourList
-          pageIndex={pageIndex}
-          tourData={tourData}
-          tours={tours}
-          beforePage={beforePage}
-          startPage={startPage}
-          setTours={setTours}
         />
       )}
     </div>

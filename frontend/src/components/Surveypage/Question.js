@@ -40,9 +40,10 @@ function Question({
     <div className="Question">
       <div className="Question-header">{questionList[pageIndex]}</div>
       <div className={'Question-img-list'}>
-        {surveyData[pageIndex].map((data, idx) => {
+        {surveyData[pageIndex].map((data) => {
           return (
             <div
+              key={data.id}
               style={{
                 width: imgCnt === 6 ? '33%' : '50%',
                 height: imgCnt === 2 ? '60vh' : '40vh',
@@ -58,7 +59,6 @@ function Question({
                 onClick={() => tasteSurveys(pageIndex, data.id, data.name)}
                 // onClick={selectImage(idx)} 를 했을 때는 무한 루프에 빠진다
                 // 위의 경우에는 함수를 호출하는 동작이 되어버리므로 호출 => 동작하여 state 변경 => 렌더링 후 또 호출 => 동작하여 state 변경 ...
-                key={idx}
                 alt={data.name}
                 src={process.env.PUBLIC_URL + data.img}
                 loading="lazy"

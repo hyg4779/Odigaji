@@ -15,6 +15,7 @@ const server = {
     comment: '/api/reviews/comment/',
     popular: '/api/recommends/popular/',
     review: '/api/reviews/',
+    selCity: '/api/recommends/sel-city/',
   },
 };
 
