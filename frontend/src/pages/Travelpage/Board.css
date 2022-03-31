@@ -8,13 +8,149 @@
 }
 
 .BoardWrap{
-  padding: 50px;
+  padding: 50px
+}
+.page-title {
+  margin-bottom: 10px;
+}
+.page-title h3 {
+  font-size: 28px;
+  color: #333333;
+  font-weight: 400;
+  text-align: center;
 }
 
-.BoardContainer{
+.board-table {
+  font-size: 13px;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.board-table a {
+  color: #333;
+  display: inline-block;
+  line-height: 1.4;
+  word-break: break-all;
+  vertical-align: middle;
+}
+.board-table tbody .left:hover {
+  text-decoration: underline;
+}
+.board-table tbody tr:hover {
+  background-color: rgb(230, 228, 228);
+}
+.board-table th {
+  text-align: center;
+}
+.board-table .th-num {
+  
+  width: 150px;
 
+}
+.board-table .th-date {
+  width: 200px;
+}
+.board-table .th-user {
+  width: 150px;
+}
+.board-table th, .board-table td {
+  padding: 14px 0;
+}
+.board-table tbody td {
+  border-top: 1px solid #e7e7e7;
+  text-align: center;
+}
+
+.board-table tbody th {
+  padding-left: 28px;
+  padding-right: 14px;
+  border-top: 1px solid #e7e7e7;
+  text-align: left;
+}
+
+.board-table tbody th p{
+  display: none;
+}
+* {
+  list-style: none;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.clearfix:after {
+  content: '';
+  display: block;
+  clear: both;
 }
 .PageNation{
+  display: flex;
+  justify-content: center;
 
 
+  
+}
+.pageItems{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+        
+.pageItems li {
+  margin: 0 1px;
+  
+}
+
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+.WriteButton{
+  display: block;
+  padding: .2em 1em;
+  border: 1px solid #999;
+  border-radius: .2em;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+.PrevButton{
+  text-align: right;
+  display: block;
+  padding: .2em 1em;
+  border: 1px solid #999;
+  border-radius: .2em;
+  text-decoration: none;
+}
+/* .PrevButton:hover{
+  box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset, -200px 0 0 0 rgba(0,0,0,0.25) inset;
+
+ 
+} */
+
+.ItemButton{
+  display: block;
+  padding: .2em 1em;
+  border: 1px solid #999;
+  border-radius: .2em;
+  text-decoration: none;
+}
+.NextButton{
+  display: block;
+  padding: .2em 1em;
+  border: 1px solid #999;
+  border-radius: .2em;
+  text-decoration: none;
 }
