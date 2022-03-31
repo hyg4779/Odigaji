@@ -8,7 +8,10 @@
 }
 
 .BoardWrap{
-  padding: 50px
+  padding-top: 50px;
+  padding-left: 200px;
+  padding-right: 200px;
+
 }
 .page-title {
   margin-bottom: 10px;
@@ -100,6 +103,7 @@
 .PageNation{
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 
 
   
@@ -136,7 +140,8 @@
   text-decoration: none;
   margin-bottom: 2px;
   color: white;
-  background: linear-gradient(to left, rgb(104, 76, 25), rgb(104, 76, 25));
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+
 
 }
 .PrevButton{
