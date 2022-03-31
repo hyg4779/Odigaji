@@ -1,5 +1,5 @@
 const server = {
-  BASE_URL: 'https://3.38.250.117:8080',
+  BASE_URL: 'http://127.0.0.1:8000',
 
   ROUTES: {
     login: '/api/token/',
