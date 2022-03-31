@@ -3,63 +3,96 @@ import './Survey.css';
 import Intro from '../../components/Surveypage/Intro';
 import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
-import { AllCitiesList } from '../../components/Surveypage/SurveyAxios';
+import {
+  AllCitiesList,
+  AddTaste,
+} from '../../components/Surveypage/SurveyAxios';
 import axios from 'axios';
 
 function Survey() {
   const surveyData = [
     [
-      { id: 1, name: '봄', img: 'img/spring.jpg' },
-      { id: 2, name: '여름', img: 'img/summer.jpg' },
-      { id: 3, name: '가을', img: 'img/autumn.jpg' },
-      { id: 4, name: '겨울', img: 'img/winter.jpg' },
+      { title: 'seasons', id: 1, name: '봄', img: 'img/spring.jpg' },
+      { title: 'seasons', id: 2, name: '여름', img: 'img/summer.jpg' },
+      { title: 'seasons', id: 3, name: '가을', img: 'img/autumn.jpg' },
+      { title: 'seasons', id: 4, name: '겨울', img: 'img/winter.jpg' },
     ],
     [
-      { id: 5, name: '산', img: 'img/mountain.jpg' },
-      { id: 6, name: '바다', img: 'img/sea.jpg' },
+      { title: 'mnt_sea', id: 5, name: '산', img: 'img/mountain.jpg' },
+      { title: 'mnt_sea', id: 6, name: '바다', img: 'img/sea.jpg' },
     ],
     [
-      { id: 7, name: '도시', img: 'img/city.jpg' },
-      { id: 8, name: '시골', img: 'img/country.jpg' },
+      { title: 'urb_rur', id: 7, name: '도시', img: 'img/city.jpg' },
+      { title: 'urb_rur', id: 8, name: '시골', img: 'img/country.jpg' },
     ],
     [
-      { id: 9, name: '혼자', img: 'img/alone.jpg' },
-      { id: 10, name: '친구', img: 'img/friends.jpg' },
-      { id: 11, name: '연인', img: 'img/couple.jpg' },
-      { id: 12, name: '가족', img: 'img/family.jpg' },
+      { title: 'comp', id: 9, name: '혼자', img: 'img/alone.jpg' },
+      { title: 'comp', id: 10, name: '친구', img: 'img/friends.jpg' },
+      { title: 'comp', id: 11, name: '연인', img: 'img/couple.jpg' },
+      { title: 'comp', id: 12, name: '가족', img: 'img/family.jpg' },
     ],
     [
-      { id: 13, name: '풍경', img: 'img/nature.jpg' },
-      { id: 14, name: '음식', img: 'img/food.jpg' },
-      { id: 15, name: '액티비티', img: 'img/activity.jpg' },
-      { id: 16, name: '힐링', img: 'img/relax.jpg' },
+      { title: 'impo', id: 13, name: '풍경', img: 'img/nature.jpg' },
+      { title: 'impo', id: 14, name: '음식', img: 'img/food.jpg' },
+      { title: 'impo', id: 15, name: '액티비티', img: 'img/activity.jpg' },
+      { title: 'impo', id: 16, name: '힐링', img: 'img/relax.jpg' },
     ],
     [
-      { id: 17, name: '별이 빛나는 밤', img: 'img/starrynight.jpg' },
-      { id: 18, name: '그랑드자트섬의 일요일 오후', img: 'img/grande.jpg' },
-      { id: 19, name: '메모리 지속성의 붕괴', img: 'img/memory.jpg' },
-      { id: 20, name: '민중을 이끄는 자유의 여신', img: 'img/liberty.jpg' },
+      {
+        title: 'paint',
+        id: 17,
+        name: '별이 빛나는 밤',
+        img: 'img/starrynight.jpg',
+      },
+      {
+        title: 'paint',
+        id: 18,
+        name: '그랑드자트섬의 일요일 오후',
+        img: 'img/grande.jpg',
+      },
+      {
+        title: 'paint',
+        id: 19,
+        name: '메모리 지속성의 붕괴',
+        img: 'img/memory.jpg',
+      },
+      {
+        title: 'paint',
+        id: 20,
+        name: '민중을 이끄는 자유의 여신',
+        img: 'img/liberty.jpg',
+      },
     ],
     [
-      { id: 21, name: '기생충', img: 'img/parasite.jpg' },
-      { id: 22, name: '토이스토리', img: 'img/toystory.jpg' },
-      { id: 23, name: '인터스텔라', img: 'img/interstellar.jpg' },
-      { id: 24, name: '건축학개론', img: 'img/건축학개론.jpg' },
-      { id: 25, name: '분노의 질주', img: 'img/분노의질주.jpg' },
-      { id: 26, name: '극한직업', img: 'img/극한직업.jpg' },
+      { title: 'movie', id: 21, name: '기생충', img: 'img/parasite.jpg' },
+      { title: 'movie', id: 22, name: '토이스토리', img: 'img/toystory.jpg' },
+      {
+        title: 'movie',
+        id: 23,
+        name: '인터스텔라',
+        img: 'img/interstellar.jpg',
+      },
+      { title: 'movie', id: 24, name: '건축학개론', img: 'img/건축학개론.jpg' },
+      {
+        title: 'movie',
+        id: 25,
+        name: '분노의 질주',
+        img: 'img/분노의질주.jpg',
+      },
+      { title: 'movie', id: 26, name: '극한직업', img: 'img/극한직업.jpg' },
     ],
     [
-      { id: 27, name: '자가용', img: 'img/car.jpg' },
-      { id: 28, name: '대중교통', img: 'img/bus.jpg' },
-      { id: 29, name: '도보', img: 'img/walking.jpg' },
+      { title: 'trans', id: 27, name: '자가용', img: 'img/car.jpg' },
+      { title: 'trans', id: 28, name: '대중교통', img: 'img/bus.jpg' },
+      { title: 'trans', id: 29, name: '도보', img: 'img/walking.jpg' },
     ],
     [
-      { id: 30, name: '계획', img: 'img/plan.jpg' },
-      { id: 31, name: '즉흥', img: 'img/생각없음.jpg' },
+      { title: 'plan', id: 30, name: '계획', img: 'img/plan.jpg' },
+      { title: 'plan', id: 31, name: '즉흥', img: 'img/생각없음.jpg' },
     ],
     [
-      { id: 32, name: '아침형 인간', img: 'img/early.jpg' },
-      { id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
+      { title: 'more_eve', id: 32, name: '아침형 인간', img: 'img/early.jpg' },
+      { title: 'more_eve', id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
     ],
   ];
   const questionList = [
@@ -87,6 +120,14 @@ function Survey() {
   function nextPage() {
     if (pageIndex <= 8) {
       setPageIndex(pageIndex + 1);
+    } else {
+      AddTaste(tastes)
+        .then(() => {
+          console.log('취향 데이터 연결 후 응답 완료');
+        })
+        .catch((error) => {
+          console.log('취향 데이터 연결 실패', error);
+        });
     }
   }
 
@@ -104,9 +145,10 @@ function Survey() {
     setPageIndex(tastes.length - 1);
   }
 
-  function tasteSurveys(pageIndex, imageId, imageName) {
+  function tasteSurveys(pageIndex, imageTitle, imageId, imageName) {
     // 취향 질문의 답변을 배열 형태로 저장하는 함수
     const newTaste = {
+      title: imageTitle,
       id: imageId,
       name: imageName,
     };

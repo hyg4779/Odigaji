@@ -50,7 +50,7 @@ function TourList({
       setTours(tours.concat(newTour));
       AddSelCity(newTour)
         .then((response) => {
-          console.log('지역 데이터 전송', response.data);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
