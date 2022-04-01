@@ -47,13 +47,11 @@ def all_reviews(request):
 
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
-        data = serializer.data
         dct = {"data": data,
                "total_pages": paginator.num_pages}
 
         return Response(dct, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
-
 
 
 @swagger_auto_schema(
@@ -76,7 +74,6 @@ def all_reviews(request):
     })
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
-# def city_reviews(request, city_id, page_number):
 def city_reviews(request, city_id):
     '''
     GET: 관광지에 달린 리뷰를 반환
