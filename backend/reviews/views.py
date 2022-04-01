@@ -93,15 +93,25 @@ def city_reviews(request, city_id):
         return Response(data, status=HTTP_200_OK)
 
     elif request.method == 'POST':
-
-        request.data['city'] = city_id
-
-        serializer = Review_serializer(data=request.data)
+        request.data["city"] = city_id
+        data = {
+            "title": request.data["title"],
+            "city": city_id,
+            "content": request.data["content"]
+        }
+        serializer = Review_serializer(data=data)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
 
-            return Response(status=HTTP_400_BAD_REQUEST)
+            user = get_object_or_404(User, id=request.user.id)
+
+            ser_point = User_point_serializer(instance=user, data={'point':user.point+100})
+            if ser_point.is_valid(raise_exception=True):
+                ser_point.save()
+                return Response(serializer.data, status=HTTP_201_CREATED)
+
+        return Response(status=HTTP_400_BAD_REQUEST)
 
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
 
