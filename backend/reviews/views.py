@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import (
@@ -47,9 +47,11 @@ def all_reviews(request):
 
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
-        data.append({'total_pages': paginator.num_pages})
+        data = serializer.data
+        dct = {"data": data,
+               "total_pages": paginator.num_pages}
 
-        return Response(data, status=HTTP_200_OK)
+        return Response(dct, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -88,9 +90,11 @@ def city_reviews(request, city_id):
 
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
-        data.append({'total_pages': paginator.num_pages})
+        data = serializer.data
+        dct = {"data": data,
+               "total_pages": paginator.num_pages}
 
-        return Response(data, status=HTTP_200_OK)
+        return Response(dct, status=HTTP_200_OK)
 
     elif request.method == 'POST':
         data = {
@@ -134,8 +138,10 @@ def user_reviews(request):
 
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
-        data.append({'total_pages': paginator.num_pages})
-        return Response(data, status=HTTP_200_OK)
+        dct = {"data":data,
+               "total_pages":paginator.num_pages}
+
+        return Response(dct, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -168,8 +174,7 @@ def review_info(request, review_id):
     review = get_object_or_404(CityReview, pk=review_id)
     if request.method=='GET':
         serializer = Review_serializer(review)
-        data = serializer.data
-        return Response(data, status=HTTP_200_OK)
+        return Response(serializer.data, status=HTTP_200_OK)
 
     elif request.method=='PUT':
         if request.user.is_authenticated and review.user.id == request.user.pk:
@@ -202,11 +207,9 @@ def all_comment(request):
     '''
     특정 유저가 작성한 관광지 리뷰 댓글 목록을 반환하는 함수
     '''
-    if request.method=='GET':
-        comments = Comment.objects.filter(user=request.user.id)
-        serializer = Comment_list_serializer(comments, many=True)
-        return Response(serializer.data, status=HTTP_200_OK)
-    return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
+    comments = get_list_or_404(user=request.user.id)
+    serializer = Comment_list_serializer(comments, many=True)
+    return Response(serializer.data, status=HTTP_200_OK)
 
 
 @swagger_auto_schema(
