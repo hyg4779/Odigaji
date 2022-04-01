@@ -100,6 +100,10 @@ def sel_city(request):
 @swagger_auto_schema(
     methods=['GET'],
     responses={200: openapi.Response('', Taste_serializer(many=True))})
+@swagger_auto_schema(
+    methods=['POST'],
+    request_body=Taste_serializer,
+    responses={200: openapi.Response('', City_visited_serializer(many=True))})
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def taste(request):
@@ -119,16 +123,17 @@ def taste(request):
 
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
-            return Response(status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(["GET"])
-@permission_classes([AllowAny])
-def by_big_data(request):
-    user_id = request.user.id
-    result = knn_recommend(user_id)
-    print(result)
-    pass
+        knn_result = knn_recommend(user.id)
+        print(knn_result)
+        rec_cities = []
+        for city_id, point in knn_result:
+            city = get_object_or_404(City, id=city_id)
+            city_dct = City_visited_serializer(city).data
+            rec_cities.append(city_dct)
+        return Response(data=rec_cities, status=status.HTTP_200_OK)
+
+
 
 @swagger_auto_schema(
     methods=['GET'],
