@@ -12,7 +12,7 @@ from drf_yasg.utils import swagger_auto_schema
 
 @swagger_auto_schema(
     methods=['GET'],
-    responses={200: openapi.Response('', City_serializer(many=True)),
+    responses={200: openapi.Response('', City_list_serializer(many=True)),
     404: openapi.Response('')}
 )
 @api_view(['GET'])
@@ -55,7 +55,7 @@ def get_city_photo(request, city_id):
     if request.method=='GET':
         city = get_object_or_404(City, pk=city_id)
         city_serializer = City_serializer(city)
-        print("../media/logos/${1}")
+
         return Response(city_serializer.data, status=status.HTTP_200_OK)
 
     # mypage 수정
@@ -64,11 +64,11 @@ def get_city_photo(request, city_id):
 
         # mypage 이미지 받기
         photo = request.data.get('photo')
-        print(photo)
+
 
         serializer = City_serializer(city, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            print('serializer is valid!')
+
             serializer.save(photo=photo)
             return Response(serializer.data)
         else:

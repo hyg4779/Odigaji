@@ -125,7 +125,7 @@ def taste(request):
             serializer.save(user=request.user)
 
         knn_result = knn_recommend(user.id)
-        print(knn_result)
+
         rec_cities = []
         for city_id, point in knn_result:
             city = get_object_or_404(City, id=city_id)
