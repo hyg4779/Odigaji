@@ -93,14 +93,13 @@ def city_reviews(request, city_id):
         return Response(data, status=HTTP_200_OK)
 
     elif request.method == 'POST':
-        request.data["city"] = city_id
         data = {
             "title": request.data["title"],
             "city": city_id,
             "content": request.data["content"]
         }
-        serializer = Review_serializer(data=data)
 
+        serializer = Review_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
 
@@ -127,12 +126,12 @@ def user_reviews(request):
     '''
     유저가 작성한 모든 리뷰를 반환
     '''
-    print(request)
     if request.method=='GET':
         reviews = CityReview.objects.filter(user=request.user.pk)
         paginator = Paginator(reviews, 10)
         page_number = request.GET.get('page_num')
         reviews = paginator.get_page(page_number)
+
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
@@ -231,8 +230,6 @@ def comment_list(request, review_id):
     review = get_object_or_404(CityReview, id=review_id)
     
     # 해당 리뷰의 댓글 조회
-    print('댓글조회성공')
-    print(request.user)
     if request.method == 'GET':
         comments = Comment.objects.filter(review_id=review_id).order_by('-id')
         serializer = Comment_list_serializer(comments, many=True)
@@ -240,20 +237,24 @@ def comment_list(request, review_id):
     
     # 해당 리뷰의 댓글 작성
     elif request.method == 'POST':
+        if not request.user.is_authenticated:
+            return Response({"message": "로그인이 필요한 서비스입니다."}, status=status.HTTP_401_UNAUTHORIZED)
+
         serializer = Comment_list_serializer(data=request.data)
+
         
         if serializer.is_valid(raise_exception=True):
             # 프론트에서 axios 요청할 때 URI에 movie의 id값을 넣어서 요청해야 함
             serializer.save(user=request.user, review=review)
-            return Response(serializer.data, status=HTTP_201_CREATED)
-    elif request.method == 'DELETE':
-        if request.user.is_authenticated and comments.user.id == request.user.pk:
-            review.delete()
-            return Response({'message': '삭제되었습니다.'}, status=HTTP_200_OK)
 
-    else:
-        return Response({'error': '입력에 문제가 있습니다.'}, status=HTTP_400_BAD_REQUEST)
-    return Response({ 'Unauthorized': '권한이 없습니다.'}, status=HTTP_403_FORBIDDEN)
+            user = get_object_or_404(User, id=request.user.id)
+            ser_point = User_point_serializer(instance=user, data={"point":user.point+20})
+            if ser_point.is_valid(raise_exception=True):
+                ser_point.save()
+                return Response(serializer.data, status=HTTP_201_CREATED)
+
+        return Response({'message': '입력 형식이 잘못 되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({ 'message': '권한이 없습니다.'}, status=HTTP_403_FORBIDDEN)
 
 @swagger_auto_schema(
     methods=['PUT'],
@@ -274,8 +275,6 @@ def comment_detail(request, comment_id):
     특정 관광지 리뷰의 특정 댓글을 수정 또는 삭제하는 함수
     '''
     comment = get_object_or_404(Comment, pk=comment_id)
-    print(comment.user)
-    print(request.user)
 
     # 현재 유저와 댓글 작성자가 같을 때 수정 및 삭제 가능
     if request.user == comment.user:
@@ -291,6 +290,6 @@ def comment_detail(request, comment_id):
             data = {
                 'delete' : f'{comment_id}번 댓글이 삭제되었습니다.'
             }
-            return Response(data, status=HTTP_200_OK)
+            return Response(data, status=status.HTTP_204_NO_CONTENT)
         
-    return Response({ 'Unauthorized': '권한이 없습니다.'}, status=HTTP_403_FORBIDDEN)
+    return Response({ 'Unauthorized': '권한이 없습니다.'}, status=HTTP_401_UNAUTHORIZED)
