@@ -204,7 +204,7 @@ def all_comment(request):
     '''
     특정 유저가 작성한 관광지 리뷰 댓글 목록을 반환하는 함수
     '''
-    comments = get_list_or_404(user=request.user.id)
+    comments = get_list_or_404(Comment, user=request.user.id)
     serializer = Comment_list_serializer(comments, many=True)
     return Response(serializer.data, status=HTTP_200_OK)
 
