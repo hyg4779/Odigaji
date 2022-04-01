@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import (
@@ -6,10 +6,8 @@ from .serializers import (
     Review_serializer,
     Comment_list_serializer,
 )
-from accounts.serializers import User_mypage_serializer
-from .models import CityReview, Comment
-from accounts.models import User
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
@@ -19,6 +17,11 @@ from rest_framework.status import (
     HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
     )
+
+from .models import CityReview, Comment
+from accounts.models import User
+from accounts.serializers import User_point_serializer
+
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from django.core.paginator import Paginator
@@ -41,20 +44,11 @@ def all_reviews(request):
         paginator = Paginator(reviews, 10)
         page_number = request.GET.get('page_num')
         reviews = paginator.get_page(page_number)
+
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
-        # for i in range(len(data)):
-        #     # print(serializer.data[i]['user'])
-        #     user = User.objects.filter(id=serializer.data[i]['user'])
-        #     userserializer = User_mypage_serializer(user, many=True)
-        #     # print(userserializer.data[0]['id'])
-        #     # print(userserializer.data[0]['username'])
-        #     # print(userserializer.data[0]['nickname'])
-        #     data[i].update({'username': userserializer.data[0]['username']})
-        #     data[i].update({'nickname': userserializer.data[0]['nickname']})
-        #     data[i].update({'photo': userserializer.data[0]['photo']})
-        #     # print(data)
         data.append({'total_pages': paginator.num_pages})
+
         return Response(data, status=HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_400_BAD_REQUEST)
 
@@ -91,16 +85,30 @@ def city_reviews(request, city_id):
         paginator = Paginator(reviews, 10)
         page_number = request.GET.get('page_num')
         reviews = paginator.get_page(page_number)
+
         serializer = Review_list_serializer(reviews, many=True)
         data = serializer.data
         data.append({'total_pages': paginator.num_pages})
+
         return Response(data, status=HTTP_200_OK)
+
     elif request.method=='POST':
+        if not request.user.is_authenticated:
+            return Response({"message": "로그인이 필요한 서비스입니다."}, status=status.HTTP_401_UNAUTHORIZED)
+
         request.data['city'] = city_id
-        serializer = Review_serializer(data = request.data)
+        serializer = Review_serializer(data=request.data)
+
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
-            return Response(serializer.data, status=HTTP_201_CREATED)
+            user = get_object_or_404(User, id=request.user)
+            point = user.point
+
+            serializer = User_point_serializer(instance=user, point=point+100)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+                return Response(serializer.data, status=HTTP_201_CREATED)
         return Response(status=HTTP_400_BAD_REQUEST)
         
     return Response({'message': '잘못된 접근입니다.'}, status=HTTP_404_NOT_FOUND)
