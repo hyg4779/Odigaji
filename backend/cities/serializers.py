@@ -37,7 +37,7 @@ class City_serializer(serializers.ModelSerializer):
             "area",
             "photo",
             "att_data",
-            "avg_rate"
+            "avg_rate",
         )
         read_only_fields = ('id', 'name', 'info', 'population', 'area')
 
