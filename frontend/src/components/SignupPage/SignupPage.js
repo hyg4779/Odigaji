@@ -132,7 +132,6 @@ function SignupPage() {
               placeholder="아이디"
               value={id}
               onChange={onidHandler}
-              required
               autoComplete="off"
             />
           </div>
@@ -144,7 +143,6 @@ function SignupPage() {
               placeholder="닉네임"
               value={name}
               onChange={onNameHandler}
-              required
               autoComplete="off"
             />
           </div>
@@ -156,7 +154,6 @@ function SignupPage() {
               placeholder="비밀번호"
               value={password}
               onChange={onPasswordHandler}
-              required
               autoComplete="off"
             />
           </div>
@@ -168,7 +165,6 @@ function SignupPage() {
               placeholder="비밀번호 확인"
               value={confirmPassword}
               onChange={onConfirmPasswordHandler}
-              required
               autoComplete="off"
             />
           </div>
