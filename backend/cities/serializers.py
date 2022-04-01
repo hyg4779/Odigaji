@@ -23,7 +23,7 @@ class City_serializer(serializers.ModelSerializer):
 
     avg_rate = serializers.SerializerMethodField()
     def get_avg_rate(self, obj):
-        return Visit.objects.filter(city_id=obj.id).aggregate(Avg('rate'))
+        return Visit.objects.filter(city_id=obj.id).aggregate(Avg('rate'))["rate__avg"]
 
 
     class Meta:
