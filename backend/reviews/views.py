@@ -233,7 +233,7 @@ def comment_list(request, review_id):
         serializer = Comment_list_serializer(data=request.data)
         
         if serializer.is_valid(raise_exception=True):
-            # 프론트에서 axios 요청할 때 URI에 movie의 id값을 넣어서 요청해야 함
+            # 프론트에서 axios 요청할 때 URI에 review의 id값을 넣어서 요청해야 함
             serializer.save(user=request.user, review=review)
             return Response(serializer.data, status=HTTP_201_CREATED)
     elif request.method == 'DELETE':

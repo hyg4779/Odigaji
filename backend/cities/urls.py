@@ -15,6 +15,9 @@ urlpatterns = [
     # 도시 사진 추출(개발용 api)
     path('<int:city_id>/get-city/photo/', views.get_city_photo, name='get_city_photo'),
     
+    # 도시 사진 추출(개발용 api)
+    path('<int:city_id>/get-city/back-photo/', views.get_city_back_photo, name='get_city_back_photo'),
+
     # input: province_id / output: {city_id, ...}
     path('<int:province_id>/roulette/', views.roulette, name='roulette')
 ]

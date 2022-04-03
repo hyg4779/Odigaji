@@ -31,6 +31,7 @@ class City_serializer(serializers.ModelSerializer):
             "population",
             "area",
             "photo",
+            "background_photo",
             "att_data"
         )
         read_only_fields = ('id', 'name', 'info', 'population', 'area')
@@ -55,6 +56,7 @@ class City_list_serializer(serializers.ModelSerializer):
             "id",
             "name",
             "photo",
+            "background_photo",
             "province_data",
             "option",
         )
@@ -72,6 +74,7 @@ class City_visited_serializer(serializers.ModelSerializer):
             "id",
             "name",
             "photo",
+            "background_photo",
             "province_data"
         )
 
