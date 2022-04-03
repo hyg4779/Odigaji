@@ -106,20 +106,17 @@ def mypage(request):
 
         # mypage 이미지 받기
         photo = request.data.get('photo')
-        print(photo)
-
+        nickname = request.data["nickname"]
         # 별명 수정 시 일치여부 검사
-        if request.user.nickname != request.data.get('nickname') and User.objects.filter(nickname=request.data.get('nickname')).exists():
+        if request.user.nickname != nickname and User.objects.filter(nickname=nickname).exists():
             return Response({'error': '이미 존재하는 별명입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         
-        serializer = User_mypage_serializer(request.user, data=request.data)
+        serializer = User_mypage_serializer(instance=request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            print('serializer is valid!')
             serializer.save(photo=photo)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response({'error': '업로드한 파일에 문제가 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': '업로드한 파일에 문제가 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
     
     # 회원탈퇴
     elif request.method == 'DELETE':
@@ -146,13 +143,13 @@ def password(request):
     '''
     비밀번호 변경
     '''
-    password = request.data.get('password')
-    passwordconfirm = request.data.get('passwordconfirm')
+    password = request.data['password']
+    passwordconfirm = request.data['passwordconfirm']
 
     if password != passwordconfirm:
         return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        serializer = User_password_serializer(request.user, data=request.data)
+        serializer = User_password_serializer(instance=request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             user.set_password(password)

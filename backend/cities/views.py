@@ -71,9 +71,8 @@ def get_city_photo(request, city_id):
 
             serializer.save(photo=photo)
             return Response(serializer.data)
-        else:
-            print('is not valid')
-    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -89,11 +88,9 @@ def get_attraction(request,attraction_id):
     '''
     세부 관광지 정보 return 함수
     '''
-    if request.method=='GET':
-        attraction = get_object_or_404(Attraction, pk=attraction_id)
-        attr_serializer = Attraction_serializer(attraction)
-        return Response(attr_serializer.data, status=status.HTTP_200_OK)
-    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
+    attraction = get_object_or_404(Attraction, pk=attraction_id)
+    attr_serializer = Attraction_serializer(attraction)
+    return Response(attr_serializer.data, status=status.HTTP_200_OK)
 
 
 @swagger_auto_schema(
@@ -106,11 +103,9 @@ def get_attraction(request,attraction_id):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def roulette(request, province_id):
-    if request.method=='GET':
-        cities = City.objects.filter(province=province_id)
-        serializer = City_list_serializer(cities, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
+    cities = City.objects.filter(province=province_id)
+    serializer = City_list_serializer(cities, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 is_visited_schema = openapi.Schema(
                         type=openapi.TYPE_OBJECT,

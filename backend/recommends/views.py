@@ -63,38 +63,42 @@ def sel_city(request):
         return Response(data=serializer.data)
 
     elif request.method == "POST":
-
-        if not Taste.objects.filter(user_id=user.id).exists():
-            taste_ser = Taste_serializer(data=request.data)
+        # 먼저 visit에 연결할 taste가 있는지 확인한다.
+        if not Taste.objects.filter(user_id=user.id).exists():      # taste가 없으면
+            taste_ser = Taste_serializer(data={})                   # 비어있는 taste를 만들어서 가져간다.
             if taste_ser.is_valid(raise_exception=True):
                 taste = taste_ser.save(user=user)
         else:
-            taste = get_object_or_404(Taste, user_id=user.id)
+            taste = get_object_or_404(Taste, user_id=user.id)       # 있으면 찾아서 가져간다.
 
-        city_id = request.data.get("city")
+        city_id = request.data["city"]
+        # visit serializer에 맞는 양식
         dic = {'user':user.id,
                'city':city_id,
                'taste':taste.id,
-               'rate':request.data['rate']
+               'rate':request.data.get('rate')
                }
 
-        if not user.rate_cities.filter(pk=city_id).exists():
+        if not user.rate_cities.filter(pk=city_id).exists():        # 기존에 해당 도시 방문 정보가 없으면 새로
+            if request.data.get('rate')==None:
+                return Response({"message":"평점 데이터를 넣어주세요."}, status=status.HTTP_400_BAD_REQUEST)
             serializer = Visit_serializer(data=dic)
         else:
-            visit = get_object_or_404(Visit, user_id=user.id, city_id=city_id)
-            if not request.data.get('rate'):
+            visit = get_object_or_404(Visit, user_id=user.id, city_id=city_id)  # 있으면 기존 visit을 사용
+            if request.data.get('rate') == None:                                # rate값이 없으면 삭제 요청처럼 적용
                 visit.delete()
-                return Response(status=status.HTTP_205_RESET_CONTENT)
+                return Response({"message":"별점을 삭제했습니다."},status=status.HTTP_205_RESET_CONTENT)
             serializer = Visit_serializer(instance=visit, data=dic)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
     elif request.method == "DELETE":
         visit = get_object_or_404(Visit, user_id=user.id, city_id=request.data.city)
         visit.delete()
-        return Response(status=status.HTTP_205_RESET_CONTENT)
+        return Response({"message":"별점을 삭제했습니다."}, status=status.HTTP_205_RESET_CONTENT)
 
 
 @swagger_auto_schema(
