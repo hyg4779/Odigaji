@@ -13,17 +13,32 @@ class User_serializer(serializers.ModelSerializer):
 
     class Meta: 
         model = User
-        fields = ('username', 'nickname', 'password', 'photo', 'is_active', 'is_admin', 'is_staff',)
+        fields = ('username',
+                  'nickname',
+                  'password',
+                  'photo',
+                  'is_active',
+                  'is_admin',
+                  'is_staff',)
 
 # 유저 프로필 serialier 는 이미지를 url화하여 사용
 class User_mypage_serializer(serializers.ModelSerializer):
     photo = serializers.ImageField(use_url=True, required=False)
     class Meta:
         model = User
-        fields = ('id', 'username', 'nickname', 'point', 'photo')
+        fields = ('id',
+                  'username',
+                  'nickname',
+                  'point',
+                  'photo')
 
 class User_password_serializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = User
         fields = ('password', )
+
+class User_point_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('point',)
