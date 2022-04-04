@@ -20,19 +20,24 @@ function TravelDetail() {
   const [longitude, setLongitude] = useState();
   const [city, setCity] = useState();
   const [province, setProvince] = useState();
+  const [cityId, setCityId] = useState();
+  const [cityLogo, setCityLogo] = useState();
   let attractionDetail;
   console.log(attractionId);
   console.log(latitude);
   console.log(longitude);
   //랜더링 이후 실행되는 함수
+
+  const attractionUrl =
+    server.BASE_URL +
+    server.ROUTES.allCities +
+    attractionId +
+    server.ROUTES.attraction;
+
   useEffect(() => {
     axios
       .get(
-        server.BASE_URL +
-          server.ROUTES.allCities +
-          attractionId +
-          server.ROUTES.attraction
-
+        attractionUrl
         // 'http://127.0.0.1:8000/api/cities/505/get-attraction/'
       )
       .then((res) => {
@@ -45,6 +50,7 @@ function TravelDetail() {
         setLatitude(res.data.latitude);
         setLongitude(res.data.longitude);
         setCity(res.data.city);
+        setCityId(city);
         setProvince(res.data.province);
         attractionDetail = res.data;
         var container = document.getElementById('map');
@@ -70,6 +76,12 @@ function TravelDetail() {
           infowindow.close();
         });
       });
+    const cityUrl =
+      server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
+    axios.get(cityUrl).then((res) => {
+      setCityLogo(res.data.photo);
+      console.log(cityLogo);
+    });
   }, []);
   let tempdata = [
     '임진각 관광지',
@@ -83,7 +95,7 @@ function TravelDetail() {
     <div className="TravelDetail">
       <Row>
         <Col>
-          <Image src="/img/수원시.jpg" roundedCircle />
+          <Image src={server.BASE_URL + cityLogo} roundedCircle />
         </Col>
         <Col>
           <div id="map"></div>
@@ -117,7 +129,7 @@ function TravelDetail() {
       </Container>
       <Container>
         <Button variant="secondary" onClick={() => goback()}>
-          **시목록으로
+          관광지 목록으로
         </Button>{' '}
       </Container>
     </div>
