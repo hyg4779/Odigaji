@@ -56,7 +56,6 @@ function Map({ tours }) {
         return colorList[0];
       }
     } else {
-      // return 0.5 + 0.05 * cntData[id].cnt;
       if (cntData[id].cnt <= 6) {
         return colorList[cntData[id].cnt];
       } else {
