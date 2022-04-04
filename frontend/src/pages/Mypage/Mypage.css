@@ -9,8 +9,12 @@
 }
 
 .TitleContainer{  
+
+  -webkit-animation: TitleContainer 8s linear infinite alternate both;
+  animation: TitleContainer 8s linear infinite alternate both;
   height: 132px;
-  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+  /* background: #74ebd5; */
+  /* background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);  */
   display: flex;
   align-items: flex-end;
   padding: 16px;
@@ -47,9 +51,10 @@
 }
 
 .ActivityContainer{
+  text-align: center;
   background-color: white;  
   display: flex;  
-  padding: 21px 16px;  
+  padding: 21px 60px;  
   height: 90px;
   margin-bottom: 10px;
 }
@@ -70,7 +75,7 @@
 
 
 .VisitedCityContainer{
-  padding: 21px 16px;
+  padding: 30px 60px;
   background-color: white;
   margin-bottom: 10px;
 }
@@ -94,16 +99,17 @@
 }
 
 .VisitedCityContainer .number{
-  width: 150px;
+  width: 250px;
   height: 200px;
   background-color: rgb(146, 155, 155);
   text-align: center;
 }
 .VisitedCityContainer .text{
-  font-size: 12px;
+  font-size: 15px;
   font-weight: normal;
   color: #c2c2c2;
   text-align: center;
+  padding-top:  20px;
 }
 .VisitedCityContainer .space{
   display: flex;
@@ -113,7 +119,7 @@
 
 
 .ReviewListContainer{  
-  padding: 21px 16px;
+  padding: 30px 60px;
   background-color: #ffffff;
   margin-bottom: 10px;
 }
@@ -161,15 +167,22 @@
 .ReviewListContainer .region{  
   flex-grow: 1;
   margin-right: 14px;
+
+  padding-left: 25px;
+
 }
+  
+
 .ReviewListContainer .textTitle{
 
   flex-grow: 1;
   font-size: 16px;
   position: relative;
+  
 }
 .ReviewListContainer .time{
   margin-left: auto;
+  padding-right: 25px;
   
 }
 
@@ -202,7 +215,7 @@
 
 
   
-.Editinfo {background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);}
+.Editinfo {background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));}
 .Editinfo {
   margin-right: 80px;
   width: 80px;
@@ -224,3 +237,50 @@
   text-decoration: none;
 }
   
+
+
+ @-webkit-keyframes TitleContainer{  
+  
+  0% {
+    background: #74ebd5;
+  }
+  100% {
+    background: #7135fe;
+  }
+}
+@keyframes TitleContainer{  
+  
+  0% {
+    background:  #74ebd5;
+  }
+  100% {
+    background: #7135fe;
+  }
+}
+
+.star-ratings {
+  display: flex;
+  color: #eeeeee; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #2b2a29; 
+
+
+
+}
+.starLine{
+  transform: translate(85px, 0px);
+}
+.star-ratings-fill {
+ 
+  color: gold;
+  padding: 0;
+  display: inline;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  /* -webkit-text-fill-color: gold; */
+}
+ 

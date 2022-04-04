@@ -40,6 +40,11 @@
 .InfoProfileChange{
   margin-left: 240px;
   border-style: none;
+  padding: 5px;
+  font-size: 8pt;
+  color: white;
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+  border-radius: 5px;
 }
 .InfoEmail{
  
@@ -119,6 +124,7 @@
   border: 1px solid lightgray;
   outline: none;
 }
+
 .InfoChangebtn button{
     
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
