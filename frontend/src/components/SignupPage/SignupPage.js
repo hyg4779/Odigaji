@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
 import server from '../../API/server';
@@ -112,6 +112,13 @@ function SignupPage() {
         });
     }
   };
+
+  useEffect(() => {
+    if (sessionStorage.getItem('jwt')) {
+      navigate('/');
+      return;
+    }
+  }, [navigate]);
 
   return (
     <div className="wrap">

@@ -17,6 +17,7 @@ import Write from './pages/Travelpage/write';
 import Post from './pages/Travelpage/Post';
 import Random from './pages/Randompage/Random';
 import Survey from './pages/Surveypage/Survey';
+import Notfound from './pages/Mainpage/Notfound';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -43,6 +44,7 @@ ReactDOM.render(
         />
         <Route path="random" element={<Random />} />
         <Route path="survey" element={<Survey />} />
+        <Route path="*" element={<Notfound />} />
       </Route>
     </Routes>
   </BrowserRouter>,
