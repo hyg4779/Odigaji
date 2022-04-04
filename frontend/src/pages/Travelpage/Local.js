@@ -5,6 +5,7 @@ import axios from 'axios';
 import server from '../../API/server';
 import { Link, useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
+import './Local.css';
 
 function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
@@ -95,48 +96,26 @@ function Local() {
   }, [isLogin]);
   return (
     <div className="TravelDetail m-5 pt-5 container">
-      <div className="list">
-        <Row className="h3">
-          <Row>
-            <Col className="m-2">
-              <h2>{name} 관광지 목록</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>{info}</h5>
-            </Col>
-          </Row>
-          <Col className="bg-secondary text-white m-2 ">
-            인구수 : {papulation}
-          </Col>
-          <Col className="bg-secondary text-white m-2">면적 : {area}</Col>
-          <Col className="bg-secondary text-white m-2">
+      <div className="card col-sm-4 mt-5">
+        <img
+          className="card-img-top"
+          src={server.BASE_URL + localLogo}
+          alt="Card image"
+        />
+        <div className="card-body">
+          <h2 className="card-title">{name}</h2>
+          <h5 className="card-text">{info}</h5>
+          <div className="bg-info">
+            평균별점
             <TravelRating
               cityId={cityId}
               rating={avg_rate}
               setRating={setRating}
             />
-          </Col>
-        </Row>
-      </div>
-      <div className="listContents">
-        <Row>
-          <Col>
-            {/* 나중에 백엔드 이미지 업로드되면 수정할것!!! 백엔드 api완성되면 추가할것(아마 주말에 할듯?) */}
-            <Image
-              src={server.BASE_URL + localLogo}
-              rounded
-              className="img-thumbnail"
-            />
-          </Col>
-        </Row>
-      </div>
-      {/* 부트스트랩 테이블 넣을자리!!! */}
-      <div className="bg-secondary">
-        <Row>
-          <Col className="m-2">도시평가</Col>
-          <Col>
+          </div>
+          <div>인구수 : {papulation}</div>
+          <div>면적 : {area}</div>
+          <div className="bg-info">
             {isLogin != null ? (
               <TravelRating
                 cityId={cityId}
@@ -144,34 +123,39 @@ function Local() {
                 setRating={setRating}
               />
             ) : null}
-          </Col>
-        </Row>
+          </div>
+          <Button
+            className="reviewButton"
+            variant="primary"
+            onClick={() => MoveBoardPage(params.cityId)}
+          >
+            리뷰 게시판 이동
+          </Button>{' '}
+        </div>
+        {/* end card */}
       </div>
-      <Table striped bordered hover className="m-5">
-        <tbody>
-          {/* &&양옆에 2개쓰면  */}
-          {travelList &&
-            travelList.map((data, idx) => {
-              return (
-                //무명함수 호출안하면 강제로 이동한다....
-                <tr key={idx} onClick={() => MovetravelPage(data.id)}>
-                  <td className="m-2">{data.name}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
-      <Container>
-        <Button
-          variant="secondary"
-          onClick={() => MoveBoardPage(params.cityId)}
-        >
-          리뷰 게시판 이동
-        </Button>{' '}
-        {/* <Button variant="success" onClick={() => visited()}>
-          방문
-        </Button> */}
-      </Container>
+      <div className="col-sm-6 tablediv mt-5 pt-5">
+        <Table striped bordered hover>
+          <thead className="bg-info">
+            <th>
+              <h5>{name}여행지목록</h5>
+            </th>
+          </thead>
+          <tbody>
+            {/* &&양옆에 2개쓰면  */}
+            {travelList &&
+              travelList.map((data, idx) => {
+                return (
+                  //무명함수 호출안하면 강제로 이동한다....
+                  <tr key={idx} onClick={() => MovetravelPage(data.id)}>
+                    <td className="m-2">{data.name}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </Table>
+      </div>
+
       {/* 로그인여부에따라 별점 평가 기능 활성/ 비활성화 */}
     </div>
 
