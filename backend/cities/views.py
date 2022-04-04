@@ -7,8 +7,7 @@ from .models import (City, Attraction, Visit)
 from .serializers import(City_list_serializer, City_serializer, Attraction_serializer)
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-
-
+import requests
 
 @swagger_auto_schema(
     methods=['GET'],
@@ -117,7 +116,23 @@ def get_attraction(request,attraction_id):
     if request.method=='GET':
         attraction = get_object_or_404(Attraction, pk=attraction_id)
         attr_serializer = Attraction_serializer(attraction)
-        return Response(attr_serializer.data, status=status.HTTP_200_OK)
+        
+        # 카카오 이미지 검색 API
+        url = "https://dapi.kakao.com/v2/search/image"
+        apikey = "e3ace0679cc7eb6718b895289ae98703"
+        subj = attr_serializer.data['name']
+        result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
+
+        # 이미지 주소 받아오기
+        img_response = requests.get(result.json()["documents"][0]['image_url'])
+        # 파일 저장
+        with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
+            fp.write(img_response.content)
+
+        data = attr_serializer.data
+        data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
+
+        return Response(data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
