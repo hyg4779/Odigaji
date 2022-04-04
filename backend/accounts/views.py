@@ -51,7 +51,7 @@ def signup(request):
     
     # 닉네임 일치여부 검사
     if User.objects.filter(nickname=request.data.get('nickname')).exists():
-        return Response({'error': '이미 존재하는 별명입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': '이미 존재하는 닉네임입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
     # UserSerializer를 통해 사용자가 넘겨준 데이터 직렬화
     serializer = User_serializer(data=request.data)

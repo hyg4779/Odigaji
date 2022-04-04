@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Province, Attraction, City, Visit
 from django.shortcuts import get_list_or_404, get_object_or_404
-
+from django.db.models import Avg
 
 class Province_serializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +21,11 @@ class City_serializer(serializers.ModelSerializer):
         serializer = Attraction_serializer(atts, many=True)
         return serializer.data
 
+    avg_rate = serializers.SerializerMethodField()
+    def get_avg_rate(self, obj):
+        return Visit.objects.filter(city_id=obj.id).aggregate(Avg('rate'))["rate__avg"]
+
+
     class Meta:
         model = City
         fields = (
@@ -31,7 +36,9 @@ class City_serializer(serializers.ModelSerializer):
             "population",
             "area",
             "photo",
-            "att_data"
+            "background_photo",
+            "att_data",
+            "avg_rate",
         )
         read_only_fields = ('id', 'name', 'info', 'population', 'area')
 
@@ -55,6 +62,7 @@ class City_list_serializer(serializers.ModelSerializer):
             "id",
             "name",
             "photo",
+            "background_photo",
             "province_data",
             "option",
         )
@@ -72,6 +80,7 @@ class City_visited_serializer(serializers.ModelSerializer):
             "id",
             "name",
             "photo",
+            "background_photo",
             "province_data"
         )
 

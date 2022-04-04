@@ -91,8 +91,8 @@ function Survey() {
       { title: 'plan', id: 31, name: '즉흥', img: 'img/생각없음.jpg' },
     ],
     [
-      { title: 'more_eve', id: 32, name: '아침형 인간', img: 'img/early.jpg' },
-      { title: 'more_eve', id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
+      { title: 'mor_eve', id: 32, name: '아침형 인간', img: 'img/early.jpg' },
+      { title: 'mor_eve', id: 33, name: '저녁형 인간', img: 'img/night.jpg' },
     ],
   ];
   const questionList = [
