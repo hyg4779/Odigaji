@@ -315,3 +315,7 @@ $RECYCLE.BIN/
 .idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,django,visualstudiocode,vue,vuejs,gitbook,venv
+
+
+# pem키
+*.pem
