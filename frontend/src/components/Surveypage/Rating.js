@@ -13,8 +13,8 @@ function Rating({ tour, tours, setTours }) {
     tempTours[findIdx] = { ...tempTours[findIdx], rate: idx };
     setTours(tempTours);
     AddSelCity(tempTours[findIdx])
-      .then((response) => {
-        console.log('지역 데이터 전송', response.data);
+      .then(() => {
+        console.log('지역-평점 정보 서버 연동 성공');
       })
       .catch((error) => {
         console.log(error);
