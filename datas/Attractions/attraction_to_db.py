@@ -2,7 +2,7 @@ import pymysql
 import csv
 
 # 세부관광지 data
-file = open('new_attractions.csv', 'r', encoding='utf-8')
+file = open('additional_attraction.csv', 'r', encoding='utf-8')
 rdr = csv.reader(file)
 
 
@@ -33,6 +33,7 @@ selete_sql = 'SELECT id FROM cities_city WHERE name LIKE %s'
 
 
 for line in rdr:
+    
     '''
     line
     ['관광지명','주소','공공편익시설정보','주차가능수','관리기관전화번호','위도','경도']
@@ -41,9 +42,10 @@ for line in rdr:
         continue
     name = line[0]  # 관광지명
     tmp = line[1].split()   # tmp(주소): 도, 시
-    # print(curs.fetchall()[0][0])
+    
     try:
         curs.execute(selete_sql, f"%{tmp[1]}%") # 시 id 찾기
+        # print(curs.fetchall()[0][0])
 
         if tmp[0] in province_ids:
             prv_id = province_ids[tmp[0]] # 도 id
@@ -54,17 +56,20 @@ for line in rdr:
             prv_id = 100
             curs.execute(selete_sql, tmp[0])
             city_id = curs.fetchall()
+        # print(tmp[0], prv_id, tmp[1], city_id)     # 자치구역이름 prv_id 매핑 확인
 
         address = line[1]
         facilites = line[2] # 공공편의시설
-        parking_lot = line[3]  # 주차가능수
+        parking_lot = line[3] if line[3] else 0 # 주차가능수
         tel = line[4]   # 전화번호
         latitude = line[5]  # 위도
         logitude = line[6]  # 경도
         curs.execute(insert_sql, (name, address, facilites, parking_lot, tel, latitude, logitude, city_id, prv_id))
         conn.commit()
-        print(tmp)
-    except:
-        continue
+
+    except Exception as e:
+        print(line[0])
+        print(e)
+        
 
 file.close()
