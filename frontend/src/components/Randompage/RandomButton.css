@@ -1,0 +1,16 @@
+.RandomButton {
+  box-sizing: border-box;
+  padding: 0 10px;
+  width: auto;
+  height: 3vw;
+  min-height: 30px;
+  border-radius: 2rem;
+  background-color: #BC8CF2;
+  border-style: none;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.RandomButton:hover {
+  background-color: #7535FE;
+}

@@ -18,7 +18,7 @@ function Nav() {
         메인페이지
       </NavLink>
       <div className="Nav-list">
-        <NavLink className="Nav-item" to="/">
+        <NavLink className="Nav-item" to="/search">
           직접찾기
         </NavLink>
         <NavLink className="Nav-item" to="/random">
