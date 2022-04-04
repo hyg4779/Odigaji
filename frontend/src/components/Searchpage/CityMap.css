@@ -1,3 +1,4 @@
 .CityMap {
-  width: 100%;
+  width: 50vw;
+  border: 5px solid black
 }
