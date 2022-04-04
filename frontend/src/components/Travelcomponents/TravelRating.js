@@ -4,7 +4,7 @@ import { AddSelCity } from './SurveyAxios'; // selcity에서 api저장해놓음
 function TravelRating({ cityId, rating, setRating }) {
   const stars = [1, 2, 3, 4, 5];
   //idx는 별점인듯,,
-  console.log('rating: ', rating);
+  // console.log('rating: ', rating);
   function chooseStar(idx) {
     const TourData = {
       id: cityId,
@@ -30,11 +30,12 @@ function TravelRating({ cityId, rating, setRating }) {
     }
   }
   useEffect(() => {
-    console.log('rerenderting 되었습니다.', rating);
+    // console.log('rerenderting 되었습니다.', rating);
   }, [rating]);
 
   return (
     <div className="Rating">
+      도시평가 :
       {stars.map((idx) => {
         return (
           <div key={idx} onClick={() => chooseStar(idx)}>

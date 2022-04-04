@@ -14,26 +14,26 @@ function MoveBoardPage(id) {
   window.location.href = 'travelDetail/board/' + id + '/';
 }
 
-function visited() {
-  console.log('visited button clicked');
-  const jwt = sessionStorage.getItem('jwt');
-  axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
+// function visited() {
+//   console.log('visited button clicked');
+//   const jwt = sessionStorage.getItem('jwt');
+//   axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
 
-  axios
-    .post(server.BASE_URL + server.ROUTES.selCity, {
-      city: cityId,
-      rate: 5,
-    })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+//   axios
+//     .post(server.BASE_URL + server.ROUTES.selCity, {
+//       city: cityId,
+//       rate: 5,
+//     })
+//     .then((res) => {
+//       console.log(res);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 
-  // 나중에 방문처리 할것!!!
-  // axios.get();
-}
+//   // 나중에 방문처리 할것!!!
+//   // axios.get();
+// }
 let cityId;
 function Local() {
   let params = useParams();
@@ -143,13 +143,16 @@ function Local() {
         >
           리뷰 게시판 이동
         </Button>{' '}
-        <Button variant="success" onClick={() => visited()}>
+        {/* <Button variant="success" onClick={() => visited()}>
           방문
-        </Button>
+        </Button> */}
       </Container>
-      {isLogin != null ? (
-        <TravelRating cityId={cityId} rating={rating} setRating={setRating} />
-      ) : null}
+      {/* 로그인여부에따라 별점 평가 기능 활성/ 비활성화 */}
+      <div className="bg-secondary">
+        {isLogin != null ? (
+          <TravelRating cityId={cityId} rating={rating} setRating={setRating} />
+        ) : null}
+      </div>
     </div>
 
     // end TravelDetail Div
