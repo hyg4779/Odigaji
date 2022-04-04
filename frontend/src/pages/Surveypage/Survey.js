@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Survey.css';
 import Intro from '../../components/Surveypage/Intro';
 import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
+import Result from '../../components/Surveypage/Result';
 import {
   AllCitiesList,
   AddTaste,
@@ -111,28 +113,34 @@ function Survey() {
   const [pageIndex, setPageIndex] = useState(-2);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
+  const [surveyResult, setSurveyResult] = useState([]);
+  const navigate = useNavigate();
 
   let leftLoc = String(13 + (pageIndex + 1) * 7.7) + 'vw';
   // survey-bar 의 left 값이 15vw 로 되어 있다
   // 10개의 취향 설문 + 1개의 지역 설문이 진행되니까
   // 11번째 페이지에서 진행도가 맨 끝으로 가 있어야 한다
 
+  function getResult() {
+    AddTaste(tastes)
+      .then((response) => {
+        console.log('취향 데이터 연결 후 응답 완료', response);
+        setSurveyResult(response.data);
+      })
+      .catch((error) => {
+        console.log('취향 데이터 연결 실패', error);
+      });
+  }
+
   function nextPage() {
-    if (pageIndex <= 8) {
-      setPageIndex(pageIndex + 1);
-    } else {
-      AddTaste(tastes)
-        .then(() => {
-          console.log('취향 데이터 연결 후 응답 완료');
-        })
-        .catch((error) => {
-          console.log('취향 데이터 연결 실패', error);
-        });
+    setPageIndex(pageIndex + 1);
+    if (pageIndex >= 9) {
+      getResult();
     }
   }
 
   function beforePage() {
-    if (pageIndex >= 1) {
+    if (pageIndex >= 0) {
       setPageIndex(pageIndex - 1);
     }
   }
@@ -164,6 +172,18 @@ function Survey() {
   }
 
   useEffect(() => {
+    if (!sessionStorage.getItem('jwt')) {
+      if (
+        window.confirm(
+          '로그인하시면 더 좋은 추천 결과를 제공해드릴 수 있습니다'
+        )
+      ) {
+        navigate('/login');
+        return;
+      } else {
+        navigate(-1);
+      }
+    }
     const source = axios.CancelToken.source();
     AllCitiesList()
       .then((response) => {
@@ -179,11 +199,11 @@ function Survey() {
     return function () {
       source.cancel();
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="Survey">
-      {pageIndex >= -1 && (
+      {pageIndex >= -1 && pageIndex <= 9 && (
         <>
           <div className="Survey-bar" />
           <img
@@ -211,7 +231,7 @@ function Survey() {
           setTours={setTours}
         />
       )}
-      {pageIndex >= 0 && (
+      {pageIndex >= 0 && pageIndex <= 9 && (
         <Question
           surveyData={surveyData}
           questionList={questionList}
@@ -223,6 +243,9 @@ function Survey() {
           lastPage={lastPage}
           tasteSurveys={tasteSurveys}
         />
+      )}
+      {pageIndex === 10 && (
+        <Result surveyResult={surveyResult} startPage={startPage} />
       )}
     </div>
   );

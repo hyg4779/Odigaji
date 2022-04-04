@@ -183,6 +183,9 @@ function Post() {
                       >
                         삭제
                       </button>
+                      <button type="button" className="btn btn-primary">
+                        수정
+                      </button>
                     </td>
                   </tr>
                 );

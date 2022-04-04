@@ -9,6 +9,7 @@
   margin-bottom: 1vh;
   color: #FFFFFF;
   font-weight: bold;
+  overflow-y: scroll;
 }
 
 .Tourlist-header {
@@ -20,15 +21,19 @@
 
 .Tourlist-content {
   display: flex;
-  flex-direction: column;
   width: 80vw;
   height: 80vh;
-  justify-content: flex-start;
-  column-gap: 5vw;
+}
+
+.Tourlist-text-content {
+  box-sizing: border-box;
+  width: 50%;
+  height: 100%;
+  padding-top: 20px;
 }
 
 .Tourlist-content-input {
-  min-width: 250px;
+  width: 50%;
   height: 30px;
   border-radius: 2rem;
   border-style: none;

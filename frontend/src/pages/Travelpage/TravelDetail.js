@@ -21,11 +21,20 @@ function TravelDetail() {
   const [city, setCity] = useState();
   const [province, setProvince] = useState();
   const [search_image, setSearch_image] = useState();
+  const [cityId, setCityId] = useState();
+  const [cityLogo, setCityLogo] = useState();
   let attractionDetail;
   console.log(attractionId);
   console.log(latitude);
   console.log(longitude);
   //랜더링 이후 실행되는 함수
+
+  const attractionUrl =
+    server.BASE_URL +
+    server.ROUTES.allCities +
+    attractionId +
+    server.ROUTES.attraction;
+
   useEffect(() => {
     axios
       .get(
@@ -45,6 +54,7 @@ function TravelDetail() {
         setLatitude(res.data.latitude);
         setLongitude(res.data.longitude);
         setCity(res.data.city);
+        setCityId(city);
         setProvince(res.data.province);
         setSearch_image(res.data.search_image);
         attractionDetail = res.data;
@@ -71,6 +81,12 @@ function TravelDetail() {
           infowindow.close();
         });
       });
+    const cityUrl =
+      server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
+    axios.get(cityUrl).then((res) => {
+      setCityLogo(res.data.photo);
+      console.log(cityLogo);
+    });
   }, []);
   let tempdata = [
     '임진각 관광지',
@@ -118,7 +134,7 @@ function TravelDetail() {
       </Container>
       <Container>
         <Button variant="secondary" onClick={() => goback()}>
-          **시목록으로
+          관광지 목록으로
         </Button>{' '}
       </Container>
     </div>
