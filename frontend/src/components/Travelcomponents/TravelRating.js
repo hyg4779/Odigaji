@@ -35,7 +35,6 @@ function TravelRating({ cityId, rating, setRating }) {
 
   return (
     <div className="Rating">
-      도시평가 :
       {stars.map((idx) => {
         return (
           <div key={idx} onClick={() => chooseStar(idx)}>
