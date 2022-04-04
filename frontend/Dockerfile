@@ -15,4 +15,4 @@ RUN npm install
 COPY /. ./
 
 # start app
-CMD ["npm", "deploy_start"]
+CMD ["npm", "run", "deploy_start"]

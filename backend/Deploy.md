@@ -1,7 +1,3 @@
-# Docker만 사용한 배포
-
-
-
 ### BACK
 
 - Dockerfile
