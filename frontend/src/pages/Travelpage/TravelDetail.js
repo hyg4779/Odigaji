@@ -20,6 +20,7 @@ function TravelDetail() {
   const [longitude, setLongitude] = useState();
   const [city, setCity] = useState();
   const [province, setProvince] = useState();
+  const [search_image, setSearch_image] = useState();
   let attractionDetail;
   console.log(attractionId);
   console.log(latitude);
@@ -32,7 +33,6 @@ function TravelDetail() {
           server.ROUTES.allCities +
           attractionId +
           server.ROUTES.attraction
-
         // 'http://127.0.0.1:8000/api/cities/505/get-attraction/'
       )
       .then((res) => {
@@ -46,6 +46,7 @@ function TravelDetail() {
         setLongitude(res.data.longitude);
         setCity(res.data.city);
         setProvince(res.data.province);
+        setSearch_image(res.data.search_image);
         attractionDetail = res.data;
         var container = document.getElementById('map');
         var options = {
@@ -83,7 +84,7 @@ function TravelDetail() {
     <div className="TravelDetail">
       <Row>
         <Col>
-          <Image src="/img/수원시.jpg" roundedCircle />
+          <Image src={server.BASE_URL + '/' + search_image} />
         </Col>
         <Col>
           <div id="map"></div>
