@@ -20,6 +20,7 @@ function TravelDetail() {
   const [longitude, setLongitude] = useState();
   const [city, setCity] = useState();
   const [province, setProvince] = useState();
+  const [search_image, setSearch_image] = useState();
   const [cityId, setCityId] = useState();
   const [cityLogo, setCityLogo] = useState();
   let attractionDetail;
@@ -37,7 +38,10 @@ function TravelDetail() {
   useEffect(() => {
     axios
       .get(
-        attractionUrl
+        server.BASE_URL +
+          server.ROUTES.allCities +
+          attractionId +
+          server.ROUTES.attraction
         // 'http://127.0.0.1:8000/api/cities/505/get-attraction/'
       )
       .then((res) => {
@@ -52,6 +56,7 @@ function TravelDetail() {
         setCity(res.data.city);
         setCityId(city);
         setProvince(res.data.province);
+        setSearch_image(res.data.search_image);
         attractionDetail = res.data;
         var container = document.getElementById('map');
         var options = {
@@ -95,7 +100,7 @@ function TravelDetail() {
     <div className="TravelDetail">
       <Row>
         <Col>
-          <Image src={server.BASE_URL + cityLogo} roundedCircle />
+          <Image src={server.BASE_URL + '/' + search_image} />
         </Col>
         <Col>
           <div id="map"></div>
