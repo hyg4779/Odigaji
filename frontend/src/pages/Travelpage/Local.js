@@ -52,7 +52,8 @@ function Local() {
   //////////////////// URL //////////////////////////////////////
   const cityUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
-  const visitedUrl = 'http://localhost:8000/api/cities/21/is-visited/';
+  const visitedUrl =
+    server.BASE_URL + server.ROUTES.allCities + cityId + '/is-visited/';
   let isLogin = sessionStorage.getItem('jwt');
   useEffect(() => {
     //렌더링 이후에 실행되는 함수
@@ -93,20 +94,29 @@ function Local() {
     console.log(isLogin);
   }, [isLogin]);
   return (
-    <div className="TravelDetail m-5 pt-5">
+    <div className="TravelDetail m-5 pt-5 container">
       <div className="list">
         <Row className="h3">
           <Row>
-            <Col className="bg-secondary text-white m-2">
-              {name} 관광지 목록
+            <Col className="m-2">
+              <h2>{name} 관광지 목록</h2>
             </Col>
           </Row>
-          <Col className="bg-secondary text-white m-2">
+          <Row>
+            <Col>
+              <h5>{info}</h5>
+            </Col>
+          </Row>
+          <Col className="bg-secondary text-white m-2 ">
             인구수 : {papulation}
           </Col>
           <Col className="bg-secondary text-white m-2">면적 : {area}</Col>
           <Col className="bg-secondary text-white m-2">
-            별점 : {avg_rate} / 5
+            <TravelRating
+              cityId={cityId}
+              rating={avg_rate}
+              setRating={setRating}
+            />
           </Col>
         </Row>
       </div>
@@ -114,14 +124,29 @@ function Local() {
         <Row>
           <Col>
             {/* 나중에 백엔드 이미지 업로드되면 수정할것!!! 백엔드 api완성되면 추가할것(아마 주말에 할듯?) */}
-            <Image src={server.BASE_URL + localLogo} rounded />
-          </Col>
-          <Col>
-            <div className="cityintro bg-secondary text-white m-2">{info}</div>
+            <Image
+              src={server.BASE_URL + localLogo}
+              rounded
+              className="img-thumbnail"
+            />
           </Col>
         </Row>
       </div>
       {/* 부트스트랩 테이블 넣을자리!!! */}
+      <div className="bg-secondary">
+        <Row>
+          <Col className="m-2">도시평가</Col>
+          <Col>
+            {isLogin != null ? (
+              <TravelRating
+                cityId={cityId}
+                rating={rating}
+                setRating={setRating}
+              />
+            ) : null}
+          </Col>
+        </Row>
+      </div>
       <Table striped bordered hover className="m-5">
         <tbody>
           {/* &&양옆에 2개쓰면  */}
@@ -148,11 +173,6 @@ function Local() {
         </Button> */}
       </Container>
       {/* 로그인여부에따라 별점 평가 기능 활성/ 비활성화 */}
-      <div className="bg-secondary">
-        {isLogin != null ? (
-          <TravelRating cityId={cityId} rating={rating} setRating={setRating} />
-        ) : null}
-      </div>
     </div>
 
     // end TravelDetail Div
