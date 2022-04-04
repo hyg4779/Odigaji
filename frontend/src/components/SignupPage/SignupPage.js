@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
 import server from '../../API/server';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 function SignupPage() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [id, setid] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [fileImage, setFileImage] = useState('');
-  const [EmailErrors, setEmailErrors] = useState('');
+  const [idErrors, setidErrors] = useState('');
   const [NicknameErrors, setNicknameErrors] = useState('');
   const [PasswordErrors, setPasswordErrors] = useState('');
   const [PasswordConErrors, setPasswordConErrors] = useState('');
@@ -22,18 +23,17 @@ function SignupPage() {
     setNicknameErrors(NicknameVaildation(event.target.value));
     setName(event.currentTarget.value);
   };
-  const EmailVaildation = (email) => {
-    let emailError = '';
-    const regex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  const idVaildation = (id) => {
+    let idError = '';
+    const regex = /^[A-Za-z]{1}[A-Za-z0-9_-]{3,19}$/;
 
-    if (!email) {
-      emailError = '이메일은 필수입니다.';
-    } else if (!regex.test(email)) {
-      emailError = '이메일 형식이 알맞지 않습니다.';
+    if (!id) {
+      idError = '아이디는 필수입니다.';
+    } else if (!regex.test(id)) {
+      idError = '반드시 영문으로 시작 숫자+언더바/하이픈 허용 4~20자리';
     }
 
-    return emailError;
+    return idError;
   };
   const NicknameVaildation = (name) => {
     let NicknameError = '';
@@ -66,10 +66,10 @@ function SignupPage() {
     return confirmPasswordError;
   };
 
-  const onEmailHandler = (event) => {
-    setEmailErrors(EmailVaildation(event.target.value));
+  const onidHandler = (event) => {
+    setidErrors(idVaildation(event.target.value));
 
-    setEmail(event.currentTarget.value);
+    setid(event.currentTarget.value);
   };
 
   const onPasswordHandler = (event) => {
@@ -88,27 +88,36 @@ function SignupPage() {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('username', email);
+    formData.append('username', id);
     formData.append('nickname', name);
     formData.append('password', password);
     formData.append('passwordconfirm', confirmPassword);
     formData.append('photo', fileImage);
 
-    if (
-      !EmailErrors &&
-      !PasswordErrors &&
-      !PasswordConErrors &&
-      !NicknameErrors
-    ) {
+    if (!idErrors && !PasswordErrors && !PasswordConErrors && !NicknameErrors) {
       await axios
         .post(server.BASE_URL + server.ROUTES.signup, formData)
         .then((res) => {
-          console.log(res);
-
-          navigate('/');
+          Swal.fire({
+            icon: 'success',
+            title: '회원가입 성공',
+            // eslint-disable-next-line prettier/prettier
+            text: '회원가입을 축하합니다.'
+            
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate('/');
+            }
+          });
         })
         .catch((error) => {
-          console.log(error);
+          Swal.fire({
+            icon: 'error',
+            title: '회원가입 실패',
+            // eslint-disable-next-line prettier/prettier
+            text: error.response.data.error
+            
+          });
         });
     }
   };
@@ -124,18 +133,16 @@ function SignupPage() {
     <div className="wrap">
       <div className="signup">
         <form onSubmit={onSubmit}>
-          <div className="email">
+          <div className="id">
             <input
-              name="email"
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={onEmailHandler}
-              required
+              name="id"
+              placeholder="아이디"
+              value={id}
+              onChange={onidHandler}
               autoComplete="off"
             />
           </div>
-          <div style={{ color: 'red', fontSize: '12px' }}>{EmailErrors}</div>
+          <div style={{ color: 'red', fontSize: '12px' }}>{idErrors}</div>
           <div className="name">
             <input
               name="name"
@@ -143,7 +150,6 @@ function SignupPage() {
               placeholder="닉네임"
               value={name}
               onChange={onNameHandler}
-              required
               autoComplete="off"
             />
           </div>
@@ -155,7 +161,6 @@ function SignupPage() {
               placeholder="비밀번호"
               value={password}
               onChange={onPasswordHandler}
-              required
               autoComplete="off"
             />
           </div>
@@ -167,7 +172,6 @@ function SignupPage() {
               placeholder="비밀번호 확인"
               value={confirmPassword}
               onChange={onConfirmPasswordHandler}
-              required
               autoComplete="off"
             />
           </div>

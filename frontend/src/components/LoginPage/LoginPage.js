@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import server from '../../API/server';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 // import jwt_decode from 'jwt-decode';
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [id, setid] = useState('');
   const [password, setPassword] = useState('');
   // const [authTokens, setAuthTokens] = useState('');
   // const [user, setUser] = useState('');
-  const onEmailHandler = (event) => {
-    setEmail(event.currentTarget.value);
+  const onidHandler = (event) => {
+    setid(event.currentTarget.value);
   };
 
   const onPasswordHandler = (event) => {
@@ -21,7 +22,7 @@ function LoginPage() {
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('username', email);
+    formData.append('username', id);
     formData.append('password', password);
     await axios
       .post(server.BASE_URL + server.ROUTES.login, formData)
@@ -37,7 +38,13 @@ function LoginPage() {
         navigate(-1);
       })
       .catch((error) => {
-        alert(error.response.data.detail);
+        // alert(error.response.data.detail);
+        Swal.fire({
+          icon: 'error',
+          title: '로그인 실패',
+          // eslint-disable-next-line prettier/prettier
+          text: '잘못된 아이디 또는 패스워드 입니다.'
+        });
       });
   };
   let navigate = useNavigate();
@@ -51,13 +58,12 @@ function LoginPage() {
         {/* <h1>오디가지</h1> */}
         <form onSubmit={onSubmit}>
           <div className="login_id">
-            <h5>이메일</h5>
+            <h5>아이디</h5>
             <input
-              name="email"
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={onEmailHandler}
+              name="id"
+              type="id"
+              value={id}
+              onChange={onidHandler}
               required
               autoComplete="on"
             />
@@ -67,22 +73,23 @@ function LoginPage() {
             <input
               name="password"
               type="password"
-              placeholder="비밀번호"
               value={password}
               onChange={onPasswordHandler}
               required
               autoComplete="off"
             />
           </div>
-          <div className="clearfix">
-            <div className="btn">
-              <button type="submit">로그인</button>
-            </div>
-            <div className="btn" onClick={onClick}>
-              <button>회원가입</button>
-            </div>
-          </div>
         </form>
+        <div className="clearfix">
+          <div className="btn">
+            <button type="submit" onClick={onSubmit}>
+              로그인
+            </button>
+          </div>
+          <div className="btn" onClick={onClick}>
+            <button>회원가입</button>
+          </div>
+        </div>
       </div>
     </div>
   );

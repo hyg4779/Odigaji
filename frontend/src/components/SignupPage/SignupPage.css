@@ -20,12 +20,12 @@
   flex-direction: column;
 
 }
-.email {
+.id {
   
   margin-top: 20px;
  
 }
-.email input {
+.id input {
 
   width: 400px;
   height: 40px;
