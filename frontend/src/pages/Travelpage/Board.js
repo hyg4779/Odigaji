@@ -23,7 +23,6 @@ function Board() {
   const movePost = (Postid) => {
     navigate('/local/travelDetail/board/post/' + Postid);
   };
-  let data = reviewData.splice(-1, 1);
 
   const makePageArray = () => {
     let pageArray = [];
@@ -37,7 +36,7 @@ function Board() {
     await axios
       .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
       .then((response) => {
-        setTotalLength(response.data[response.data.length - 1].total_pages);
+        setTotalLength(response.data.total_pages);
         console.log(response.data);
       })
       .catch((error) => {
@@ -58,10 +57,10 @@ function Board() {
             currentPage
         )
         .then((response) => {
-          console.log(response.data);
-          let data = response.data;
-          data.splice(-1, 1);
-          data.reverse();
+          console.log(response.data.data);
+          let data = response.data.data;
+          data.slice(-1, 1);
+
           setReviewdata(data);
         })
         .catch((error) => {});
