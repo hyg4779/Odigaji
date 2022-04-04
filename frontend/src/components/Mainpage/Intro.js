@@ -30,6 +30,7 @@ function Intro({ randomData, moveCity }) {
         alt="대표이미지"
         src={server.BASE_URL + randomData.photo}
         onClick={() => moveCity(randomData.id)}
+        loading="lazy"
       />
     </div>
   );

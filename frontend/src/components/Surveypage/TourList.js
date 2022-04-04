@@ -49,8 +49,8 @@ function TourList({
       };
       setTours(tours.concat(newTour));
       AddSelCity(newTour)
-        .then((response) => {
-          console.log(response.data);
+        .then(() => {
+          console.log('지역-평점 정보 서버 연동 성공');
         })
         .catch((error) => {
           console.log(error);
