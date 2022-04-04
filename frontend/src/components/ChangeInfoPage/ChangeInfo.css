@@ -46,6 +46,11 @@
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
   border-radius: 5px;
 }
+
+.InfoProfileChange:hover{
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
+
+}
 .InfoEmail{
  
     margin-top: 10px;
@@ -138,6 +143,10 @@
   font-size: 1.2em;
   letter-spacing: 2px;
 }
+.InfoChangebtn button:hover{
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
+
+}
 .InfoPageProfileBox{
   margin-top: 100px;
   width: 150px;
@@ -145,7 +154,8 @@
   border-radius: 70%;
 }
 .InfoPageProfileBox .InfoProfileImg{
-  
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
+
   width: 100%;
   height: 100%;
   object-fit: cover;
