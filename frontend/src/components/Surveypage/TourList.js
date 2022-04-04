@@ -1,6 +1,7 @@
 import React from 'react';
 import './TourList.css';
 import Rating from './Rating';
+import Map from './Map';
 import { AddSelCity } from './SurveyAxios';
 import {
   FaAngleLeft,
@@ -84,30 +85,33 @@ function TourList({
         다녀온 지역을 등록하고 평점을 입력해주세요
       </div>
       <div className="Tourlist-content">
-        <form onSubmit={(event) => addTour(event)}>
-          <input list="tourInput" className="Tourlist-content-input" />
-          <datalist id="tourInput">{makeList()}</datalist>
-          <button className="Tourlist-content-button">추가하기</button>
-        </form>
-        <div className="Tourlist-content-items">
-          {tours.map((tour, idx) => {
-            return (
-              <div className="Tourlist-content-item" key={idx}>
-                <div>
-                  {tour.name}({[tour.provinceName]})
+        <Map tours={tours} />
+        <div className="Tourlist-text-content">
+          <form onSubmit={(event) => addTour(event)}>
+            <input list="tourInput" className="Tourlist-content-input" />
+            <datalist id="tourInput">{makeList()}</datalist>
+            <button className="Tourlist-content-button">추가하기</button>
+          </form>
+          <div className="Tourlist-content-items">
+            {tours.map((tour, idx) => {
+              return (
+                <div className="Tourlist-content-item" key={idx}>
+                  <div>
+                    {tour.name}({[tour.provinceName]})
+                  </div>
+                  <div className="Tourlist-content-item-rate">
+                    <Rating tour={tour} tours={tours} setTours={setTours} />
+                    <button
+                      onClick={() => deleteTour(tour)}
+                      className="Tourlist-content-button"
+                    >
+                      X
+                    </button>
+                  </div>
                 </div>
-                <div className="Tourlist-content-item-rate">
-                  <Rating tour={tour} tours={tours} setTours={setTours} />
-                  <button
-                    onClick={() => deleteTour(tour)}
-                    className="Tourlist-content-button"
-                  >
-                    X
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="Tourlist-button-group">

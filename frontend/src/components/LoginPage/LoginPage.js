@@ -35,7 +35,7 @@ function LoginPage() {
           sessionStorage.setItem('jwt', response.data.access);
         }
 
-        navigate('/');
+        navigate(-1);
       })
       .catch((error) => {
         // alert(error.response.data.detail);
