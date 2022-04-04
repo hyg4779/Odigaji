@@ -1,5 +1,6 @@
 import React from 'react';
 import server from '../../API/server';
+import { Link } from 'react-router-dom';
 function visitedCity({ selCityData }) {
   console.log(selCityData);
 
@@ -26,10 +27,12 @@ function visitedCity({ selCityData }) {
             return (
               <div key={key} className="item">
                 <div>
-                  <img
-                    className="number"
-                    src={server.BASE_URL + data.city_data.photo}
-                  ></img>
+                  <Link to={{ pathname: `/local/${data.city}` }}>
+                    <img
+                      className="number"
+                      src={server.BASE_URL + data.city_data.photo}
+                    />
+                  </Link>
                   <div className="text">{data.city_data.name}</div>
                   <div className="star-ratings">
                     <div className="starLine">
