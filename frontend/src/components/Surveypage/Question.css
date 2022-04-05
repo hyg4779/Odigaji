@@ -79,6 +79,10 @@
   font-size: 20px;
 }
 
+.Question-button path {
+  fill: #FFFFFF;
+}
+
 .Question-button:hover {
   color: yellowgreen;
 }
