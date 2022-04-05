@@ -1,4 +1,3 @@
-/*global kakao*/
 import { Table } from 'react-bootstrap';
 
 import React, { useState, useEffect } from 'react';
@@ -7,7 +6,7 @@ import server from '../../API/server';
 import { Link, useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
 import './Local.css';
-
+import LocalModal from '../../components/Travelpage/LocalModal';
 function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
 }
@@ -50,13 +49,20 @@ function Local() {
   const [localLogo, setLocalLogo] = useState(null); // 시 로고 이미지
   const [avg_rate, setAvg_rate] = useState(null);
   const [rating, setRating] = useState(null);
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   //////////////////// URL //////////////////////////////////////
   const cityUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
   const visitedUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/is-visited/';
   let isLogin = sessionStorage.getItem('jwt');
+
   useEffect(() => {
     isLogin = sessionStorage.getItem('jwt');
 
@@ -72,7 +78,7 @@ function Local() {
       setProvince(res.data.province_data.name);
       setArea(res.data.area);
       setTravelList(res.data.att_data);
-      setLocalLogo(res.data.photo);
+      setLocalLogo(res.data.background_photo);
       setAvg_rate(res.data.avg_rate);
       console.log(server.BASE_URL + localLogo);
     });
@@ -80,19 +86,16 @@ function Local() {
     axios
       .get(visitedUrl)
       .then((res) => {
-        console.log(res);
         setRating(res.data.rate);
         if (res.status === 200) {
           isLogin = true;
         }
       })
       .catch((err) => {
-        console.log(err);
         isLogin = false;
       });
-    console.log(isLogin);
   }, [isLogin]);
-  console.log(travelList);
+
   return (
     <div className="LocalContainer">
       <div className="DetailContent">
@@ -101,8 +104,8 @@ function Local() {
             <img className="localImage" src={server.BASE_URL + localLogo} />
             <div className="LocalInfo">
               <div className="LocalTitle">
-                {province + '\n' + name}{' '}
-                {avg_rate != null ? (
+                {(province === '자치 시도' ? '' : province) + '\n' + name}
+                {rating != null ? (
                   <img className="visitedMedal" src="\img\메달.png"></img>
                 ) : (
                   ''
@@ -125,18 +128,31 @@ function Local() {
                 setRating={setRating}
               />
             </div>
-            {isLogin != null ? (
-              <div className="MyRatingTitle">
-                <span className="avg">나의 평균 평점</span>
+            {(isLogin && rating) != null ? (
+              <div className="RatingTitle2">
+                <span className="avg">나의 평점</span>
                 <TravelRating
                   cityId={cityId}
                   rating={rating}
                   setRating={setRating}
                 />
               </div>
-            ) : null}
+            ) : (
+              <button className="MyRatingTitle2" onClick={openModal}>
+                다녀온 곳 등록
+              </button>
+            )}
           </div>
         </div>
+        <LocalModal
+          open={modalOpen}
+          close={closeModal}
+          cityId={cityId}
+          rating={rating}
+          setRating={setRating}
+          province={province}
+          name={name}
+        ></LocalModal>
         <div className="LocalInfoBox2">
           <div className="LocalAttraction">{name} 추천 여행지</div>
           <div className="IntoReview">
@@ -162,6 +178,9 @@ function Local() {
             </tbody>
           </Table>
         </div>
+      </div>
+      <div className="modal">
+        <div className="modal_body">Modal</div>
       </div>
     </div>
 

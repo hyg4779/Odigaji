@@ -60,8 +60,9 @@
 .DetailContent .localImage{
   width: 200px;
   height: 200px;
-  margin: 20px;
-
+  margin: 30px 10px 10px 10px;
+  object-fit: cover;
+  border-radius: 10px;
 
 }
 .spaceArea{
@@ -80,6 +81,16 @@
  
   margin-right: 10px;
 }
+.MyRatingTitle2{
+  box-shadow : 5px 5px 10px -5px;
+  background-color: rgb(117,53,254);
+  text-align: center;
+  border-radius: 10px;
+  width: 120px;
+  height: 60px;
+  color: white;
+  border:none;
+}
 .RatingTitle{
   background-color: rgb(117,53,254);
   box-shadow : 5px 5px 10px -5px;
@@ -92,6 +103,16 @@
 
 
 }
+.RatingTitle2{
+  background-color: rgb(117,53,254);
+  box-shadow : 5px 5px 10px -5px;
+  text-align: center;
+  border-radius: 10px;
+  width: 120px;
+  height: 60px;
+ 
+}
+
  .avg{
   color: rgb(255, 255, 255);
   font-size: 13px;
@@ -107,6 +128,7 @@
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
   color: white;
   border-radius: 10px ;
+  border: none;
 }
 .IntoReview{
   display: flex;
