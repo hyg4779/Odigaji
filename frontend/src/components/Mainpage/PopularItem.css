@@ -2,9 +2,8 @@
   width: 20vw;
   height: 30vh;
   background-color: #FFFFFF;
-  border: 5px solid black;
+  border: 2px solid white;
   border-radius: 2rem;
-  padding: 20px;
 }
 
 .PopularItem:hover {
