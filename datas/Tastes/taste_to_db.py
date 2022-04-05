@@ -64,7 +64,8 @@ curs = conn.cursor()
 conn.commit()
 
 # db insert sql
-insert_sql = "INSERT INTO recommends_taste (seasons, mnt_sea, urb_rur, comp, impo, paint, movie, trans, plan, mor_eve) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+taste_sql = "INSERT INTO recommends_taste (seasons, mnt_sea, urb_rur, comp, impo, paint, movie, trans, plan, mor_eve) values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+visit_sql = "INSERT INTO cities_visit (city_id, taste_id, rate) values(%s, %s, %s)"
 
 
 for line in rdr:
@@ -80,7 +81,10 @@ for line in rdr:
     trans = trans_ch[line[7]]
     plan = plan_ch[line[8]]
     mor_eve = random.randrange(32,34)
-    curs.execute(insert_sql, (
+    v_1 = line[9].split(':')[0]
+    v_2 = line[10].split(':')[0]
+    v_3 = line[11].split(':')[0]
+    curs.execute(taste_sql, (
         season,
         mnt_sea,
         urb_rur,
@@ -92,6 +96,12 @@ for line in rdr:
         plan,
         mor_eve,
         ))
+    curs.execute('SELECT last_insert_id()')
+    taste_id = curs.fetchone()[0]
+
+    curs.execute(visit_sql, (v_1, taste_id, 5))
+    curs.execute(visit_sql, (v_2, taste_id, 4))
+    curs.execute(visit_sql, (v_3, taste_id, 3))
 
 conn.commit()
 file.close()
