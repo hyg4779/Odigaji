@@ -8,6 +8,11 @@ from .serializers import(City_list_serializer, City_serializer, Attraction_seria
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 import requests
+import os
+import sys
+import urllib.request
+import json
+
 
 @swagger_auto_schema(
     methods=['GET'],
@@ -117,20 +122,47 @@ def get_attraction(request,attraction_id):
         attraction = get_object_or_404(Attraction, pk=attraction_id)
         attr_serializer = Attraction_serializer(attraction)
         
-        # 카카오 이미지 검색 API
-        url = "https://dapi.kakao.com/v2/search/image"
-        apikey = "e3ace0679cc7eb6718b895289ae98703"
-        subj = attr_serializer.data['name']
-        result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
+        # # 카카오 이미지 검색 API
+        # url = "https://dapi.kakao.com/v2/search/image"
+        # apikey = "e3ace0679cc7eb6718b895289ae98703"
+        # subj = attr_serializer.data['name']
+        # result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
 
-        # 이미지 주소 받아오기
-        img_response = requests.get(result.json()["documents"][0]['image_url'])
-        # 파일 저장
-        with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
-            fp.write(img_response.content)
+        # # 이미지 주소 받아오기
+        # img_response = requests.get(result.json()["documents"][0]['image_url'])
+        # # 파일 저장
+        # with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
+        #     fp.write(img_response.content)
+
+        # data = attr_serializer.data
+        # data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
+
+        # data = attr_serializer.data
+        # data.update({'search_image': "media/kakao_images/" + subj + ".jpg"})    
+
+        # 네이버 이미지 검색 API
+
+        client_id = "Z_Y1MRlICpKBu8b5e75M"
+        client_secret = "UEkhjSkxzS"
+        encText = urllib.parse.quote(attr_serializer.data['name'])
+        url = "https://openapi.naver.com/v1/search/image?query=" + encText # json 결과
+        subj = attr_serializer.data['name']
+
+        request = urllib.request.Request(url)
+        request.add_header("X-Naver-Client-Id",client_id)
+        request.add_header("X-Naver-Client-Secret",client_secret)
+        response = urllib.request.urlopen(request)
+        rescode = response.getcode()
+        if(rescode==200):
+            response_body = response.read()
+            response_json = json.loads(response_body.decode('utf-8'))
+            img_response = requests.get(response_json['items'][0]['link'])
+            with open("media\\naver_images\\" + subj + '.jpg', "wb") as fp:
+                fp.write(img_response.content)
 
         data = attr_serializer.data
-        data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
+        data.update({'search_image': "media/naver_images/" + subj + ".jpg"})    
+        # data.update({'search_image': response_json['items'][0]['link']})    
 
         return Response(data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
@@ -178,3 +210,37 @@ def is_visited(request, city_id):
         dic["is_visited"] = True
         dic["rate"] = visit[0].rate
     return Response(data=dic, status=status.HTTP_200_OK)
+
+
+
+@swagger_auto_schema(
+    methods = ['GET'],
+    responses={
+        200: openapi.Response('', is_visited_schema),
+        404: openapi.Response('')
+    }
+)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def tested(self):
+        print(self)
+        client_id = "Z_Y1MRlICpKBu8b5e75M"
+        client_secret = "UEkhjSkxzS"
+        encText = urllib.parse.quote("간절곶")
+        url = "https://openapi.naver.com/v1/search/image?query=" + encText # json 결과
+        # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
+        request = urllib.request.Request(url)
+        request.add_header("X-Naver-Client-Id",client_id)
+        request.add_header("X-Naver-Client-Secret",client_secret)
+        response = urllib.request.urlopen(request)
+        rescode = response.getcode()
+        # print(response_body.decode('utf-8')['items'][0]['link'])
+        if(rescode==200):
+            response_body = response.read()
+            d = json.loads(response_body.decode('utf-8'))
+            print(type(d))
+            print(d['items'][0]['link'])
+            return Response(response_body, status=status.HTTP_200_OK)
+        else:
+            print("Error Code:" + rescode)
+            return Response(rescode, status=status.HTTP_400_BAD_REQUEST)

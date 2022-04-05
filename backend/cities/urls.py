@@ -17,4 +17,5 @@ urlpatterns = [
     path('<int:province_id>/roulette/', views.roulette, name='roulette'),
     # 특정 도시에 다녀왔는지
     path('<int:city_id>/is-visited/', views.is_visited, name='is_visted'),
+    path('tested/', views.tested, name='tested'),
 ]
