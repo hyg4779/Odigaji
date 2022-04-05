@@ -8,6 +8,10 @@ from .serializers import(City_list_serializer, City_serializer, Attraction_seria
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 import requests
+import urllib.request
+import json
+import os
+
 
 @swagger_auto_schema(
     methods=['GET'],
@@ -117,20 +121,46 @@ def get_attraction(request,attraction_id):
         attraction = get_object_or_404(Attraction, pk=attraction_id)
         attr_serializer = Attraction_serializer(attraction)
         
-        # 카카오 이미지 검색 API
-        url = "https://dapi.kakao.com/v2/search/image"
-        apikey = "e3ace0679cc7eb6718b895289ae98703"
-        subj = attr_serializer.data['name']
-        result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
+        # # 카카오 이미지 검색 API (나중에 쓸 수도 있으니 삭제 X)
+        # url = "https://dapi.kakao.com/v2/search/image"
+        # apikey = "e3ace0679cc7eb6718b895289ae98703"
+        # subj = attr_serializer.data['name']
+        # result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
 
-        # 이미지 주소 받아오기
-        img_response = requests.get(result.json()["documents"][0]['image_url'])
-        # 파일 저장
-        with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
-            fp.write(img_response.content)
+        # # 이미지 주소 받아오기
+        # img_response = requests.get(result.json()["documents"][0]['image_url'])
+        # # 파일 저장
+        # with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
+        #     fp.write(img_response.content)
+
+        # data = attr_serializer.data
+        # data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})  
+
+        # 네이버 이미지 검색 API
+        client_id = "Z_Y1MRlICpKBu8b5e75M"
+        client_secret = "UEkhjSkxzS"
+        encText = urllib.parse.quote(attr_serializer.data['name'])
+        url = "https://openapi.naver.com/v1/search/image?query=" + encText # json 결과
+        subj = attr_serializer.data['name']
+
+        request = urllib.request.Request(url)
+        request.add_header("X-Naver-Client-Id",client_id)
+        request.add_header("X-Naver-Client-Secret",client_secret)
+        response = urllib.request.urlopen(request)
+        rescode = response.getcode()
+        if(rescode==200):
+            try:
+                os.mkdir("media\\naver_images\\")
+            except:
+                print('폴더 존재함')
+            response_body = response.read()
+            response_json = json.loads(response_body.decode('utf-8'))
+            img_response = requests.get(response_json['items'][0]['link'])
+            with open("media\\naver_images\\" + subj + '.jpg', "wb") as fp:
+                fp.write(img_response.content)
 
         data = attr_serializer.data
-        data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
+        data.update({'search_image': "media/naver_images/" + subj + ".jpg"})     
 
         return Response(data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
