@@ -1,13 +1,17 @@
 .Nav {
-  box-sizing: border-box;
-  background-color: #C4C4C4;
   width: 10%;
   height: 100%;
+  box-sizing: border-box;
+  /* background-color: #fff; */
+  /* box-shadow: .3vw 0 .3vw rgba(220,220,220,1); */
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem 0rem;
-  align-items: center;
+  background-color: rgba(220,220,220,0.5);
+  box-shadow: .1vw 0 .8vw rgba(220,220,220,0.8);
+  opacity: 0.7;
 }
 
 .Nav-list {
@@ -22,11 +26,23 @@
 .Nav-item {
   border-style: none;
   width: 70%;
-  background-color: white;
+  background-color: transparent;
   text-decoration: none;
   color: black;
   padding: 10px;
   font-weight: bold;
   text-align: center;
   font-size: 1vw;
+  transition: color 300ms;
+  cursor: pointer !important;
 }
+
+.Nav-item:hover{
+  color: #A177FA;
+}
+
+/* 
+text-decoration-color: rgba(200, 70, 200, 1);
+text-decoration: underline 0.3vw rgba(200, 200, 200, 0);
+text-underline-position: under;
+ */

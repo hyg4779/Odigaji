@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 from django.shortcuts import get_list_or_404, get_object_or_404
 from scipy.sparse import csr_matrix
@@ -8,6 +10,8 @@ from accounts.models import User
 from cities.models import City, Visit
 from cities.serializers import Visit_simple_serializer
 from apscheduler.schedulers.background import BackgroundScheduler
+
+
 
 def knn_recommend(user_id):
     '''
@@ -96,7 +100,6 @@ def knn_recommend(user_id):
     UbyU[range(user_num), range(user_num)] = 0
     # 여기까지가 visit과 taste를 knn알고리즘을 통해 유저별 유사도와 유사한 K명의 유저를 구하는 단계
     topK = UbyU.argsort(axis=1)[:,-K:]
-
     # 전체 추천도를 예상하는 알고리즘, 속도를 위해 reuest user의 추천 점수만 구하고 싶어서 주석 처리
                 # for i in range(user_num):
                 #     # 유저 i와, 그와 K번째로 유사한 유저의 유사도 weight
@@ -113,7 +116,6 @@ def knn_recommend(user_id):
     for j in range(K):
         user_city_mat[row_of_request_user] += weights[j] * user_city_mat[topK[row_of_request_user, j]]
     # user_city_mat[row_of_request_user] = user_city_mat[row_of_request_user] / weights.sum()
-
     rsl = user_city_mat[row_of_request_user] # 요청을 보낸 유저의 행만 자른 것
     rsl_col = rsl.nonzero()[1] # 그 행에 값이 있는 컬럼의 인덱스들
     rsl_dat = rsl.data  # 값이 있는 컬럼의 값
@@ -123,7 +125,19 @@ def knn_recommend(user_id):
     for i in range(rsl.count_nonzero()):
         rtn.append((rsl_col[i], rsl_dat[i]))
 
-    return sorted(rtn, key= lambda x:-x[1])
+    max_range = min(rsl.count_nonzero(), 10)
+    result = sorted(rtn, key= lambda x:-x[1])[:max_range]
+    dic = {}
+    for i in range(max_range):
+        dic[str(i+1)] = int(result[i][0])
+    dic = json.dumps(dic)
+
+    taste = get_object_or_404(Taste, user_id=user_id)
+    taste.results = dic
+    taste.save()
+
+
+
 
 def popular_cities(n):
     '''

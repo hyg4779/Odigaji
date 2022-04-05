@@ -1,4 +1,3 @@
-import { Row, Table, Col, Button } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -32,6 +31,13 @@ function Board() {
     setTotalPage(pageArray);
   };
 
+  // const getCityName = async (cityId) => {
+  //   await axios
+  //     .get(server.BASE_URL + server.ROUTES.allCities + cityId + 'get-city/')
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  // };
   const getLoadReviews = async (cityId) => {
     await axios
       .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
@@ -75,15 +81,10 @@ function Board() {
   return (
     <div className="Board">
       <div className="BoardWrap">
-        <div className="page-title">
-          <div className="container">
-            <h3>관광지 리뷰</h3>
-          </div>
-        </div>
-
+        <h3>관광지 리뷰</h3>
         <div className="board-list">
           <div className="container">
-            <button className="WriteButton" onClick={writeReview}>
+            <button className="writeButton" onClick={writeReview}>
               글쓰기
             </button>
             <table className="board-table">
@@ -95,7 +96,7 @@ function Board() {
                   <th className="th-user">작성자</th>
                 </tr>
               </thead>
-              <tbody style={{ background: 'white' }}>
+              <tbody>
                 {reviewData &&
                   reviewData.map((data, key) => {
                     return (
@@ -104,9 +105,10 @@ function Board() {
                         onClick={() => {
                           movePost(data.id);
                         }}
+                        className="tablebody"
                       >
                         <td>{data.id}</td>
-                        <td className="left">{data.title}</td>
+                        <td>{data.title}</td>
                         <td>{data.updated}</td>
                         <td>{data.user.nickname}</td>
                       </tr>
@@ -117,54 +119,50 @@ function Board() {
           </div>
         </div>
       </div>
-      <div className="PageNation">
-        <ul className="pageItems">
+      <ul className="pageItems">
+        <li
+          onClick={(e) => {
+            e.preventDefault();
+
+            if (currentPage > 1) {
+              setCurrentPage(currentPage - 1);
+              setIsClick(true);
+            }
+          }}
+        >
+          <button className="PrevButton">Prev</button>
+        </li>
+        {totalPage.map((num) => (
           <li
+            key={num}
             onClick={(e) => {
               e.preventDefault();
+              setIsClick(true);
+              // currentPage == num ? setColor('red') : setColor('white')
+              // if (!isClick) {
+              console.log(e.view);
+              // e.target.style.backgroundColor = 'red';
+              // }
 
-              if (currentPage > 1) {
-                setCurrentPage(currentPage - 1);
-                setIsClick(true);
-              }
+              setCurrentPage(num);
             }}
           >
-            <button className="PrevButton">Prev</button>
+            <button className="ItemButton">{num}</button>
           </li>
-          {totalPage.map((num) => (
-            <li
-              key={num}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsClick(true);
-                // currentPage == num ? setColor('red') : setColor('white')
-                // if (!isClick) {
-                console.log(e.view);
-                // e.target.style.backgroundColor = 'red';
-                // }
+        ))}
+        <li
+          onClick={(e) => {
+            e.preventDefault();
 
-                setCurrentPage(num);
-              }}
-            >
-              <button style={{ backgroundColor: color }} className="ItemButton">
-                {num}
-              </button>
-            </li>
-          ))}
-          <li
-            onClick={(e) => {
-              e.preventDefault();
-
-              if (currentPage < totalLength) {
-                setCurrentPage(currentPage + 1);
-                setIsClick(true);
-              }
-            }}
-          >
-            <button className="NextButton">Next</button>
-          </li>
-        </ul>
-      </div>
+            if (currentPage < totalLength) {
+              setCurrentPage(currentPage + 1);
+              setIsClick(true);
+            }
+          }}
+        >
+          <button className="NextButton">Next</button>
+        </li>
+      </ul>
     </div>
   );
 }
