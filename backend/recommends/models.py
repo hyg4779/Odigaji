@@ -59,3 +59,4 @@ class Taste(models.Model):
     trans = models.IntegerField(choices=trans_ch, null=True)
     plan = models.IntegerField(choices=plan_ch, null=True)
     mor_eve = models.IntegerField(choices=mor_eve_ch, null=True)
+    results = models.JSONField(null=True, default=None)

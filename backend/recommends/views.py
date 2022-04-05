@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import get_list_or_404, get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -128,16 +130,34 @@ def taste(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
 
-        knn_result = knn_recommend(user.id)
+        knn_recommend(user.id)
+        taste = get_object_or_404(Taste, user_id=user.id)
+
+        result = json.loads(taste.results)
 
         rec_cities = []
-        for city_id, point in knn_result:
-            city = get_object_or_404(City, id=city_id)
+        for i in range(len(result)):
+            city = get_object_or_404(City, id=result[str(i+1)])
             city_dct = City_visited_serializer(city).data
             rec_cities.append(city_dct)
         return Response(data=rec_cities, status=status.HTTP_200_OK)
 
+@swagger_auto_schema(
+    methods=['GET'],
+    responses={200: openapi.Response('', City_visited_serializer(many=True))})
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def result(request):
+    taste = get_object_or_404(Taste, user_id=request.user.id)
 
+    result = json.loads(taste.results)
+
+    rec_cities = []
+    for i in range(len(result)):
+        city = get_object_or_404(City, id=result[str(i + 1)])
+        city_dct = City_visited_serializer(city).data
+        rec_cities.append(city_dct)
+    return Response(data=rec_cities, status=status.HTTP_200_OK)
 
 @swagger_auto_schema(
     methods=['GET'],
