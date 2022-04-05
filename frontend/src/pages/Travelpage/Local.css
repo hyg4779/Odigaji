@@ -1,4 +1,4 @@
-.card-img-top{
+/* .card-img-top{
   width: 500px;
   height: 300px;
 }
@@ -12,4 +12,108 @@
 }
 .tablediv{
   float: right;
+} */
+.LocalContainer{
+  display: grid;
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  overflow-y: auto;
+ 
+}
+.DetailContent{
+   padding: 50px; 
+
+  
+   background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+}
+.LocalInfoBox{
+
+ 
+  /* border: 1px solid; */
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+}
+.LocalInfoBox2{
+
+ 
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+}
+.LocalWrap{
+  justify-content: center;
+  display: flex;
+}
+.LocalTitle{
+
+  font-size: 20px;
+  font-weight: 700;
+}
+.LocalInfo{
+
+  width: 500px;
+  margin: 30px;
+}
+.DetailContent .localImage{
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+
+
+}
+.spaceArea{
+  height: 30px;
+}
+.RatingArea{
+  display: flex;
+}
+.MyRatingTitle{
+  box-shadow : 5px 5px 10px -5px;
+  background-color: rgb(117,53,254);
+  text-align: center;
+  border-radius: 10px;
+  width: 120px;
+  height: 60px;
+ 
+  margin-right: 10px;
+}
+.RatingTitle{
+  background-color: rgb(117,53,254);
+  box-shadow : 5px 5px 10px -5px;
+  text-align: center;
+  border-radius: 10px;
+  width: 120px;
+  height: 60px;
+ 
+  margin: auto 5px 5px auto;
+
+
+}
+ .avg{
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+}
+.visitedMedal{
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+.reviewButton{
+  width: 150px;
+  margin: auto 15px 10px auto;
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+  color: white;
+  border-radius: 10px ;
+}
+.IntoReview{
+  display: flex;
+
+
+
+}
+.LocalAttraction{
+  
 }
