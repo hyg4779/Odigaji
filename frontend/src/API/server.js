@@ -15,7 +15,7 @@ const server = {
     comment: '/api/reviews/comment/',
     popular: '/api/recommends/popular/',
     review: '/api/reviews/',
-    userReview: '/api/reviews/user_reviews/',
+    userReview: '/api/reviews/user-reviews/',
     selCity: '/api/recommends/sel-city/',
     tastes: '/api/recommends/taste/',
     city: '/api/cities/',
