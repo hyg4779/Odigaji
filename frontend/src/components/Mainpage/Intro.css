@@ -1,5 +1,5 @@
 .Intro {
-  background-image: url(./nature-gac0e76523_1920.jpg);
+  background-image: url(./korea-gab8d4235f_1920.jpg);
   background-size: cover;
   box-sizing: border-box;
   display: flex;
@@ -21,7 +21,7 @@
 }
 
 .Intro-text {
-  width: 40%;
+  width: 450px;
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -30,7 +30,7 @@
 
 .Intro-text-blur {
   border-radius: 5vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .Intro-text-header {
@@ -105,9 +105,26 @@
 }
 
 .Intro-image {
-  width: 50%;
-  height: 100%;
+  width: 30%;
+  height: 50%;
+  border: none;
+  /* border: 5px solid black;
   border-radius: 2rem;
+  padding: 2rem;
+  background-color: #FFFFFF; */
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
 }
 
 .Intro-image:hover {

@@ -27,10 +27,17 @@ function Intro({ randomData, moveCity }) {
           추천받기
         </Link>
       </div>
+      {/* <img
+        className="Intro-image"
+        alt="대표이미지"
+        src="../../../img/오디가지.png"
+        loading="lazy"
+      /> */}
       <img
         className="Intro-image"
         alt="대표이미지"
         src="../../../img/오디가지.png"
+        // onClick={() => moveCity(randomData.id)}
         loading="lazy"
       />
     </div>

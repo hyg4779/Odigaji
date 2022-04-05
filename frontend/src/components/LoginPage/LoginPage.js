@@ -19,6 +19,18 @@ function LoginPage() {
     setPassword(event.currentTarget.value);
   };
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    },
+  });
+
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -33,6 +45,10 @@ function LoginPage() {
           // setUser(jwt_decode(response.data.access));
           // //Access Token 저장
           sessionStorage.setItem('jwt', response.data.access);
+          Toast.fire({
+            icon: 'success',
+            title: '어서오세요!',
+          });
         }
 
         navigate(-1);
@@ -77,6 +93,9 @@ function LoginPage() {
               onChange={onPasswordHandler}
               required
               autoComplete="off"
+              onKeyPress={(event) =>
+                event.code === 'Enter' ? onSubmit(event) : null
+              }
             />
           </div>
         </form>
