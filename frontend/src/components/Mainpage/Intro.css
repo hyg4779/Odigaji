@@ -1,4 +1,6 @@
 .Intro {
+  background-image: url(./korea-gab8d4235f_1920.jpg);
+  background-size: cover;
   box-sizing: border-box;
   display: flex;
   padding: 10vh 10vw;
@@ -19,19 +21,30 @@
 }
 
 .Intro-text {
-  width: 50%;
+  width: 450px;
   font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.Intro-text-blur {
+  border-radius: 5vh;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .Intro-text-header {
-  font-size: 3rem;
+  color: plum;
+  font-size: 5vh;
+  width: 90%;
+  padding: 15px;
 }
 
 .Intro-text-content {
-  font-size: 1.5rem;
+  color:lightgrey;
+  font-size: 3vh;
+  padding: 15px;
+  width: 80%;
 }
 
 /* .Intro-button {
@@ -91,10 +104,9 @@
   transform: translateY(-6px);
 }
 
-
 .Intro-image {
-  width: 50%;
-  height: 100%;
+  width: 30%;
+  height: 50%;
   border: none;
   /* border: 5px solid black;
   border-radius: 2rem;

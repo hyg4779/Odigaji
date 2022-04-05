@@ -87,7 +87,7 @@ function TravelDetail() {
       setCityLogo(res.data.photo);
       console.log(cityLogo);
     });
-  }, []);
+  }, [cityId]);
   let tempdata = [
     '임진각 관광지',
     '경기도 파주시 문산읍 임진각로 177',
@@ -98,13 +98,11 @@ function TravelDetail() {
   ];
   return (
     <div className="TravelDetail">
-      <Row>
-        <Col>
+      <Row id="row">
+        <div>
           <Image src={server.BASE_URL + '/' + search_image} />
-        </Col>
-        <Col>
           <div id="map"></div>
-        </Col>
+        </div>
       </Row>
       <Container>
         <Table striped bordered hover>
@@ -133,7 +131,7 @@ function TravelDetail() {
         </Table>
       </Container>
       <Container>
-        <Button variant="secondary" onClick={() => goback()}>
+        <Button id="button" variant="secondary" onClick={() => goback()}>
           관광지 목록으로
         </Button>{' '}
       </Container>

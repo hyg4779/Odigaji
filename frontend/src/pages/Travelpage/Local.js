@@ -1,4 +1,5 @@
-import { Container, Image, Row, Table, Col, Button } from 'react-bootstrap';
+/*global kakao*/
+import { Table } from 'react-bootstrap';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -57,9 +58,6 @@ function Local() {
     server.BASE_URL + server.ROUTES.allCities + cityId + '/is-visited/';
   let isLogin = sessionStorage.getItem('jwt');
   useEffect(() => {
-    //렌더링 이후에 실행되는 함수
-
-    //로그인 정보 주입!!!
     isLogin = sessionStorage.getItem('jwt');
 
     const jwt = sessionStorage.getItem('jwt');
@@ -71,7 +69,7 @@ function Local() {
       setInfo(res.data.info);
       setPapulation(res.data.population);
       setName(res.data.name);
-      setProvince(res.data.province);
+      setProvince(res.data.province_data.name);
       setArea(res.data.area);
       setTravelList(res.data.att_data);
       setLocalLogo(res.data.photo);
@@ -94,70 +92,142 @@ function Local() {
       });
     console.log(isLogin);
   }, [isLogin]);
+  console.log(travelList);
   return (
-    <div className="TravelDetail m-5 pt-5 container">
-      <div className="card col-sm-4 mt-5">
-        <img
-          className="card-img-top"
-          src={server.BASE_URL + localLogo}
-          alt="Card image"
-        />
-        <div className="card-body">
-          <h2 className="card-title">{name}</h2>
-          <h5 className="card-text">{info}</h5>
-          <div className="bg-info">
-            평균별점
-            <TravelRating
-              cityId={cityId}
-              rating={avg_rate}
-              setRating={setRating}
-            />
+    <div className="LocalContainer">
+      <div className="DetailContent">
+        <div className="LocalInfoBox">
+          <div className="LocalWrap">
+            <img className="localImage" src={server.BASE_URL + localLogo} />
+            <div className="LocalInfo">
+              <div className="LocalTitle">
+                {province + '\n' + name}{' '}
+                {avg_rate != null ? (
+                  <img className="visitedMedal" src="\img\메달.png"></img>
+                ) : (
+                  ''
+                )}
+              </div>
+              <div className="spaceArea"></div>
+              <div className="LcoalText">{info}</div>
+              <div className="spaceArea"></div>
+              <div>인구수 : {papulation}</div>
+              <div>면적 : {area}</div>
+            </div>
           </div>
-          <div>인구수 : {papulation}</div>
-          <div>면적 : {area}</div>
-          <div className="bg-info">
-            {isLogin != null ? (
+
+          <div className="RatingArea">
+            <div className="RatingTitle">
+              <span className="avg">평균 평점</span>
               <TravelRating
                 cityId={cityId}
-                rating={rating}
+                rating={avg_rate}
                 setRating={setRating}
               />
+            </div>
+            {isLogin != null ? (
+              <div className="MyRatingTitle">
+                <span className="avg">나의 평균 평점</span>
+                <TravelRating
+                  cityId={cityId}
+                  rating={rating}
+                  setRating={setRating}
+                />
+              </div>
             ) : null}
           </div>
-          <Button
-            className="reviewButton"
-            variant="primary"
-            onClick={() => MoveBoardPage(params.cityId)}
-          >
-            리뷰 게시판 이동
-          </Button>{' '}
         </div>
-        {/* end card */}
+        <div className="LocalInfoBox2">
+          <div className="LocalAttraction">{name} 추천 여행지</div>
+          <div className="IntoReview">
+            <button
+              className="reviewButton"
+              onClick={() => MoveBoardPage(params.cityId)}
+            >
+              리뷰 게시판
+            </button>
+          </div>
+          <Table striped bordered hover>
+            <tbody>
+              {/* &&양옆에 2개쓰면  */}
+              {travelList &&
+                travelList.map((data, idx) => {
+                  return (
+                    //무명함수 호출안하면 강제로 이동한다....
+                    <tr key={idx} onClick={() => MovetravelPage(data.id)}>
+                      <td className="m-2">{data.name}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+        </div>
       </div>
-      <div className="col-sm-6 tablediv mt-5 pt-5">
-        <Table striped bordered hover>
-          <thead className="bg-info">
-            <th>
-              <h5>{name}여행지목록</h5>
-            </th>
-          </thead>
-          <tbody>
-            {/* &&양옆에 2개쓰면  */}
-            {travelList &&
-              travelList.map((data, idx) => {
-                return (
-                  //무명함수 호출안하면 강제로 이동한다....
-                  <tr key={idx} onClick={() => MovetravelPage(data.id)}>
-                    <td className="m-2">{data.name}</td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
-      </div>
-
-      {/* 로그인여부에따라 별점 평가 기능 활성/ 비활성화 */}
     </div>
+
+    // <div className="TravelDetail m-5 pt-5 container">
+    //   <div className="card col-sm-4 mt-5">
+    //     <img
+    //       className="card-img-top"
+    //       src={server.BASE_URL + localLogo}
+    //       alt="Card image"
+    //     />
+    //     <div className="card-body">
+    //       <h2 className="card-title">{name}</h2>
+    //       <h5 className="card-text">{info}</h5>
+    //       <div className="bg-info">
+    //         평균별점
+    //         <TravelRating
+    //           cityId={cityId}
+    //           rating={avg_rate}
+    //           setRating={setRating}
+    //         />
+    //       </div>
+    //       <div>인구수 : {papulation}</div>
+    //       <div>면적 : {area}</div>
+    //       <div className="bg-info">
+    //         {isLogin != null ? (
+    //           <TravelRating
+    //             cityId={cityId}
+    //             rating={rating}
+    //             setRating={setRating}
+    //           />
+    //         ) : null}
+    //       </div>
+    //       <Button
+    //         className="reviewButton"
+    //         variant="primary"
+    //         onClick={() => MoveBoardPage(params.cityId)}
+    //       >
+    //         리뷰 게시판 이동
+    //       </Button>{' '}
+    //     </div>
+    //     {/* end card */}
+    //   </div>
+    //   <div className="col-sm-6 tablediv mt-5 pt-5">
+    //     <Table striped bordered hover>
+    //       <thead className="bg-info">
+    //         <th>
+    //           <h5>{name}여행지목록</h5>
+    //         </th>
+    //       </thead>
+    //       <tbody>
+    //         {/* &&양옆에 2개쓰면  */}
+    //         {travelList &&
+    //           travelList.map((data, idx) => {
+    //             return (
+    //               //무명함수 호출안하면 강제로 이동한다....
+    //               <tr key={idx} onClick={() => MovetravelPage(data.id)}>
+    //                 <td className="m-2">{data.name}</td>
+    //               </tr>
+    //             );
+    //           })}
+    //       </tbody>
+    //     </Table>
+    //   </div>
+
+    //   {/* 로그인여부에따라 별점 평가 기능 활성/ 비활성화 */}
+    // </div>
 
     // end TravelDetail Div
   );
