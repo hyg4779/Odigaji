@@ -1,29 +1,62 @@
 .post-del-btn{
+
   float: right;
   margin: 3cm;
 }
 
-.comment-tr>td{
+.comment{
+
+  height: 400px;
+  width: fit-content;
   
+  margin: 30%;
 }
+
 .comment-del-btn{
+
   size: 1em;
   text-align: center;
   font-size: 10px;
+  width: 50px;
 }
 
-#post-del-div{
-  width: 1000px;
-  display: inline-block;
-  align-items: center;
-  
+.post{
+  border-style: solid;
+  border-radius: 3px;
+  border-color: aquamarine;
+  margin: 30px;
+  padding: 10px;
+  margin-left: 50px;
+  overflow-y: auto;
 }
 
-#post-del-btn{
-  
+#button-addon2{
+  margin-left: 10px;
+}
+
+.comment-btn{
+  background-color: aquamarine;
+}
+
+.list-btn{
+  background-color: purple;
+  color: rgb(255, 255, 255);
+}
+
+.comment-table{
+  height: 100px;
+}
+
+.comment-content{
+  width: 60%;
+}
+
+.post th{
+  background-color: aquamarine;
+  color: black;
+  text-align: center;
 }
 
 #menu{
   float: right;
-  align-self: flex-end;
 }

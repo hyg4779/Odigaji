@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Helmet } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import server from '../../API/server';
 import parse from 'html-react-parser';
+import './Post.css';
 import { Table } from 'react-bootstrap';
+
 let postId;
 function moveBack() {
   window.history.back();
@@ -56,7 +58,7 @@ function Post() {
     axios
       .delete(server.BASE_URL + server.ROUTES.comment + 'edit/' + id + '/')
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status == 204) {
           alert('댓글이 삭제되었습니다');
           window.location.reload(false);
         }
@@ -80,8 +82,9 @@ function Post() {
         newComment
       )
       .then((res) => {
-        if (res.status === 201) {
+        if (res.status == 201) {
           alert('댓글 작성이 완료되었습니다');
+          alert();
           window.location.reload(false);
         }
       })
@@ -121,101 +124,110 @@ function Post() {
   }, []);
 
   return (
-    <div className="border border-2 border-info m-5 p-5">
-      <div className="content">
-        <Table striped bordered hover className="ml-5 shadow p-3">
-          <tbody>
-            <tr>
-              <td>
-                <h1>{title && title}</h1>
-              </td>
-            </tr>
-            <tr>
-              <td>{createDay}</td>
-            </tr>
+    <div className="post">
+      <div className=" m-5 p-5">
+        <div className="content post-child-div">
+          <Table striped bordered hover className="ml-5 shadow p-3">
+            <tbody>
+              <tr>
+                <th>제목</th>
+                <td>
+                  <h1>{title && title}</h1>
+                </td>
+              </tr>
+              <tr>
+                <th>작성일</th>
+                <td>{createDay}</td>
+              </tr>
 
-            <tr>
-              <td>작성자 : {user}</td>
-            </tr>
-            <tr>
-              <td>{content}</td>
-              {/* <div>{parse(content && content)}</div> */}
-            </tr>
-          </tbody>
-        </Table>
-        <div id="post-del-div">
+              <tr>
+                <th>작성자</th>
+                <td>작성자 : {user}</td>
+              </tr>
+              <tr>
+                <th>내용</th>
+                <td>{content}</td>
+                {/* <div>{parse(content && content)}</div> */}
+              </tr>
+            </tbody>
+          </Table>
+          <div id="post-del-div">
+            <button
+              type="button"
+              className="btn btn-danger post-del-btn m-1 mb-3 shadow"
+              onClick={() => {
+                deletePost();
+              }}
+            >
+              글삭제
+            </button>
+          </div>
+        </div>
+        <div className="comment m-5">
+          <Table striped bordered hover className="comment-table shadow p-3 ">
+            <thead>
+              <tr>
+                <th>작성자</th>
+                <th className="comment-content">내용</th>
+                <th>작성일시</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              {comments &&
+                comments.map((data, key) => {
+                  return (
+                    <tr key={key} className="comment-tr">
+                      <td>{data.user.nickname}</td>
+                      <td>{data.content}</td>
+                      <td>{data.created}</td>
+                      <td>
+                        {' '}
+                        <button
+                          type="button"
+                          className="btn btn-danger comment-del-btn"
+                          onClick={() => {
+                            deleteComment(data.id);
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+          <div className="input-group mb-2 ">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="댓글을 입력해주세요"
+              onChange={(event) =>
+                setNewComment({ content: event.target.value })
+              }
+            />
+            <button
+              className="btn comment-btn"
+              type="button"
+              id="button-addon2"
+              onClick={() => {
+                writeComment();
+              }}
+            >
+              댓글 작성
+            </button>
+          </div>
           <button
-            type="button"
-            className="btn btn-danger post-del-btn m-1 mb-4 shadow"
+            className="btn list-btn"
+            id="menu"
             onClick={() => {
-              deletePost();
+              moveBack();
             }}
           >
-            글삭제
+            목록으로
           </button>
         </div>
-      </div>
-      <div className="comment m-5">
-        <Table striped bordered hover className="shadow p-3">
-          <thead>
-            <tr>
-              <th>작성자</th>
-              <th>내용</th>
-              <th>작성일시</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comments &&
-              comments.map((data, key) => {
-                return (
-                  <tr key={key} className="comment-tr">
-                    <td>{data.user.nickname}</td>
-                    <td>{data.content}</td>
-                    <td>{data.created}</td>
-                    <td>
-                      {' '}
-                      <button
-                        type="button"
-                        className="btn btn-danger comment-del-btn"
-                        onClick={() => {
-                          deleteComment(data.id);
-                        }}
-                      >
-                        삭제
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
-        <div class="input-group mb-3 ">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="댓글을 입력해주세요"
-            onChange={(event) => setNewComment({ content: event.target.value })}
-          />
-          <button
-            className="btn bg-info"
-            type="button"
-            id="button-addon2"
-            onClick={() => {
-              writeComment();
-            }}
-          >
-            댓글 작성
-          </button>
-        </div>
-        <button
-          className="btn bg-info"
-          id="menu"
-          onClick={() => {
-            moveBack();
-          }}
-        >
-          목록으로
-        </button>
       </div>
     </div>
   );
