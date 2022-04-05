@@ -3,9 +3,34 @@
 #map {
   width:600px;
   height:400px;
+  float:left; 
 }
 
 img {
   width:600px;
   height:400px;
+  float:left;
+  margin-right:10px;
+}
+
+.TravelDetail {
+  margin: 10px;
+  overflow-y:auto;
+  height:100%;
+}
+
+#row {
+  width:1400px;
+}
+
+.container {
+  width:1212px;
+
+  margin-top:10px;
+  margin-left:0px;
+  padding: 0px;
+}
+
+#button {
+  margin-top:0px;
 }

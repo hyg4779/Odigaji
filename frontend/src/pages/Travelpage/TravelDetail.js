@@ -98,13 +98,11 @@ function TravelDetail() {
   ];
   return (
     <div className="TravelDetail">
-      <Row>
-        <Col>
+      <Row id="row">
+        <div>
           <Image src={server.BASE_URL + '/' + search_image} />
-        </Col>
-        <Col>
           <div id="map"></div>
-        </Col>
+        </div>
       </Row>
       <Container>
         <Table striped bordered hover>
@@ -133,7 +131,7 @@ function TravelDetail() {
         </Table>
       </Container>
       <Container>
-        <Button variant="secondary" onClick={() => goback()}>
+        <Button id="button" variant="secondary" onClick={() => goback()}>
           관광지 목록으로
         </Button>{' '}
       </Container>
