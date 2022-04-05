@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 .App {
   display: flex;
+  font-family: 'Nanum Gothic', sans-serif;
   width: 100vw;
   height: 100vh;
 }

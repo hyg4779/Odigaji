@@ -34,7 +34,7 @@
   font-size: 1.5rem;
 }
 
-.Intro-button {
+/* .Intro-button {
   font-weight: bold;
   width: 30%;
   padding: 5px 15px;
@@ -48,6 +48,82 @@
 .Intro-button:hover {
   color: #FFFFFF;
   background-color: #7535FE;
+} */
+
+.Intro-button {
+  width: 16vw;
+  min-height: 4vh;
+  font-size: 3vh;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1vh;
+  color: #FFFFFF;
+  background: #A177FA;
+  background: linear-gradient(90deg, #A177FA 0%, #7535FE 100%);
+  border-radius: 1000px;
+  box-shadow: .5vw .5vw 1vw #A177FA;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  position: relative;
+  padding: 12px;
+  }
+
+/* 
+.Intro-button::before {
+  content: '';
+  border-radius: 1000px;
+  min-width: calc(300px + 12px);
+  min-height: calc(60px + 12px);
+  border: 6px solid #FFFFFF;
+  box-shadow: 0 0 60px #7535FE;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+ .Intro-button:hover::before, .Intro-button:focus::before {
+  opacity: 1;
+} */
+
+.Intro-button:hover, .Intro-button:focus {
+  color: #FFFFFF;
+  transform: translateY(-6px);
+}
+
+
+.Intro-button::after {
+  content: '';
+  width: 3vw; height: 3vw;
+  border-radius: 100%;
+  border: 0.1vh solid #A177FA;
+  position: absolute; 
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.Intro-button:hover::after, .Intro-button:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
 }
 
 .Intro-image {
