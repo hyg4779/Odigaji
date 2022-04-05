@@ -121,7 +121,7 @@ function Post() {
         console.log(res);
         setComments(res.data);
       });
-  }, []);
+  }, [title]);
 
   return (
     <div className="post">
@@ -132,7 +132,7 @@ function Post() {
               <tr>
                 <th>제목</th>
                 <td>
-                  <h1>{title && title}</h1>
+                  <h1>{title}</h1>
                 </td>
               </tr>
               <tr>
@@ -142,7 +142,7 @@ function Post() {
 
               <tr>
                 <th>작성자</th>
-                <td>작성자 : {user}</td>
+                <td>{user}</td>
               </tr>
               <tr>
                 <th>내용</th>
