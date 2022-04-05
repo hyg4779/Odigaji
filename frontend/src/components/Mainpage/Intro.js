@@ -28,7 +28,7 @@ function Intro({ randomData, moveCity }) {
       <img
         className="Intro-image"
         alt="대표이미지"
-        src={server.BASE_URL + randomData.photo}
+        src={server.BASE_URL + randomData.background_photo}
         onClick={() => moveCity(randomData.id)}
         loading="lazy"
       />

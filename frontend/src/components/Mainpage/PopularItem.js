@@ -7,7 +7,7 @@ function PopularItem({ data, moveCity }) {
     <img
       className="PopularItem"
       alt={data.name}
-      src={server.BASE_URL + data.photo}
+      src={server.BASE_URL + data.background_photo}
       loading="lazy"
       onClick={() => moveCity(data.id)}
     />
