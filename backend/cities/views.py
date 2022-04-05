@@ -8,10 +8,9 @@ from .serializers import(City_list_serializer, City_serializer, Attraction_seria
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 import requests
-import os
-import sys
 import urllib.request
 import json
+import os
 
 
 @swagger_auto_schema(
@@ -122,7 +121,7 @@ def get_attraction(request,attraction_id):
         attraction = get_object_or_404(Attraction, pk=attraction_id)
         attr_serializer = Attraction_serializer(attraction)
         
-        # # 카카오 이미지 검색 API
+        # # 카카오 이미지 검색 API (나중에 쓸 수도 있으니 삭제 X)
         # url = "https://dapi.kakao.com/v2/search/image"
         # apikey = "e3ace0679cc7eb6718b895289ae98703"
         # subj = attr_serializer.data['name']
@@ -135,13 +134,9 @@ def get_attraction(request,attraction_id):
         #     fp.write(img_response.content)
 
         # data = attr_serializer.data
-        # data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
-
-        # data = attr_serializer.data
-        # data.update({'search_image': "media/kakao_images/" + subj + ".jpg"})    
+        # data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})  
 
         # 네이버 이미지 검색 API
-
         client_id = "Z_Y1MRlICpKBu8b5e75M"
         client_secret = "UEkhjSkxzS"
         encText = urllib.parse.quote(attr_serializer.data['name'])
@@ -154,6 +149,10 @@ def get_attraction(request,attraction_id):
         response = urllib.request.urlopen(request)
         rescode = response.getcode()
         if(rescode==200):
+            try:
+                os.mkdir("media\\naver_images\\")
+            except:
+                print('폴더 존재함')
             response_body = response.read()
             response_json = json.loads(response_body.decode('utf-8'))
             img_response = requests.get(response_json['items'][0]['link'])
@@ -161,8 +160,7 @@ def get_attraction(request,attraction_id):
                 fp.write(img_response.content)
 
         data = attr_serializer.data
-        data.update({'search_image': "media/naver_images/" + subj + ".jpg"})    
-        # data.update({'search_image': response_json['items'][0]['link']})    
+        data.update({'search_image': "media/naver_images/" + subj + ".jpg"})     
 
         return Response(data, status=status.HTTP_200_OK)
     return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
