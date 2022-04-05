@@ -169,7 +169,7 @@ function Post() {
               <tr>
                 <th>작성자</th>
                 <th className="comment-content">내용</th>
-                <th>작성일시이</th>
+                <th>작성일시</th>
                 <th>삭제</th>
               </tr>
             </thead>
