@@ -11,7 +11,7 @@ urlpatterns = [
     path('<int:city_id>/', views.city_reviews, name='city_reviews'),
 
     # 유저가 작성한 리뷰 전체
-    path('user_reviews/', views.user_reviews, name='user_reviews'),
+    path('user-reviews/', views.user_reviews, name='user_reviews'),
     
     # GET: 리뷰 상세내용/PUT: 리뷰수정 /DELETE: 리뷰삭제
     path('<int:review_id>/review-info/', views.review_info, name='review_info'),
