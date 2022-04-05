@@ -1,5 +1,5 @@
 .Intro {
-  background-image: url(./sea-g5547e5913_1920.jpg);
+  background-image: url(./nature-gac0e76523_1920.jpg);
   background-size: cover;
   box-sizing: border-box;
   display: flex;
@@ -21,30 +21,30 @@
 }
 
 .Intro-text {
-  width: 50%;
+  width: 40%;
   font-weight: bold;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.Intro-text-blur {
+  border-radius: 5vh;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 .Intro-text-header {
+  color: plum;
   font-size: 5vh;
-  backdrop-filter: blur(10px);
-  background-color: rgba(0,0,128,0.1);
-  border-radius: 30px;
   width: 90%;
   padding: 15px;
 }
 
 .Intro-text-content {
+  color:lightgrey;
   font-size: 3vh;
-  background-color: rgba(0,0,128,0.1);
-  border-radius: 30px;
   padding: 15px;
-  backdrop-filter: blur(10px);
   width: 80%;
-  background-color: rgba(255,255,192,0.1)
 }
 
 /* .Intro-button {
@@ -107,9 +107,7 @@
 .Intro-image {
   width: 50%;
   height: 100%;
-  border: 5px solid black;
   border-radius: 2rem;
-  background-color: #FFFFFF;
 }
 
 .Intro-image:hover {
