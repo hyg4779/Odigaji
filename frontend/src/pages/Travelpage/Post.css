@@ -1,0 +1,29 @@
+.post-del-btn{
+  float: right;
+  margin: 3cm;
+}
+
+.comment-tr>td{
+  
+}
+.comment-del-btn{
+  size: 1em;
+  text-align: center;
+  font-size: 10px;
+}
+
+#post-del-div{
+  width: 1000px;
+  display: inline-block;
+  align-items: center;
+  
+}
+
+#post-del-btn{
+  
+}
+
+#menu{
+  float: right;
+  align-self: flex-end;
+}

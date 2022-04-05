@@ -87,7 +87,7 @@ function TravelDetail() {
       setCityLogo(res.data.photo);
       console.log(cityLogo);
     });
-  }, []);
+  }, [cityId]);
   let tempdata = [
     '임진각 관광지',
     '경기도 파주시 문산읍 임진각로 177',

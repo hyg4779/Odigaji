@@ -5,6 +5,9 @@ import server from '../../API/server';
 import parse from 'html-react-parser';
 import { Table } from 'react-bootstrap';
 let postId;
+function moveBack() {
+  window.history.back();
+}
 
 function Post() {
   let params = useParams();
@@ -118,9 +121,9 @@ function Post() {
   }, []);
 
   return (
-    <div>
+    <div className="border border-2 border-info m-5 p-5">
       <div className="content">
-        <Table striped bordered hover>
+        <Table striped bordered hover className="ml-5 shadow p-3">
           <tbody>
             <tr>
               <td>
@@ -140,23 +143,20 @@ function Post() {
             </tr>
           </tbody>
         </Table>
-        <div className="btn-group btn-group-lg">
-          <button type="button" className="btn btn-primary">
-            수정
-          </button>
+        <div id="post-del-div">
           <button
             type="button"
-            className="btn btn-danger"
+            className="btn btn-danger post-del-btn m-1 mb-4 shadow"
             onClick={() => {
               deletePost();
             }}
           >
-            삭제
+            글삭제
           </button>
         </div>
       </div>
-      <div className="comment">
-        <Table striped bordered hover>
+      <div className="comment m-5">
+        <Table striped bordered hover className="shadow p-3">
           <thead>
             <tr>
               <th>작성자</th>
@@ -168,7 +168,7 @@ function Post() {
             {comments &&
               comments.map((data, key) => {
                 return (
-                  <tr key={key}>
+                  <tr key={key} className="comment-tr">
                     <td>{data.user.nickname}</td>
                     <td>{data.content}</td>
                     <td>{data.created}</td>
@@ -176,15 +176,12 @@ function Post() {
                       {' '}
                       <button
                         type="button"
-                        className="btn btn-danger"
+                        className="btn btn-danger comment-del-btn"
                         onClick={() => {
                           deleteComment(data.id);
                         }}
                       >
                         삭제
-                      </button>
-                      <button type="button" className="btn btn-primary">
-                        수정
                       </button>
                     </td>
                   </tr>
@@ -192,7 +189,7 @@ function Post() {
               })}
           </tbody>
         </Table>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 ">
           <input
             type="text"
             class="form-control"
@@ -200,7 +197,7 @@ function Post() {
             onChange={(event) => setNewComment({ content: event.target.value })}
           />
           <button
-            class="btn btn-outline-secondary"
+            className="btn bg-info"
             type="button"
             id="button-addon2"
             onClick={() => {
@@ -210,6 +207,15 @@ function Post() {
             댓글 작성
           </button>
         </div>
+        <button
+          className="btn bg-info"
+          id="menu"
+          onClick={() => {
+            moveBack();
+          }}
+        >
+          목록으로
+        </button>
       </div>
     </div>
   );
