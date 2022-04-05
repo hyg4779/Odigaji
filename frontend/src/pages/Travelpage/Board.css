@@ -1,190 +1,115 @@
 .Board{
-  background-color: #F8F8F8;  
-  box-sizing: border-box;
-  width: 90%;
-  height: 100vh;
+  padding: 5vh 10vw;
+  width: 100%;
+  font-size: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;  
   overflow-y: auto;
- 
 }
 
-.BoardWrap{
-  padding-top: 50px;
-  padding-left: 200px;
-  padding-right: 200px;
-
-}
-.page-title {
-  margin-bottom: 10px;
-}
-.page-title h3 {
-  font-size: 28px;
-  color: #333333;
-  font-weight: 400;
+.BoardWrap h3{
+  font-weight: bold;
   text-align: center;
 }
 
-.board-table {
-  font-size: 13px;
-  width: 100%;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-.table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
 .tableHead {
-  background: black; 
-  color: white;
-  
+  background: rgba(255,255,255,0.5); 
+  color: black;
 }
-.board-table a {
-  color: #333;
-  display: inline-block;
-  line-height: 1.4;
-  word-break: break-all;
-  vertical-align: middle;
-}
-.board-table tbody .left:hover {
-  text-decoration: underline;
-}
+
 .board-table tbody tr:hover {
-  background-color: rgb(230, 228, 228);
+  background-color: rgba(255,255,255,0.6);
 }
+
+.tablebody{
+  border-bottom: .1vw solid rgb(144,93,254);
+  cursor: pointer;
+}
+
 .board-table th {
   text-align: center;
 }
 .board-table .th-num {
-  
-  width: 100px;
-
+  width: 5vw;
 }
+
 .board-table .th-title {
-  
-  width: 300px;
+  width: 20vw;
+}
 
-}
 .board-table .th-date {
-  width: 100px;
+  width: 10vw;
 }
+
 .board-table .th-user {
-  width: 150px;
+  width: 10vw;
 }
 .board-table th, .board-table td {
   padding: 14px 0;
 }
 .board-table tbody td {
-  border-top: 1px solid #e7e7e7;
   text-align: center;
 }
 
-.board-table tbody th {
-  padding-left: 28px;
-  padding-right: 14px;
-  border-top: 1px solid #e7e7e7;
-  text-align: left;
-}
-
-.board-table tbody th p{
-  display: none;
-}
-* {
-  list-style: none;
-  text-decoration: none;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.clearfix:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-.PageNation{
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-
-
-  
-}
 .pageItems{
   list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
-}
-        
-.pageItems li {
-  margin: 0 1px;
-  
+  margin: 1vw;
 }
 
-
-.visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
+.pageItems li{
+  margin:  0 .1vw;
 }
-.WriteButton{
+
+.writeButton{
   display: block;
   padding: .2em 1em;
-  border: 1px solid #999;
-  border-radius: .2em;
+  border: none;
+  border-radius: 10px;
   text-decoration: none;
   margin-bottom: 2px;
   color: white;
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
-
-
+  transition: 0.2s ease-in;
 }
+
+.pageItems li button{
+  display: block;
+  padding: .2em 1em;
+  border: none;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s ease-in;
+}
+
 .PrevButton{
-  text-align: right;
-  display: block;
-  padding: .2em 1em;
-  border: 1px solid #999;
-  border-radius: .2em;
-  text-decoration: none;
-  color: white;
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+}
 
-}
-.PrevButton:hover{
-  box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset, -200px 0 0 0 rgba(0,0,0,0.25) inset;
-
- 
-}
-.ItemButton:hover{
-  box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset, -200px 0 0 0 rgba(0,0,0,0.25) inset;
-
- 
-}
-.NextButton:hover{
-  box-shadow: 200px 0 0 0 rgba(0,0,0,0.25) inset, -200px 0 0 0 rgba(0,0,0,0.25) inset;
-
- 
-}
-.ItemButton{
-  display: block;
-  padding: .2em 1em;
-  
-  border: 1px solid #999;
-  border-radius: .2em;
-  text-decoration: none;
-}
 .NextButton{
-  display: block;
-  padding: .2em 1em;
-  border: 1px solid #999;
-  border-radius: .2em;
-  text-decoration: none;
-  color: white;
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+}
 
+.ItemButton{
+  background: linear-gradient(to left, rgb(144,93,254), rgb(117,53,254)) !important;
+}
+
+.writeButton:hover{
+  box-shadow: 3px 3px rgba(0,0,0,0.25);
+}
+
+.PrevButton:hover{
+  box-shadow: 3px 3px rgba(0,0,0,0.25);
+}
+
+.ItemButton:hover{
+  box-shadow: 3px 3px rgba(0,0,0,0.25);
+}
+
+.NextButton:hover{
+  box-shadow: 3px 3px rgba(0,0,0,0.25); 
 }
