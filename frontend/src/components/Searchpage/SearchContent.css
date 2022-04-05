@@ -18,3 +18,22 @@
   font-size: 1.5vw;
   row-gap: 5px;
 }
+
+.SearchContent-footer {
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+}
+
+.SearchContent-footer-item {
+  display: flex;
+  column-gap: 5px;
+}
+
+.SearchContent-footer-icon:hover {
+  cursor: pointer;
+}
+
+.SearchContent-footer-icon path {
+  fill: black;
+}

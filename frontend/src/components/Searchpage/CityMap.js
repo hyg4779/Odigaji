@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './CityMap.css';
 
-function CityMap({ cityId, setCityShow, cityData }) {
+function CityMap({ cityId, setCityShow, cityData, clickCity }) {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   const [show, setShow] = useState(false);
   const [showName, setShowName] = useState('');
-  const navigate = useNavigate();
 
   function getCityNameById(id) {
-    const cityName = cityData.find((city) => city.id === id).name;
-    setShowName(cityName);
-  }
-
-  function clickCity(id) {
-    navigate(`/local/${id}`);
+    const city = cityData.find((city) => city.id === id);
+    if (city === undefined) {
+      setShowName(null);
+    } else {
+      setShowName(city.name);
+    }
   }
 
   function mouseOverCity(event) {
@@ -31,7 +29,7 @@ function CityMap({ cityId, setCityShow, cityData }) {
 
   return (
     <>
-      {show && (
+      {show && showName && (
         <div
           className="CityMap-text"
           style={{

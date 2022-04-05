@@ -11,7 +11,7 @@ const server = {
     attraction: '/get-attraction/',
     writeReview: '/api/reviews/',
     getReview: '/api/reviews/',
-    reviewInfo: 'review_info/',
+    reviewInfo: 'review-info/',
     comment: '/api/reviews/comment/',
     popular: '/api/recommends/popular/',
     review: '/api/reviews/',
