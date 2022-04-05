@@ -9,8 +9,12 @@
 }
 
 .TitleContainer{  
+
+  -webkit-animation: TitleContainer 8s linear infinite alternate both;
+  animation: TitleContainer 8s linear infinite alternate both;
   height: 132px;
-  background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
+  /* background: #74ebd5; */
+  /* background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);  */
   display: flex;
   align-items: flex-end;
   padding: 16px;
@@ -47,9 +51,10 @@
 }
 
 .ActivityContainer{
+  text-align: center;
   background-color: white;  
   display: flex;  
-  padding: 21px 16px;  
+  padding: 21px 60px;  
   height: 90px;
   margin-bottom: 10px;
 }
@@ -70,40 +75,63 @@
 
 
 .VisitedCityContainer{
-  padding: 21px 16px;
+  padding: 30px 60px;
   background-color: white;
   margin-bottom: 10px;
+
 }
 
 
 .VisitedCityContainer .title{
-  font-size: 16px;
+  font-size: 23px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+ 
 }
 
 
 .VisitedCityContainer .status{
+  margin-left: 30px;
   display: flex;
+  flex-wrap: wrap;
   /* justify-content: space-evenly; */
-  margin-bottom: 21px;
+  /* justify-content: center; */
+  justify-content: start;
+  width: 100%;
+  min-width: 1400px;
+
 }
 
 .VisitedCityContainer .item{
-  display: flex;
+
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  margin: 10px;
+  border-radius: 10%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.VisitedCityContainer .item:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .VisitedCityContainer .number{
-  width: 150px;
-  height: 200px;
-  background-color: rgb(146, 155, 155);
+  width: 240px;
+  height: 160px;
+  padding: 20px;
   text-align: center;
+  /* border: 1px solid; */
+  border-radius: 10%;
+  /* margin: 10px; */
+
 }
+
 .VisitedCityContainer .text{
-  font-size: 12px;
+  font-size: 15px;
   font-weight: normal;
   color: #c2c2c2;
   text-align: center;
+  padding-top:  20px;
 }
 .VisitedCityContainer .space{
   display: flex;
@@ -113,24 +141,35 @@
 
 
 .ReviewListContainer{  
-  padding: 21px 16px;
+  padding: 30px 60px;
   background-color: #ffffff;
   margin-bottom: 10px;
+  
 }
-
+.ReviewWrap{
+  align-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
 .ReviewListContainer .Reviewtitle{
-  font-size: 16px;
+  font-size: 23px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+  
+  
+  
 }
 .ReviewListContainer .ListTitle{  
   display: flex;
   align-items: center;
-  padding: 16px;
-  color: black;
-  background-color: #bbc0c5;
+  padding: 25px;
+  color: white;
+  font-size: 15px;
+  
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
   text-decoration: none;  
   height: 20px;
+ border-radius: 10px;
   box-sizing: border-box;
 }
 .ReviewListContainer .headRegion{  
@@ -140,8 +179,9 @@
 }
 .ReviewListContainer .headtitle{
   flex-grow: 1;
-  font-size: 16px;
+  font-size: 15px;
   position: relative;
+ 
 }
 .ReviewListContainer .headtime{
   padding-right: 25px;
@@ -155,21 +195,30 @@
   color: black;
   text-decoration: none;  
   height: 56px;
-  border: 1px solid #afb3b1;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px #ddd;
+  margin: 5px;
   box-sizing: border-box;
 }
 .ReviewListContainer .region{  
   flex-grow: 1;
   margin-right: 14px;
+
+  padding-left: 25px;
+
 }
+  
+
 .ReviewListContainer .textTitle{
 
   flex-grow: 1;
   font-size: 16px;
   position: relative;
+  
 }
 .ReviewListContainer .time{
   margin-left: auto;
+  padding-right: 25px;
   
 }
 
@@ -183,6 +232,7 @@
   width: 150px;
   height: 150px; 
   border-radius: 70%;
+  
  
 }
  .profileBox .profileImg{
@@ -191,6 +241,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 1000px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
 
  
   transform: translate(50%, 50%);
@@ -202,7 +253,7 @@
 
 
   
-.Editinfo {background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);}
+.Editinfo {background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));}
 .Editinfo {
   margin-right: 80px;
   width: 80px;
@@ -222,5 +273,55 @@
  
   color: #fff;
   text-decoration: none;
+
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.22);
+
 }
   
+
+
+ @-webkit-keyframes TitleContainer{  
+  
+  0% {
+    background: #74ebd5;
+  }
+  100% {
+    background: #7135fe;
+  }
+}
+@keyframes TitleContainer{  
+  
+  0% {
+    background:  #74ebd5;
+  }
+  100% {
+    background: #7135fe;
+  }
+}
+
+.star-ratings {
+  display: flex;
+  color: #eeeeee; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #2b2a29; 
+
+
+
+}
+.starLine{
+  transform: translate(80px, 0px);
+}
+.star-ratings-fill {
+ 
+  color: gold;
+  padding: 0;
+  display: inline;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  /* -webkit-text-fill-color: gold; */
+}
+ 
