@@ -208,37 +208,3 @@ def is_visited(request, city_id):
         dic["is_visited"] = True
         dic["rate"] = visit[0].rate
     return Response(data=dic, status=status.HTTP_200_OK)
-
-
-
-@swagger_auto_schema(
-    methods = ['GET'],
-    responses={
-        200: openapi.Response('', is_visited_schema),
-        404: openapi.Response('')
-    }
-)
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def tested(self):
-        print(self)
-        client_id = "Z_Y1MRlICpKBu8b5e75M"
-        client_secret = "UEkhjSkxzS"
-        encText = urllib.parse.quote("간절곶")
-        url = "https://openapi.naver.com/v1/search/image?query=" + encText # json 결과
-        # url = "https://openapi.naver.com/v1/search/blog.xml?query=" + encText # xml 결과
-        request = urllib.request.Request(url)
-        request.add_header("X-Naver-Client-Id",client_id)
-        request.add_header("X-Naver-Client-Secret",client_secret)
-        response = urllib.request.urlopen(request)
-        rescode = response.getcode()
-        # print(response_body.decode('utf-8')['items'][0]['link'])
-        if(rescode==200):
-            response_body = response.read()
-            d = json.loads(response_body.decode('utf-8'))
-            print(type(d))
-            print(d['items'][0]['link'])
-            return Response(response_body, status=status.HTTP_200_OK)
-        else:
-            print("Error Code:" + rescode)
-            return Response(rescode, status=status.HTTP_400_BAD_REQUEST)
