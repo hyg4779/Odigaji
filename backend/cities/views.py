@@ -7,8 +7,7 @@ from .models import (City, Attraction, Visit)
 from .serializers import(City_list_serializer, City_serializer, Attraction_serializer)
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-
-
+import requests
 
 @swagger_auto_schema(
     methods=['GET'],
@@ -71,9 +70,35 @@ def get_city_photo(request, city_id):
 
             serializer.save(photo=photo)
             return Response(serializer.data)
+        else:
+            print('is not valid')
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
-    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([AllowAny])
+def get_city_back_photo(request, city_id):
+
+    if request.method=='GET':
+        city = get_object_or_404(City, pk=city_id)
+        city_serializer = City_serializer(city)
+        print("../media/backgrounds/${1}")
+        return Response(city_serializer.data, status=status.HTTP_200_OK)
+
+    elif request.method == 'PUT':
+        city = get_object_or_404(City, pk=city_id)
+
+        background_photo = request.data.get('background_photo')
+        print(background_photo)
+
+        serializer = City_serializer(city, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            print('serializer is valid!')
+            serializer.save(background_photo=background_photo)
+            return Response(serializer.data)
+        else:
+            print('is not valid')
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -88,9 +113,27 @@ def get_attraction(request,attraction_id):
     '''
     세부 관광지 정보 return 함수
     '''
-    attraction = get_object_or_404(Attraction, pk=attraction_id)
-    attr_serializer = Attraction_serializer(attraction)
-    return Response(attr_serializer.data, status=status.HTTP_200_OK)
+    if request.method=='GET':
+        attraction = get_object_or_404(Attraction, pk=attraction_id)
+        attr_serializer = Attraction_serializer(attraction)
+        
+        # 카카오 이미지 검색 API
+        url = "https://dapi.kakao.com/v2/search/image"
+        apikey = "e3ace0679cc7eb6718b895289ae98703"
+        subj = attr_serializer.data['name']
+        result = requests.get( url, params = {'query':subj}, headers={'Authorization' : 'KakaoAK ' + apikey } )
+
+        # 이미지 주소 받아오기
+        img_response = requests.get(result.json()["documents"][0]['image_url'])
+        # 파일 저장
+        with open("media\\kakao_images\\" + subj + '.jpg', "wb") as fp:
+            fp.write(img_response.content)
+
+        data = attr_serializer.data
+        data.update({'search_image': "media/kakao_images/" + subj + '.jpg'})
+
+        return Response(data, status=status.HTTP_200_OK)
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @swagger_auto_schema(
@@ -103,9 +146,11 @@ def get_attraction(request,attraction_id):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def roulette(request, province_id):
-    cities = City.objects.filter(province=province_id)
-    serializer = City_list_serializer(cities, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method=='GET':
+        cities = City.objects.filter(province=province_id)
+        serializer = City_list_serializer(cities, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'message': '잘못된 접근입니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 is_visited_schema = openapi.Schema(
                         type=openapi.TYPE_OBJECT,

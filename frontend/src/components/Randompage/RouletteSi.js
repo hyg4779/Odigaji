@@ -1,51 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Wheel } from 'react-custom-roulette';
 
 function RouletteSi({
   cities,
-  provinceSpin,
   citySpin,
+  cityNumber,
   setCitySpin,
   randomResult,
   setRandomResult,
 }) {
-  const data = [
-    { option: '이천', id: 1, photo: '' },
-    { option: '여주', id: 1, photo: '' },
-    { option: '파주', id: 1, photo: '' },
-    { option: '용인', id: 1, photo: '' },
-    { option: '수원', id: 1, photo: '' },
-    { option: '성남', id: 1, photo: '' },
-    { option: '의정부', id: 1, photo: '' },
-    { option: '안양', id: 1, photo: '' },
-    { option: '부천', id: 1, photo: '' },
-    { option: '광주', id: 1, photo: '' },
-    { option: '고양', id: 1, photo: '' },
-    { option: '평택', id: 1, photo: '' },
-    { option: '시흥', id: 1, photo: '' },
-    { option: '안성', id: 1, photo: '' },
-    { option: '오산', id: 1, photo: '' },
-    { option: '하남', id: 1, photo: '' },
-    { option: '화성', id: 1, photo: '' },
-  ];
-
-  const [prizeNumber, setPrizeNumber] = useState(0);
-
-  function handleSpinClick() {
-    if (!provinceSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
-      setPrizeNumber(newPrizeNumber);
-      setCitySpin(true);
-    }
-  }
-
   return (
-    <div align="center">
+    <div>
       <Wheel
-        className="wheel"
         mustStartSpinning={citySpin}
-        prizeNumber={prizeNumber}
-        data={data}
+        prizeNumber={cityNumber}
+        data={cities}
         outerBorderColor={['#f2f2f2']}
         outerBorderWidth={[10]}
         innerBorderColor={['#f2f2f2']}
@@ -61,14 +30,16 @@ function RouletteSi({
           '#AA14F0',
           '#BC8CF2',
         ]}
+        spinDuration={[0.5]}
         onStopSpinning={() => {
           setCitySpin(false);
-          const newResult = [...randomResult];
-          newResult[1] = data[prizeNumber].option;
-          setRandomResult(newResult);
+          const newRandomResult = [
+            cities[cityNumber].option,
+            cities[cityNumber].id,
+          ];
+          setRandomResult(randomResult.concat(newRandomResult));
         }}
       />
-      <button onClick={handleSpinClick}>시작하기</button>
     </div>
   );
 }

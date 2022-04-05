@@ -1,5 +1,5 @@
 const server = {
-  BASE_URL: 'http://127.0.0.1:8000',
+  BASE_URL: 'http://localhost:8000',
 
   ROUTES: {
     login: '/api/token/',
@@ -15,9 +15,14 @@ const server = {
     comment: '/api/reviews/comment/',
     popular: '/api/recommends/popular/',
     review: '/api/reviews/',
+    userReview: '/api/reviews/user_reviews/',
     selCity: '/api/recommends/sel-city/',
     tastes: '/api/recommends/taste/',
+    city: '/api/cities/',
   },
 };
 
+if (process.env.REACT_APP_ENV === 'production') {
+  server.BASE_URL = 'https://j6b103.p.ssafy.io:8000';
+}
 export default server;

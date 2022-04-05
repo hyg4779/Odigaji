@@ -36,6 +36,12 @@ class City(models.Model):
         # processors=[ResizeToFill(200,200)],
         options={'quality':100 }
     )
+    background_photo = ProcessedImageField(
+        blank=True,
+        upload_to='back_images/',
+        # processors=[ResizeToFill(200,200)],
+        options={'quality':100 }
+    )
     rate_users = models.ManyToManyField(User, through='Visit', default='', related_name='rate_cities')
 
     def __str__(self):

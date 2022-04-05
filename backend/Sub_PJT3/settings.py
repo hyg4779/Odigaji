@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'recommends',
     'reviews',
     'drf_yasg',
+    'sslserver',
 
     'django_extensions',
     'rest_framework',
@@ -167,22 +168,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cors setting
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:3000",
-    "http://localhost:3000",
-]
-# CORS_ORIGIN_ALLOW_ALL=True
-# ALLOWED_HOSTS = ["*"]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8080",
+#     "http://127.0.0.1:8000",
+#     "http://127.0.0.1:3000",
+#     "http://localhost:3000",
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
+
+ALLOWED_HOSTS = ["*"]
+
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
-       "http://localhost:8000",
-       "http://localhost:3000",
-       "http://127.0.0.1:8000",
-       "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://localhost:3000",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:3000",
+        "https://j6b103.p.ssafy.io",
+        "https://j6b103.p.ssafy.io:3000",
+        "http://3.38.250.117",
 ]
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

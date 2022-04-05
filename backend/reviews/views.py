@@ -244,7 +244,7 @@ def comment_list(request, review_id):
 
         
         if serializer.is_valid(raise_exception=True):
-            # 프론트에서 axios 요청할 때 URI에 movie의 id값을 넣어서 요청해야 함
+            # 프론트에서 axios 요청할 때 URI에 review의 id값을 넣어서 요청해야 함
             serializer.save(user=request.user, review=review)
 
             user = get_object_or_404(User, id=request.user.id)
