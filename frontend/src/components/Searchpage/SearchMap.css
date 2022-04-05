@@ -1,6 +1,6 @@
 .SearchMap {
-  width: 60%;
-  height: 100%;
+  width: 50%;
+  height: 90%;
 }
 
 .SearchMap-content {
@@ -12,5 +12,9 @@
   stroke-linejoin: round;
   stroke: #FFFFFF;
   stroke-width: 2;
-  fill: rgb(20, 121, 0)
+}
+
+.SearchMap path:hover {
+  cursor: pointer;
+  fill: rgb(48, 114, 28);
 }
