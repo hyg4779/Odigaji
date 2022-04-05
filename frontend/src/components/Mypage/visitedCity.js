@@ -23,30 +23,26 @@ function visitedCity({ selCityData }) {
       <div className="title">다녀온 도시</div>
       <div className="status">
         {selCityData.map((data, key) => {
-          if (key) {
-            return (
-              <div key={key} className="item">
-                <div>
-                  <Link to={{ pathname: `/local/${data.city}` }}>
-                    <img
-                      className="number"
-                      src={server.BASE_URL + data.city_data.photo}
-                    />
-                  </Link>
-                  <div className="text">{data.city_data.name}</div>
-                  <div className="star-ratings">
-                    <div className="starLine">
-                      {starRating(data.rate)}
-                      {starNoneRating(data.rate)}
-                    </div>
+          return (
+            <div key={key} className="item">
+              <div>
+                <Link to={{ pathname: `/local/${data.city}` }}>
+                  <img
+                    className="number"
+                    src={server.BASE_URL + data.city_data.photo}
+                  />
+                </Link>
+                <div className="text">{data.city_data.name}</div>
+                <div className="star-ratings">
+                  <div className="starLine">
+                    {starRating(data.rate)}
+                    {starNoneRating(data.rate)}
                   </div>
                 </div>
-                <div className="space"></div>
               </div>
-            );
-          } else {
-            <div className="text">다녀온 도시가 없습니다.</div>;
-          }
+              <div className="space"></div>
+            </div>
+          );
         })}
       </div>
     </div>
