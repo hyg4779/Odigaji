@@ -9,7 +9,6 @@
   margin-bottom: 1vh;
   color: #FFFFFF;
   font-weight: bold;
-  overflow-y: scroll;
 }
 
 .Tourlist-header {
@@ -90,6 +89,10 @@
   color: #FFFFFF;
   border-style: none;
   font-size: 20px;
+}
+
+.Tourlist-button path {
+  fill: #FFFFFF;
 }
 
 .Tourlist-button:hover {
