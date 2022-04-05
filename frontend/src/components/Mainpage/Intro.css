@@ -1,4 +1,6 @@
 .Intro {
+  background-image: url(tmp_Jeju_1366x768.jpeg);
+  background-size: cover;
   box-sizing: border-box;
   display: flex;
   padding: 10vh 10vw;
@@ -28,10 +30,21 @@
 
 .Intro-text-header {
   font-size: 3rem;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0,0,128,0.1);
+  border-radius: 30px;
+  width: 90%;
+  padding: 15px;
 }
 
 .Intro-text-content {
   font-size: 1.5rem;
+  background-color: rgba(0,0,128,0.1);
+  border-radius: 30px;
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  width: 80%;
+  background-color: rgba(255,255,192,0.1)
 }
 
 .Intro-button {
@@ -50,12 +63,12 @@
   background-color: #7535FE;
 }
 
-.Intro-image {
-  width: 50%;
-  height: 100%;
-  border: 5px solid black;
+.Intro-image {                  
+  vertical-align: bottom;                           
+  width: 55%;
+  height: 70%;
+  border: 2px solid black;
   border-radius: 2rem;
-  padding: 2rem;
   background-color: #FFFFFF;
 }
 
