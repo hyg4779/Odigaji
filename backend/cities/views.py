@@ -150,13 +150,13 @@ def get_attraction(request,attraction_id):
         rescode = response.getcode()
         if(rescode==200):
             try:
-                os.mkdir("media\\naver_images\\")
+                os.mkdir("media/naver_images/")
             except:
                 print('폴더 존재함')
             response_body = response.read()
             response_json = json.loads(response_body.decode('utf-8'))
             img_response = requests.get(response_json['items'][0]['link'])
-            with open("media\\naver_images\\" + subj + '.jpg', "wb") as fp:
+            with open("media/naver_images/" + subj + '.jpg', "wb") as fp:
                 fp.write(img_response.content)
 
         data = attr_serializer.data
