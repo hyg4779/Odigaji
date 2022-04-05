@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Nav.css';
+import Swal from 'sweetalert2';
 
 function Nav() {
   let navigate = useNavigate();
@@ -8,6 +9,17 @@ function Nav() {
   function logout(event) {
     if (window.confirm('정말로 로그아웃하실 건가요?')) {
       event.preventDefault();
+      Swal.fire({
+        icon: 'success',
+        title: '로그아웃 완료',
+        // eslint-disable-next-line prettier/prettier
+        text: '또 오세요!'
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/');
+        }
+      });
       sessionStorage.removeItem('jwt');
       navigate('/');
     }

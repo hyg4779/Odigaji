@@ -1,4 +1,3 @@
-
 .Nav {
   width: 10%;
   height: 100%;
@@ -34,6 +33,7 @@
   text-align: center;
   font-size: 1vw;
   transition: color 300ms;
+  cursor: pointer !important;
 }
 
 .Nav-item:hover{
