@@ -168,7 +168,7 @@ function Post() {
                 writeComment();
               }}
             >
-              댓글 작성
+              작성
             </button>
           </div>
         </div>
