@@ -1,53 +1,85 @@
 
 
-#map {
-  width:600px;
-  height:400px;
-  float:left; 
+.TravelDetailContainer{
+  display: grid;
+  box-sizing: border-box;
+  width: 90%;
+  height: 100vh;
+  overflow-y: auto;
+}
+.ContentTravelBox{
+  padding: 50px; 
+  /* background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%); */
+}
+.DetailImage{
+  width: 600px;
+  height: 400px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: 30px;
+  object-fit: cover;
+}
+
+.TravelDetailInfoBox{
+    /* border: 1px solid; */
+    border-radius: 10px;
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 30px;
+    background-color: white;
+}
+.TravelDetailInfoBox2{
+  margin-top: 20px;
+  /* border: 1px solid; */
   border-radius: 10px;
+  padding: 20px;
+  background-color: white;
 }
-
-.travel-img {
-  width:600px;
-  height:400px;
-  float:left;
-  margin-right:10px;
-  border-radius: 10px;
-}
-
-.TravelDetail {
-  margin: 10px;
-  overflow-y:auto;
-  height:100%;
-}
-
-#row {
-  width:1400px;
-}
-
-.container {
-  width:1212px;
-
-  margin-top:10px;
-  margin-left:0px;
-  padding: 0px;
-}
-
-#button {
-  margin-top:0px;
-}
-
-
-.travel-table-container {
-  border-radius: 10px;
-  background-color: azure;
+.TravelDetailTitleName{
   padding: 10px;
-  margin: 10px;
+  margin-bottom: 10px;
+  background-color: white;
 }
-.travel-info-table th{
-  background-color: aquamarine;
+.DetailTitleWrap{
+  display: flex;
+  justify-content: space-between;
+}
+.TravelDetaiLocationTitle{
+  padding: 10px;
+}
+#map {
+  width:auto;
+  height:500px;
+  margin: (0,auto);
+  padding: 20px;
+  border-radius: 10px;
+}
+.TravelDetailWrap{
+  display: flex;
+  justify-content: space-evenly;
+}
+.TravelDetailMapWrap{
+  padding: 30px;
+}
+
+.travel-info-table .tbody {
+  border: 1px solid;
   
 }
-.travel-info-table td{
-  background-color: white;
+.TableContent{
+  /* margin-left: 250px; */
+  align-self: center;
+}
+.TravelBackButton{
+  
+  background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
+  color: white;
+  border-radius: 10px ;
+  border: none;
+}
+.MapTitle{
+  font-size: 23px;
+  margin-left: 20px;
 }

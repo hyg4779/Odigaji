@@ -24,9 +24,9 @@ function TravelDetail() {
   const [cityId, setCityId] = useState();
   const [cityLogo, setCityLogo] = useState();
   let attractionDetail;
-  console.log(attractionId);
-  console.log(latitude);
-  console.log(longitude);
+  // console.log(attractionId);
+  // console.log(latitude);
+  // console.log(longitude);
   //랜더링 이후 실행되는 함수
 
   const attractionUrl =
@@ -42,10 +42,8 @@ function TravelDetail() {
           server.ROUTES.allCities +
           attractionId +
           server.ROUTES.attraction
-        // 'http://127.0.0.1:8000/api/cities/505/get-attraction/'
       )
       .then((res) => {
-        console.log(res);
         setName(res.data.name);
         setAddress(res.data.address);
         setFacilities(res.data.facilities);
@@ -90,48 +88,111 @@ function TravelDetail() {
   }, [cityId]);
 
   return (
-    <div className="TravelDetail m-5 p-5">
-      <Row id="row">
-        <div>
-          <Image
-            className="travel-img"
-            src={server.BASE_URL + '/' + search_image}
-          />
-          <div id="map"></div>
+    <div className="TravelDetailContainer">
+      <div className="ContentTravelBox">
+        <div className="TravelDetailInfoBox">
+          <div className="TravelDetailTitleName">
+            <div className="DetailTitleWrap">
+              <h2>{name} </h2>
+
+              <button className="TravelBackButton" onClick={() => goback()}>
+                이전 목록
+              </button>
+            </div>
+          </div>
+          <div className="TravelDetailWrap">
+            <img
+              className="DetailImage"
+              src={server.BASE_URL + '/' + search_image}
+            />
+
+            <div className="TableContent">
+              <Table borderless size="md">
+                <tbody>
+                  <tr>
+                    <th width="100" height="50">
+                      주소
+                    </th>
+                    <td width="300">{address}</td>
+                  </tr>
+
+                  <tr>
+                    <th width="100" height="50">
+                      편의시설
+                    </th>
+                    <td>{facilities}</td>
+                  </tr>
+
+                  <tr>
+                    <th width="100" height="50">
+                      주차가능수
+                    </th>
+                    <td>{parking_lot}</td>
+                  </tr>
+
+                  <tr>
+                    <th width="100" height="50">
+                      전화번호
+                    </th>
+                    <td>{tel}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
+          </div>
         </div>
-      </Row>
-      <Container className="travel-table-container">
-        <Table striped bordered hover className="travel-info-table">
-          <tbody>
-            <tr>
-              <th>관광지명</th>
-              <td>{name}</td>
-            </tr>
-            <tr>
-              <th>주소</th>
-              <td>{address}</td>
-            </tr>
-            <tr>
-              <th>편의시설</th>
-              <td>{facilities}</td>
-            </tr>
-            <tr>
-              <th>주차가능수</th>
-              <td>{parking_lot}</td>
-            </tr>
-            <tr>
-              <th>전화번호</th>
-              <td>{tel}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </Container>
-      <Container>
-        <Button id="button" variant="secondary" onClick={() => goback()}>
-          관광지 목록으로
-        </Button>{' '}
-      </Container>
+        <div className="TravelDetailInfoBox2">
+          <div className="TravelDetaiLocationTitle">
+            <div className="MapTitle">위치 상세보기</div>
+          </div>
+          <div className="TravelDetailMapWrap">
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
     </div>
+    // <div className="TravelDetail m-5 p-5">
+    //   <Row id="row">
+    //     <div>
+    //       <Image
+    //         className="travel-img"
+    //         src={server.BASE_URL + '/' + search_image}
+    //       />
+    //       <div id="map"></div>
+    //     </div>
+    //   </Row>
+    //   <Container className="travel-table-container">
+    //     <Table striped bordered hover className="travel-info-table">
+    //       <tbody>
+    //         <tr>
+    //           <th>관광지명</th>
+    //           <td>{name}</td>
+    //         </tr>
+    //         <tr>
+    //           <th>주소</th>
+    //           <td>{address}</td>
+    //         </tr>
+    //         <tr>
+    //           <th>편의시설</th>
+    //           <td>{facilities}</td>
+    //         </tr>
+    //         <tr>
+    //           <th>주차가능수</th>
+    //           <td>{parking_lot}</td>
+    //         </tr>
+    //         <tr>
+    //           <th>전화번호</th>
+    //           <td>{tel}</td>
+    //         </tr>
+    //       </tbody>
+    //     </Table>
+    //   </Container>
+    //   <Container>
+    //     <Button id="button" variant="secondary" onClick={() => goback()}>
+    //       관광지 목록으로
+    //     </Button>{' '}
+    //   </Container>
+    // </div>
     // end TravelDetail div
   );
 }
