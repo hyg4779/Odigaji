@@ -198,6 +198,11 @@ function Post() {
                 </div>
               );
             })}
+          {comments.length == 0 ? (
+            <div className="NoneItems">해당 게시물의 댓글이 없습니다.</div>
+          ) : (
+            ''
+          )}
         </div>
         <div className="BackButtonWrap">
           <button
