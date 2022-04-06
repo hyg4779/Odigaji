@@ -76,14 +76,7 @@ function Random() {
 
   return (
     <div className="Random">
-      <div className="Random-header">랜덤랜덤</div>
-      <button
-        className="Random-result"
-        style={{ visibility: randomResult.length >= 2 ? 'visible' : 'hidden' }}
-        onClick={() => moveCity(randomResult[2])}
-      >
-        {randomResult[0]} {randomResult[1]}
-      </button>
+      <div className="Random-header">어디든 떠나고 싶을 때</div>
       <div className="Random-content">
         {!cityShow && (
           <RouletteDo
@@ -107,6 +100,13 @@ function Random() {
         )}
         <RandomModal textShow={textShow} randomResult={randomResult} />
       </div>
+      <button
+        className="Random-result"
+        style={{ visibility: randomResult.length >= 2 ? 'visible' : 'hidden' }}
+        onClick={() => moveCity(randomResult[2])}
+      >
+        {randomResult[1]} 알아보기!
+      </button>
       <RandomButton
         provinceSpin={provinceSpin}
         citySpin={citySpin}
