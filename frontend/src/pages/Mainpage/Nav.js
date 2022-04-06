@@ -26,9 +26,15 @@ function Nav() {
   }
   return (
     <div className="Nav">
-      <NavLink className="Nav-item" to="/">
-        메인페이지
+      <NavLink className="Nav-odi-wrap" to="/">
+        <img
+          className="Nav-odi"
+          src={process.env.PUBLIC_URL + 'img/신난가지.png'}
+        />
       </NavLink>
+      {/* <NavLink className="Nav-item" to="/">
+        메인페이지
+      </NavLink> */}
       <div className="Nav-list">
         <NavLink className="Nav-item" to="/search">
           직접찾기

@@ -1,13 +1,11 @@
 /*global kakao*/
 import React, { useEffect, useState } from 'react';
 import { Image, Row, Col, Container, Table, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './TravelDetail.css';
 import server from '../../API/server';
-function goback() {
-  window.history.back();
-}
+
 function TravelDetail() {
   let params = useParams();
   const attractionId = params.attractionId;
@@ -34,7 +32,9 @@ function TravelDetail() {
     server.ROUTES.allCities +
     attractionId +
     server.ROUTES.attraction;
-
+  function goback(id) {
+    navigate('/local/' + id);
+  }
   useEffect(() => {
     axios
       .get(

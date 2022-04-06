@@ -3,12 +3,14 @@ from rest_framework import serializers
 from .models import CityReview, Comment
 
 from accounts.serializers import User_mypage_serializer
+from cities.serializers import City_serializer
 
 class Review_list_serializer(serializers.ModelSerializer):
     '''
     review들 읽어서 반환하는 serializer
     '''
     user = User_mypage_serializer(read_only=True)
+    city = City_serializer(read_only=True)
     class Meta:
         model = CityReview
         fields = (
