@@ -92,7 +92,7 @@
 }
 .MyRatingTitle2{
   box-shadow : 5px 5px 10px -5px;
-  background-color: rgb(117,53,254);
+  background-color: rgb(217, 205, 251);
   text-align: center;
   border-radius: 10px;
   width: 120px;
@@ -135,11 +135,19 @@
 }
 .reviewButton{
   width: 150px;
-  margin: auto 10px 10px auto;
+  margin: auto 20px 10px auto;
   background: linear-gradient(to left, rgb(117,53,254), rgb(144,93,254));
   color: white;
   border-radius: 10px ;
   border: none;
+}
+.MyRatingTitle2:hover{
+  cursor: pointer;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2);
+}
+.reviewButton:hover {
+  cursor: pointer;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2);
 }
 .IntoReview{
   display: flex;
@@ -153,4 +161,7 @@
 .LocalTableItems{
   text-align: center;
 
+}
+.TableContainer{
+  padding: 20px;
 }

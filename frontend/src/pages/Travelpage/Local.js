@@ -135,7 +135,7 @@ function Local() {
               <div className="LcoalText">{info}</div>
               <div className="spaceArea"></div>
               <div>인구수 : 약 {papulation} 명 </div>
-              <div>면적 : {area} m2</div>
+              <div>면적 : {area} km²</div>
             </div>
           </div>
 
@@ -188,25 +188,27 @@ function Local() {
             </button>
           </div>
           {/* <div id="map2" style={{ width: '100%', height: '350px' }}></div> */}
-          <Table striped bordered hover>
-            <tbody>
-              {/* &&양옆에 2개쓰면  */}
-              {travelList &&
-                travelList.map((data, idx) => {
-                  return (
-                    //무명함수 호출안하면 강제로 이동한다....
-                    <tr
-                      key={idx}
-                      className="LocalTableItems"
-                      onClick={() => MovetravelPage(data.id)}
-                    >
-                      <td>{data.name}</td>
-                      <td>{data.address}</td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </Table>
+          <div className="TableContainer">
+            <Table striped bordered hover>
+              <tbody>
+                {/* &&양옆에 2개쓰면  */}
+                {travelList &&
+                  travelList.map((data, idx) => {
+                    return (
+                      //무명함수 호출안하면 강제로 이동한다....
+                      <tr
+                        key={idx}
+                        className="LocalTableItems"
+                        onClick={() => MovetravelPage(data.id)}
+                      >
+                        <td>{data.name}</td>
+                        <td>{data.address}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </div>
       <div className="modal">
