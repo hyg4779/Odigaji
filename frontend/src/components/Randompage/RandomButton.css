@@ -1,12 +1,12 @@
 .RandomButton {
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 5px 10px;
   width: auto;
-  height: 3vw;
+  height: 4vw;
   min-height: 30px;
+  border: 2px solid #FFFFFF;
   border-radius: 2rem;
   background-color: #BC8CF2;
-  border-style: none;
   color: #FFFFFF;
   font-weight: bold;
 }

@@ -8,12 +8,13 @@
   position: absolute;
   width: auto;
   font-weight: bold;
-  border: 2px solid black;
   background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 5px 10px;
 }
 
 path {
-  fill: yellowgreen;
+  fill: #d1aef8;
 }
 
 g .CityMap-none path {
@@ -27,5 +28,5 @@ g .CityMap-none:hover path {
 
 g g:hover path {
   cursor: pointer;
-  fill: rgb(48, 114, 28);
+  fill: #5f00cc;
 }

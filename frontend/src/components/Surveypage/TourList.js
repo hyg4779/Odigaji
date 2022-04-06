@@ -18,7 +18,20 @@ function TourList({
   startPage,
   lastPage,
   setTours,
+  mouseX,
+  mouseY,
+  textIdx,
+  textShow,
+  buttonOver,
+  buttonOut,
 }) {
+  const textList = [
+    '처음으로',
+    '이전으로',
+    '다음으로',
+    '진행한 마지막 설문으로',
+  ];
+
   function isVisit(id) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
     return tours.find((tour) => tour.id === id);
@@ -114,14 +127,39 @@ function TourList({
           </div>
         </div>
       </div>
+      {textShow && (
+        <div
+          className="Tourlist-tooltip"
+          style={{ top: `${mouseY}px`, left: `${mouseX}px` }}
+        >
+          {textList[textIdx]}
+        </div>
+      )}
       <div className="Tourlist-button-group">
-        <FaAngleDoubleLeft onClick={startPage} className="Tourlist-button" />
-        <FaAngleLeft onClick={beforePage} className="Tourlist-button" />
-        <FaAngleRight
-          onClick={tours.length >= 1 ? nextPage : alertMessage}
+        <FaAngleDoubleLeft
+          onClick={startPage}
+          onMouseMove={(event) => buttonOver(event, 0)}
+          onMouseOut={() => buttonOut()}
           className="Tourlist-button"
         />
-        <FaAngleDoubleRight onClick={lastPage} className="Tourlist-button" />
+        <FaAngleLeft
+          onClick={beforePage}
+          onMouseMove={(event) => buttonOver(event, 1)}
+          onMouseOut={() => buttonOut()}
+          className="Tourlist-button"
+        />
+        <FaAngleRight
+          onClick={tours.length >= 1 ? nextPage : alertMessage}
+          onMouseMove={(event) => buttonOver(event, 2)}
+          onMouseOut={() => buttonOut()}
+          className="Tourlist-button"
+        />
+        <FaAngleDoubleRight
+          onClick={lastPage}
+          onMouseMove={(event) => buttonOver(event, 3)}
+          onMouseOut={() => buttonOut()}
+          className="Tourlist-button"
+        />
       </div>
     </div>
   );

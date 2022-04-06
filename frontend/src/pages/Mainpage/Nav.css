@@ -54,6 +54,28 @@
   cursor: pointer !important;
 }
 
+.Nav-item-on {
+  border-style: none;
+  width: 95%;
+  background-color: transparent;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1vw;
+  transition: color 300ms;
+  cursor: pointer !important;
+  background-color: rgb(233, 255, 213);
+  border-radius: 5px;
+}
+
+.Nav-item-on:hover {
+  color: #A177FA;
+  background-color: beige;
+  border-radius: 5px;
+}
+
 .Nav-item:hover{
   color: #A177FA;
   background-color: beige;

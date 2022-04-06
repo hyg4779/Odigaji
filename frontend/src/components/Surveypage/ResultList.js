@@ -1,36 +1,47 @@
 import React, { useState } from 'react';
 import { Carousel } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import server from '../../API/server';
 import './ResultList.css';
 
-function ResultList({ resultData }) {
+function ResultList({ resultData, inputData }) {
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   const [textShow, setTextShow] = useState(false);
   const [carouselShow, setCarouselShow] = useState(false);
   const [cityData, setCityData] = useState([]);
   const [count, setCount] = useState(0);
+  const [cityName, setCityName] = useState('');
+  const colors = [
+    '#d1aef8',
+    '#ba7dff',
+    '#a354fd',
+    '#9030fd',
+    '#7c0cfd',
+    '#5f00cc',
+  ];
+  const navigate = useNavigate();
 
   function getColor(id) {
     const cityCnt = resultData[id].count;
-    if (cityCnt === 0) {
-      return '#d1aef8';
-    } else if (cityCnt === 1) {
-      return '#ba7dff';
-    } else if (cityCnt === 2) {
-      return '#a354fd';
-    } else if (cityCnt === 3) {
-      return '#9030fd';
-    } else if (cityCnt === 4) {
-      return '#7c0cfd';
+    if (cityCnt < 5) {
+      return colors[cityCnt];
     } else {
-      return '#5f00cc';
+      return colors[5];
     }
   }
 
   function getCityData(id) {
+    if (resultData[id].count === 0) {
+      return;
+    }
     setCount(resultData[id].count);
     setCityData(resultData[id].cities);
+    if (resultData[id].cities[0].province_data.name === '자치 시도') {
+      setCityName(resultData[id].cities[0].name);
+    } else {
+      setCityName(resultData[id].cities[0].province_data.name);
+    }
   }
 
   function mouseMoveCity(event, id) {
@@ -51,10 +62,23 @@ function ResultList({ resultData }) {
     }
   }
 
+  function carouselOff(event) {
+    if (event.target.className === 'ResultList-carousel') {
+      setCarouselShow(false);
+    }
+  }
+
+  function moveCity(id) {
+    navigate(`/local/${id}`);
+  }
+
   return (
     <div className="ResultList">
       {carouselShow && count >= 1 && (
-        <div className="ResultList-carousel">
+        <div
+          className="ResultList-carousel"
+          onClick={(event) => carouselOff(event)}
+        >
           <Carousel interval={null}>
             {cityData.map((item) => {
               return (
@@ -63,6 +87,7 @@ function ResultList({ resultData }) {
                     className="ResultList-img"
                     alt={item.name}
                     src={server.BASE_URL + item.background_photo}
+                    onClick={() => moveCity(item.id)}
                   />
                   <Carousel.Caption>
                     <div>
@@ -73,22 +98,19 @@ function ResultList({ resultData }) {
               );
             })}
           </Carousel>
-          <button onClick={() => setCarouselShow(false)}>다른지역보기</button>
         </div>
       )}
       {textShow && (
         <div
           className="ResultList-textbox"
           style={{
-            position: 'absolute',
-            top: `${mouseY - 150}px`,
-            left: `${mouseX - 450}px`,
+            top: `${mouseY}px`,
+            left: `${mouseX}px`,
           }}
         >
-          {count}개의 도시가 있습니다
+          {cityName}에 {count}개 지역이 있습니다
         </div>
       )}
-      <div className="ResultList-header">결과가 나왔습니다</div>
       <div className="ResultList-content">
         <svg
           className="ResultMap-content"
@@ -334,7 +356,25 @@ function ResultList({ resultData }) {
             onClick={() => clickCity(16)}
           />
         </svg>
-        <div className="ResultList-textContent">내용들</div>
+        <div className="ResultList-textContent">
+          <div className="ResultList-textContent-header">
+            추천 결과가 나왔습니다
+          </div>
+          <div className="ResultList-textContent-cities">
+            {inputData.map((ele) => {
+              return (
+                <div className="ResultList-textContent-city" key={ele.id}>
+                  {ele.name}
+                </div>
+              );
+            })}
+          </div>
+          <div className="ResultList-textContent-footer">
+            <div>10개의 추천 지역들이 있습니다</div>
+            <div>각 지역의 자세한 정보를 알고 싶다면</div>
+            <div>색칠된 지역을 눌러서 확인해 보세요</div>
+          </div>
+        </div>
       </div>
     </div>
   );

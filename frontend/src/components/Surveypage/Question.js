@@ -17,13 +17,26 @@ function Question({
   startPage,
   lastPage,
   tasteSurveys,
+  mouseX,
+  mouseY,
+  textIdx,
+  textShow,
+  buttonOver,
+  buttonOut,
 }) {
   const [selectName, setSelectName] = useState();
   const imgCnt = surveyData[pageIndex].length;
+  const textList = [
+    '처음으로',
+    '이전으로',
+    '다음으로',
+    '진행한 마지막 설문으로',
+  ];
 
   function alertMessage() {
     alert('항목을 선택해주세요!');
   }
+
   useEffect(() => {
     // 하나의 컴포넌트를 이용해서 10개의 설문을 진행하기 때문에
     // pageIndex 가 변경될 때마다 imageName을 초기화하지 않으면 다음 설문에 영향을 주게 된다
@@ -44,7 +57,7 @@ function Question({
             <div
               key={data.id}
               style={{
-                width: imgCnt === 6 ? '33%' : '50%',
+                width: imgCnt === 6 ? '33%' : '40%',
                 height: imgCnt === 2 ? '60vh' : '40vh',
                 position: 'relative',
               }}
@@ -69,14 +82,39 @@ function Question({
           );
         })}
       </div>
+      {textShow && (
+        <div
+          className="Question-tooltip"
+          style={{ top: `${mouseY}px`, left: `${mouseX}px` }}
+        >
+          {textList[textIdx]}
+        </div>
+      )}
       <div className="Question-button-group">
-        <FaAngleDoubleLeft onClick={startPage} className="Question-button" />
-        <FaAngleLeft onClick={beforePage} className="Question-button" />
-        <FaAngleRight
-          onClick={selectName ? nextPage : alertMessage}
+        <FaAngleDoubleLeft
+          onClick={startPage}
+          onMouseMove={(event) => buttonOver(event, 0)}
+          onMouseOut={() => buttonOut()}
           className="Question-button"
         />
-        <FaAngleDoubleRight onClick={lastPage} className="Question-button" />
+        <FaAngleLeft
+          onClick={beforePage}
+          onMouseMove={(event) => buttonOver(event, 1)}
+          onMouseOut={() => buttonOut()}
+          className="Question-button"
+        />
+        <FaAngleRight
+          onClick={selectName ? nextPage : alertMessage}
+          onMouseMove={(event) => buttonOver(event, 2)}
+          onMouseOut={() => buttonOut()}
+          className="Question-button"
+        />
+        <FaAngleDoubleRight
+          onClick={lastPage}
+          onMouseMove={(event) => buttonOver(event, 3)}
+          onMouseOut={() => buttonOut()}
+          className="Question-button"
+        />
       </div>
     </div>
   );

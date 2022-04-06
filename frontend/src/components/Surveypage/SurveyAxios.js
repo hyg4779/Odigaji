@@ -4,6 +4,7 @@ import server from '../../API/server';
 const allCitiesUrl = server.BASE_URL + server.ROUTES.allCities;
 const selCityUrl = server.BASE_URL + server.ROUTES.selCity;
 const tasteUrl = server.BASE_URL + server.ROUTES.tastes;
+const resultUrl = server.BASE_URL + server.ROUTES.result;
 
 function AllCitiesList() {
   return axios.get(allCitiesUrl);
@@ -35,4 +36,20 @@ function AddTaste(data) {
   });
 }
 
-export { AllCitiesList, AddSelCity, AddTaste };
+function GetResult() {
+  return axios.get(resultUrl, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+    },
+  });
+}
+
+function GetTaste() {
+  return axios.get(tasteUrl, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
+    },
+  });
+}
+
+export { AllCitiesList, AddSelCity, AddTaste, GetResult, GetTaste };

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Loading.css';
 
-function Loading({ setLoading }) {
-  const [idx, setIdx] = useState(0);
+function Loading({ setLoading, time, idx, setIdx }) {
   const imgList = [
     {
       id: 1,
@@ -25,22 +24,19 @@ function Loading({ setLoading }) {
       title: '추천 결과를 페이지에 옮기는 중',
     },
   ];
-
   useEffect(() => {
     function startLoading() {
       return setTimeout(() => {
         setIdx(idx + 1);
-        console.log('2초 뒤 실행');
-      }, 2000);
+      }, time);
     }
     if (idx >= 4) {
-      console.log('8초가 되었습니다');
       setLoading(false);
-      return;
+      return () => clearTimeout(startLoading);
     }
     startLoading();
     return () => clearTimeout(startLoading);
-  }, [idx, setLoading]);
+  }, [idx, setIdx, setLoading, time]);
 
   return (
     <div className="Loading">

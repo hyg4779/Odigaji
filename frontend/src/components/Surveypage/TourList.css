@@ -7,12 +7,11 @@
   align-items: center;
   margin-top: 10vh;
   margin-bottom: 1vh;
-  color: #FFFFFF;
+  color: black;
   font-weight: bold;
 }
 
 .Tourlist-header {
-  color: #FFFFFF;
   font-size: 2vw;
   text-align: center;
   font-weight: bold;
@@ -41,7 +40,6 @@
 }
 
 .Tourlist-content-button {
-  color: #FFFFFF;
   background-color: transparent;
   border-style: none;
   font-weight: bold;
@@ -81,32 +79,33 @@
   column-gap: 5vw;
 }
 
+.Tourlist-tooltip {
+  position: fixed;
+  width: auto;
+  color: black;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 5px 10px;
+  transform: translate(-50%, -150%);
+}
+
 .Tourlist-button {
   width: auto;
   height: auto;
-  background-color: #A177FA;
   font-weight: bold;
-  color: #FFFFFF;
   border-style: none;
   font-size: 20px;
 }
 
-.Tourlist-button path {
-  fill: #FFFFFF;
-}
-
 .Tourlist-button:hover {
-  color: yellowgreen;
+  cursor: pointer;
 }
 
-.Tourlist-button-reset {
-  position: absolute;
-  right: 0px;
-  width: auto;
-  height: auto;
-  background-color: #A177FA;
-  font-weight: bold;
-  color: #FFFFFF;
-  border-radius: 2rem;
-  border-style: none;
+.Tourlist-button path {
+  fill: black;
+}
+
+.Tourlist-button:hover path {
+  fill: purple;
 }
