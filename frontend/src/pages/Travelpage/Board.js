@@ -83,86 +83,86 @@ function Board() {
       <div className="BoardWrap">
         <h3>관광지 리뷰</h3>
         <div className="board-list">
-          <div className="container">
-            <button className="writeButton" onClick={writeReview}>
-              글쓰기
-            </button>
-            <table className="board-table">
-              <thead className="tableHead">
-                <tr>
-                  <th className="th-num">No</th>
-                  <th className="th-title">제목</th>
-                  <th className="th-date">작성일</th>
-                  <th className="th-user">작성자</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reviewData &&
-                  reviewData.map((data, key) => {
-                    return (
-                      <tr
-                        key={key}
-                        onClick={() => {
-                          movePost(data.id);
-                        }}
-                        className="tablebody"
-                      >
-                        <td>{data.id}</td>
-                        <td>{data.title}</td>
-                        <td>{data.updated}</td>
-                        <td>{data.user.nickname}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+          <button className="writeButton" onClick={writeReview}>
+            글쓰기
+          </button>
+          <table className="board-table">
+            <thead className="tableHead">
+              <tr>
+                <th className="th-num">No</th>
+                <th className="th-title">제목</th>
+                <th className="th-date">작성일</th>
+                <th className="th-user">작성자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reviewData &&
+                reviewData.map((data, key) => {
+                  return (
+                    <tr
+                      key={key}
+                      onClick={() => {
+                        movePost(data.id);
+                      }}
+                      className="tablebody"
+                    >
+                      <td>{data.id}</td>
+                      <td>{data.title}</td>
+                      <td>{data.updated}</td>
+                      <td>{data.user.nickname}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
         </div>
       </div>
-      <ul className="pageItems">
-        <li
-          onClick={(e) => {
-            e.preventDefault();
-
-            if (currentPage > 1) {
-              setCurrentPage(currentPage - 1);
-              setIsClick(true);
-            }
-          }}
-        >
-          <button className="PrevButton">Prev</button>
-        </li>
-        {totalPage.map((num) => (
+      <div>
+        <ul className="pageItems">
           <li
-            key={num}
             onClick={(e) => {
               e.preventDefault();
-              setIsClick(true);
-              // currentPage == num ? setColor('red') : setColor('white')
-              // if (!isClick) {
-              console.log(e.view);
-              // e.target.style.backgroundColor = 'red';
-              // }
 
-              setCurrentPage(num);
+              if (currentPage > 1) {
+                setCurrentPage(currentPage - 1);
+                setIsClick(true);
+              }
             }}
           >
-            <button className="ItemButton">{num}</button>
+            <button className="PrevButton">Prev</button>
           </li>
-        ))}
-        <li
-          onClick={(e) => {
-            e.preventDefault();
+          {totalPage.map((num) => (
+            <li
+              key={num}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsClick(true);
+                // currentPage == num ? setColor('red') : setColor('white')
+                // if (!isClick) {
+                console.log(e.view);
+                // e.target.style.backgroundColor = 'red';
+                // }
 
-            if (currentPage < totalLength) {
-              setCurrentPage(currentPage + 1);
-              setIsClick(true);
-            }
-          }}
-        >
-          <button className="NextButton">Next</button>
-        </li>
-      </ul>
+                setCurrentPage(num);
+              }}
+            >
+              <button className="ItemButton">{num}</button>
+            </li>
+          ))}
+          <li
+            onClick={(e) => {
+              e.preventDefault();
+
+              if (currentPage < totalLength) {
+                setCurrentPage(currentPage + 1);
+                setIsClick(true);
+              }
+            }}
+          >
+            <button className="NextButton">Next</button>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
