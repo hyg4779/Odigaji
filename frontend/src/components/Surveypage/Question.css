@@ -40,13 +40,12 @@
 .Question-img {
   width: 100%;
   height: 100%;
-  border: 10px solid #A177FA;
+  padding: 10px;
   border-radius: 2rem;
 }
 
 .Question-img:hover {
   cursor: pointer;
-  border-color: yellowgreen;
 }
 
 .Question-img-name {
@@ -60,6 +59,15 @@
   padding: 0rem 10px;
 }
 
+.Question-tooltip {
+  position: fixed;
+  width: auto;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 5px 10px;
+  transform: translate(-50%, -150%);
+}
+
 .Question-button-group {
   position: relative;
   width: 80vw;
@@ -71,7 +79,6 @@
 .Question-button {
   width: auto;
   height: auto;
-  background-color: #A177FA;
   font-weight: bold;
   color: #FFFFFF;
   border-radius: 2rem;
@@ -79,22 +86,14 @@
   font-size: 20px;
 }
 
+.Question-button:hover {
+  cursor: pointer;
+}
+
 .Question-button path {
   fill: #FFFFFF;
 }
 
-.Question-button:hover {
-  color: yellowgreen;
-}
-
-.Question-button-reset {
-  position: absolute;
-  right: 0px;
-  width: auto;
-  height: auto;
-  background-color: #A177FA;
-  font-weight: bold;
-  color: #FFFFFF;
-  border-radius: 2rem;
-  border-style: none;
+.Question-button:hover path {
+  fill: purple;
 }

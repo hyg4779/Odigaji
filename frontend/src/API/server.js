@@ -19,6 +19,7 @@ const server = {
     selCity: '/api/recommends/sel-city/',
     tastes: '/api/recommends/taste/',
     city: '/api/cities/',
+    result: '/api/recommends/result/',
   },
 };
 

@@ -81,32 +81,33 @@
   column-gap: 5vw;
 }
 
+.Tourlist-tooltip {
+  position: fixed;
+  width: auto;
+  color: black;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 5px 10px;
+  transform: translate(-50%, -150%);
+}
+
 .Tourlist-button {
   width: auto;
   height: auto;
-  background-color: #A177FA;
   font-weight: bold;
-  color: #FFFFFF;
   border-style: none;
   font-size: 20px;
+}
+
+.Tourlist-button:hover {
+  cursor: pointer;
 }
 
 .Tourlist-button path {
   fill: #FFFFFF;
 }
 
-.Tourlist-button:hover {
-  color: yellowgreen;
-}
-
-.Tourlist-button-reset {
-  position: absolute;
-  right: 0px;
-  width: auto;
-  height: auto;
-  background-color: #A177FA;
-  font-weight: bold;
-  color: #FFFFFF;
-  border-radius: 2rem;
-  border-style: none;
+.Tourlist-button:hover path {
+  fill: purple;
 }

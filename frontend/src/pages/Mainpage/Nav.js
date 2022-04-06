@@ -26,25 +26,47 @@ function Nav() {
   }
   return (
     <div className="Nav">
-      <NavLink className="Nav-item" to="/">
+      <NavLink
+        className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
+        to="/"
+      >
         메인페이지
       </NavLink>
       <div className="Nav-list">
-        <NavLink className="Nav-item" to="/search">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
+          to="/search"
+        >
           직접찾기
         </NavLink>
-        <NavLink className="Nav-item" to="/random">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
+          to="/random"
+        >
           랜덤여행지
         </NavLink>
-        <NavLink className="Nav-item" to="/survey">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
+          to="/survey"
+        >
           맞춤여행지
         </NavLink>
         {isLogin ? (
-          <NavLink className="Nav-item" to="/mypage">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'Nav-item-on' : 'Nav-item'
+            }
+            to="/mypage"
+          >
             마이페이지
           </NavLink>
         ) : (
-          <NavLink className="Nav-item" to="/signup">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'Nav-item-on' : 'Nav-item'
+            }
+            to="/signup"
+          >
             회원가입
           </NavLink>
         )}
@@ -54,7 +76,10 @@ function Nav() {
           로그아웃
         </button>
       ) : (
-        <NavLink className="Nav-item" to="/login">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
+          to="/login"
+        >
           로그인
         </NavLink>
       )}

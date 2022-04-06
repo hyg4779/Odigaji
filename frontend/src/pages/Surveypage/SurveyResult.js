@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Loading from '../../components/Surveypage/Loading';
 import ResultList from '../../components/Surveypage/ResultList';
-import { AddTaste } from '../../components/Surveypage/SurveyAxios';
+import { AddTaste, GetResult } from '../../components/Surveypage/SurveyAxios';
 import './SurveyResult.css';
 
 function SurveyResult() {
@@ -26,8 +26,12 @@ function SurveyResult() {
     { id: 85, name: '제주특별자치도', count: 0, cities: [] },
   ];
 
+  const navigate = useNavigate();
   const location = useLocation();
+  const [idx, setIdx] = useState(0);
+  const [time, setTime] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [inputData, setInputData] = useState([]);
   const [resultData, setResultData] = useState([]);
 
   function devideData(inputData) {
@@ -52,21 +56,48 @@ function SurveyResult() {
   }
 
   useEffect(() => {
-    AddTaste(location.state)
-      .then((response) => {
-        console.log('추천 결과 받아오기 성공', response.data);
-        devideData(response.data);
-      })
-      .catch((error) => {
-        console.log('추천 결과 받아오기 실패', error);
-      });
+    if (!sessionStorage.getItem('jwt')) {
+      navigate('/');
+    }
+
+    if (location.state === null) {
+      setTime(1000);
+      setIdx(3);
+      GetResult()
+        .then((response) => {
+          console.log('마지막 추천 결과 받아오기 성공', response.data);
+          devideData(response.data);
+          setInputData(response.data);
+        })
+        .catch((error) => {
+          console.log('마지막 추천 결과 받아오기 실패', error);
+        });
+    } else {
+      setTime(2000);
+      AddTaste(location.state)
+        .then((response) => {
+          console.log('추천 결과 받아오기 성공', response.data);
+          devideData(response.data);
+          setInputData(response.data);
+        })
+        .catch((error) => {
+          console.log('추천 결과 받아오기 실패', error);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="SurveyResult">
-      {loading && <Loading setLoading={setLoading} />}
-      {!loading && <ResultList resultData={resultData} />}
+      {time > 0 && loading && (
+        <Loading
+          setLoading={setLoading}
+          time={time}
+          idx={idx}
+          setIdx={setIdx}
+        />
+      )}
+      {!loading && <ResultList resultData={resultData} inputData={inputData} />}
     </div>
   );
 }

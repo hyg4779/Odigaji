@@ -109,6 +109,10 @@ function Survey() {
   const [pageIndex, setPageIndex] = useState(-2);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [textIdx, setTextIdx] = useState(0);
+  const [textShow, setTextShow] = useState(false);
   const navigate = useNavigate();
 
   let leftLoc = String(13 + (pageIndex + 1) * 7.7) + 'vw';
@@ -135,6 +139,17 @@ function Survey() {
 
   function lastPage() {
     setPageIndex(tastes.length - 1);
+  }
+
+  function buttonOver(event, id) {
+    setMouseX(event.clientX);
+    setMouseY(event.clientY);
+    setTextShow(true);
+    setTextIdx(id);
+  }
+
+  function buttonOut() {
+    setTextShow(false);
   }
 
   function tasteSurveys(pageIndex, imageTitle, imageId, imageName) {
@@ -213,6 +228,12 @@ function Survey() {
           startPage={startPage}
           lastPage={lastPage}
           setTours={setTours}
+          mouseX={mouseX}
+          mouseY={mouseY}
+          textIdx={textIdx}
+          textShow={textShow}
+          buttonOver={buttonOver}
+          buttonOut={buttonOut}
         />
       )}
       {pageIndex >= 0 && pageIndex <= 9 && (
@@ -226,6 +247,12 @@ function Survey() {
           startPage={startPage}
           lastPage={lastPage}
           tasteSurveys={tasteSurveys}
+          mouseX={mouseX}
+          mouseY={mouseY}
+          textIdx={textIdx}
+          textShow={textShow}
+          buttonOver={buttonOver}
+          buttonOut={buttonOut}
         />
       )}
     </div>

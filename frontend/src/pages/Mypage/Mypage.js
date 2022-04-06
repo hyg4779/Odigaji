@@ -19,6 +19,7 @@ function Mypage() {
   const [reviewData, setReviewData] = useState([]);
   const [reviewLength, setReviewLength] = useState(0);
   const [CityData, setCityData] = useState([]);
+  const [isHaveResult, setIsHaveResult] = useState(false);
   if (Userdata.photo) {
     imageCondition = true;
   }
@@ -103,10 +104,37 @@ function Mypage() {
       });
   };
 
+  const getResult = async () => {
+    const jwt = sessionStorage.getItem('jwt');
+    await axios
+      .get(server.BASE_URL + server.ROUTES.result, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+      .then((response) => {
+        console.log('추천 결과 받아오기 성공', response.data);
+        setIsHaveResult(true);
+      })
+      .catch((error) => {
+        console.log('추천 결과 받아오기 실패', error);
+      });
+  };
+
   let navigate = useNavigate();
 
   const InfoClick = () => {
     navigate('/mypage/userinfo', { state: Userdata });
+  };
+
+  const moveResult = () => {
+    if (isHaveResult) {
+      navigate('/result');
+    } else {
+      if (window.confirm('설문을 진행하셔야 합니다!')) {
+        navigate('/survey');
+      }
+    }
   };
 
   useEffect(() => {
@@ -115,7 +143,9 @@ function Mypage() {
     getReviewConmentInfo();
     getUserReviewInfo();
     getCity();
+    getResult();
   }, []);
+
   console.log(Userdata);
   return (
     <div className="My">
@@ -124,6 +154,7 @@ function Mypage() {
           <div className="profileBox">
             <img
               className="profileImg"
+              alt="프로필이미지"
               src={
                 imageCondition ? server.BASE_URL + Userdata.photo : Defaultimg
               }
@@ -134,6 +165,9 @@ function Mypage() {
       <div className="userContainer">
         <div className="userbutton">
           <div className="userName">{Userdata.username}</div>
+          <button onClick={() => moveResult()} className="Editinfo">
+            추천결과
+          </button>
           <button onClick={InfoClick} className="Editinfo">
             회원수정
           </button>

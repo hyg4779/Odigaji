@@ -22,14 +22,12 @@ function Map({ tours }) {
     { id: 16, name: '제주특별자치도', cnt: 0 },
   ];
   const colorList = [
-    '#FFE9CF',
-    '#FFDBB1',
-    '#FFCA8C',
-    '#FFBE73',
-    '#FFB054',
-    '#FFA336',
-    '#FE961D',
-    '#FF8A00',
+    '#d1aef8',
+    '#ba7dff',
+    '#a354fd',
+    '#9030fd',
+    '#7c0cfd',
+    '#5f00cc',
   ];
   const [cntData, setCntData] = useState(referenceData);
 
@@ -51,15 +49,15 @@ function Map({ tours }) {
   function cityColor(id) {
     if (id >= 8) {
       if (cntData[id].cnt === 1) {
-        return colorList[7];
+        return colorList[5];
       } else {
         return colorList[0];
       }
     } else {
-      if (cntData[id].cnt <= 6) {
+      if (cntData[id].cnt <= 4) {
         return colorList[cntData[id].cnt];
       } else {
-        return colorList[7];
+        return colorList[5];
       }
     }
   }
