@@ -11,7 +11,7 @@
 .signup {
  
   width: 500px;
-  height: 600px;
+  height: 700px;
   background: white;
   border-radius: 20px;
   display: flex;
@@ -19,6 +19,10 @@
   align-items: center;
   flex-direction: column;
 
+}
+.TitleImage2{
+  width: 60%;
+  margin: 30px;
 }
 .id {
   
@@ -102,6 +106,7 @@
   outline: none;
   border-radius: 40px;
   margin-top: 20px;
+  margin-bottom: 20px;
   color: white;
   font-size: 1.2em;
   letter-spacing: 2px;

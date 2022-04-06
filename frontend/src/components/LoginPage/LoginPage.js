@@ -71,7 +71,11 @@ function LoginPage() {
   return (
     <div className="wrap">
       <div className="login">
-        {/* <h1>오디가지</h1> */}
+        <img
+          className="TitleImage"
+          src={process.env.PUBLIC_URL + 'img/오디가지main.png'}
+        />
+
         <form onSubmit={onSubmit}>
           <div className="login_id">
             <h5>아이디</h5>
