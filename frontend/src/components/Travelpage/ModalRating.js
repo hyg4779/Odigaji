@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import './TravelRating.css';
-import { AddSelCity } from './SurveyAxios'; // selcity에서 api저장해놓음
-function TravelRating({ cityId, rating, setRating }) {
+import './ModalRating.css';
+import { AddSelCity } from '../Travelcomponents/SurveyAxios'; // selcity에서 api저장해놓음
+function ModalRating({ cityId, rating, setRating }) {
   const stars = [1, 2, 3, 4, 5];
   //idx는 별점인듯,,
   // console.log('rating: ', rating);
@@ -34,7 +34,7 @@ function TravelRating({ cityId, rating, setRating }) {
   }, [rating]);
 
   return (
-    <div className="TravelRating">
+    <div className="ModalRating">
       {stars.map((idx) => {
         return (
           <div key={idx} onClick={() => chooseStar(idx)}>
@@ -50,4 +50,4 @@ function TravelRating({ cityId, rating, setRating }) {
   );
 }
 
-export default TravelRating;
+export default ModalRating;
