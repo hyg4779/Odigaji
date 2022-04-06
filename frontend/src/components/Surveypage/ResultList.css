@@ -49,8 +49,18 @@
   width: auto;
 }
 
+.ResultList-carousel .carousel-control-prev:hover {
+  width: auto;
+  box-shadow: none;
+}
+
 .ResultList-carousel .carousel-control-next {
   width: auto;
+}
+
+.ResultList-carousel .carousel-control-next:hover {
+  width: auto;
+  box-shadow: none;
 }
 
 .ResultList-img {
