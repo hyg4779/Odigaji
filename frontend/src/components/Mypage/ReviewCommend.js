@@ -13,6 +13,24 @@ function ReviewCommend({ reviewCommentData }) {
           <div className="headtime">작성일자</div>
         </div>
         {reviewCommentData.map((data, key) => {
+          var content = data.content.substr(0, 20);
+          if (data.content.length > 20) {
+            return (
+              <>
+                <Link
+                  to={{
+                    pathname: `/local/travelDetail/board/post/${data.review_id}`,
+                  }}
+                >
+                  <div key={key} className="item">
+                    <div className="region">{content} ...</div>
+                    <div className="textTitle">{data.user.username}</div>
+                    <div className="time">{data.created}</div>
+                  </div>
+                </Link>
+              </>
+            );
+          }
           return (
             <Link
               to={{
@@ -20,7 +38,7 @@ function ReviewCommend({ reviewCommentData }) {
               }}
             >
               <div key={key} className="item">
-                <div className="region">{data.content}</div>
+                <div className="region">{content}</div>
                 <div className="textTitle">{data.user.username}</div>
                 <div className="time">{data.created}</div>
               </div>

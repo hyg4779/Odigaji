@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 function Review({ reviewData, CityData }) {
   console.log(reviewData);
-
   return (
     <div className="ReviewListContainer">
       <div className="Reviewtitle">관광지 리뷰 목록</div>
