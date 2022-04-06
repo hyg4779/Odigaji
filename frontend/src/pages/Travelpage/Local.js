@@ -16,26 +16,6 @@ function MoveBoardPage(id) {
   window.location.href = 'travelDetail/board/' + id + '/';
 }
 
-// function visited() {
-//   console.log('visited button clicked');
-//   const jwt = sessionStorage.getItem('jwt');
-//   axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
-
-//   axios
-//     .post(server.BASE_URL + server.ROUTES.selCity, {
-//       city: cityId,
-//       rate: 5,
-//     })
-//     .then((res) => {
-//       console.log(res);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-
-//   // 나중에 방문처리 할것!!!
-//   // axios.get();
-// }
 let cityId;
 function Local() {
   let params = useParams();
@@ -64,7 +44,7 @@ function Local() {
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
     axios.get(cityUrl).then((res) => {
-      console.log(res);
+      console.log(cityUrl, res);
       setId(res.data.id);
       setInfo(res.data.info);
       setPapulation(res.data.population);
@@ -80,7 +60,7 @@ function Local() {
     axios
       .get(visitedUrl)
       .then((res) => {
-        console.log(res);
+        console.log(visitedUrl, res);
         setRating(res.data.rate);
         if (res.status === 200) {
           isLogin = true;
@@ -90,9 +70,8 @@ function Local() {
         console.log(err);
         isLogin = false;
       });
-    console.log(isLogin);
   }, [isLogin]);
-  console.log(travelList);
+  console.log('여행지목록', travelList);
   return (
     <div className="LocalContainer">
       <div className="DetailContent">
