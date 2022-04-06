@@ -1,7 +1,7 @@
 
 
 .My{
-  background-color: #F8F8F8;  
+  background-color: rgba(255, 255, 255, 0.7);
   box-sizing: border-box;
   width: 90%;
   height: 100vh;
@@ -18,11 +18,11 @@
   display: flex;
   align-items: flex-end;
   padding: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .userContainer{
-  
-  background-color: white;  
+  background-color: rgba(255, 255, 255, 0.5); 
   padding: 21px 16px;  
   height: 120px;
   margin-bottom: 10px;
@@ -52,7 +52,7 @@
 
 .ActivityContainer{
   text-align: center;
-  background-color: white;  
+  background-color: rgba(255, 255, 255, 0.5);
   display: flex;  
   padding: 21px 60px;  
   height: 90px;
@@ -76,7 +76,7 @@
 
 .VisitedCityContainer{
   padding: 30px 60px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   margin-bottom: 10px;
 
 }
@@ -142,7 +142,7 @@
 
 .ReviewListContainer{  
   padding: 30px 60px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.5);
   margin-bottom: 10px;
   
 }
