@@ -4,13 +4,15 @@
   width:600px;
   height:400px;
   float:left; 
+  border-radius: 10px;
 }
 
-img {
+.travel-img {
   width:600px;
   height:400px;
   float:left;
   margin-right:10px;
+  border-radius: 10px;
 }
 
 .TravelDetail {
@@ -33,4 +35,19 @@ img {
 
 #button {
   margin-top:0px;
+}
+
+
+.travel-table-container {
+  border-radius: 10px;
+  background-color: azure;
+  padding: 10px;
+  margin: 10px;
+}
+.travel-info-table th{
+  background-color: aquamarine;
+  
+}
+.travel-info-table td{
+  background-color: white;
 }

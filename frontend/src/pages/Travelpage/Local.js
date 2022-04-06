@@ -70,6 +70,7 @@ function Local() {
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
     axios.get(cityUrl).then((res) => {
+      console.log(cityUrl, res);
       setId(res.data.id);
       setInfo(res.data.info);
       setPapulation(res.data.population);
@@ -92,6 +93,7 @@ function Local() {
     axios
       .get(visitedUrl)
       .then((res) => {
+        console.log(visitedUrl, res);
         setRating(res.data.rate);
         if (res.status === 200) {
           isLogin = true;
@@ -100,18 +102,8 @@ function Local() {
       .catch((err) => {
         isLogin = false;
       });
-    // var mapContainer = document.getElementById('map2'), // 지도를 표시할 div
-    //   mapOption = {
-    //     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    //     level: 3, // 지도의 확대 레벨
-    //   };
-    // var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-    // // MakeMarker(positions, map);
-
-    // console.log(positions);
-    // randerMap(positions);
   }, [isLogin]);
-
+  console.log('여행지목록', travelList);
   return (
     <div className="LocalContainer">
       <div className="DetailContent">
