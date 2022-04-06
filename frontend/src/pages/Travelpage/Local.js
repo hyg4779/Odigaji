@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
 import './Local.css';
 import LocalModal from '../../components/Travelpage/LocalModal';
-
+import Board from './Board';
 function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
 }
@@ -172,12 +172,12 @@ function Local() {
         <div className="LocalInfoBox2">
           <div className="LocalAttraction">{name} 추천 여행지</div>
           <div className="IntoReview">
-            <button
+            {/* <button
               className="reviewButton"
               onClick={() => MoveBoardPage(params.cityId)}
             >
               리뷰 게시판
-            </button>
+            </button> */}
           </div>
           {/* <div id="map2" style={{ width: '100%', height: '350px' }}></div> */}
           <div className="TableContainer">
@@ -202,9 +202,10 @@ function Local() {
             </Table>
           </div>
         </div>
-      </div>
-      <div className="modal">
-        <div className="modal_body">Modal</div>
+        <div className="LocalInfoBox3">
+          <div className="LocalBoardInfo">{name} 관광 후기</div>
+          <Board></Board>
+        </div>
       </div>
     </div>
   );
