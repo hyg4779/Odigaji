@@ -1,13 +1,11 @@
 /*global kakao*/
 import React, { useEffect, useState } from 'react';
 import { Image, Row, Col, Container, Table, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './TravelDetail.css';
 import server from '../../API/server';
-function goback() {
-  window.history.back();
-}
+
 function TravelDetail() {
   let params = useParams();
   const attractionId = params.attractionId;
@@ -27,6 +25,8 @@ function TravelDetail() {
   console.log(attractionId);
   console.log(latitude);
   console.log(longitude);
+
+  let navigate = useNavigate();
   //랜더링 이후 실행되는 함수
 
   const attractionUrl =
@@ -34,7 +34,9 @@ function TravelDetail() {
     server.ROUTES.allCities +
     attractionId +
     server.ROUTES.attraction;
-
+  function goback(id) {
+    navigate('/local/' + id);
+  }
   useEffect(() => {
     axios
       .get(
@@ -127,7 +129,7 @@ function TravelDetail() {
         </Table>
       </Container>
       <Container>
-        <Button id="button" variant="secondary" onClick={() => goback()}>
+        <Button id="button" variant="secondary" onClick={() => goback(city)}>
           관광지 목록으로
         </Button>{' '}
       </Container>

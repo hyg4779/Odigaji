@@ -53,8 +53,7 @@ function Write() {
 
   return (
     <div className="Write">
-      <h1>관광지 리뷰</h1>
-      <div className="review-container">
+      <div className="review-container mt-5">
         {viewContent.map((element) => (
           <div>
             <h2>{element.title}</h2>
