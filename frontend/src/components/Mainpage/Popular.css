@@ -1,4 +1,6 @@
 .Popular {
+  background-image: url(./pexels-stephan-seeber-1261728.jpg);
+  background-size: cover;
   box-sizing: border-box;
   padding: 10vh 10vw;
   height: 100vh;
@@ -6,8 +8,10 @@
 }
 
 .Popular-header {
-  font-size: 2rem;
+  text-align: center;
+  font-size: 2.5rem;
   font-weight: bold;
+  color: black;
   margin-bottom: 2rem;
 }
 
@@ -17,6 +21,9 @@
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 5vh;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .Popular-bg-item-1 {

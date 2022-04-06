@@ -39,17 +39,17 @@
 }
 
 .Intro-text-header {
-  color: #7535FE;
+  color: plum;
   font-size: 4vh;
-  width: 20vw;
-  padding: 1vw;
+  width: 90%;
+  padding: 15px;
 }
 
 .Intro-text-content {
-  /* color:lightgrey; */
-  font-size: 3vh;
-  padding: 1vw;
-  width: 20vw;
+  color:white;
+  font-size: 2.5vh;
+  padding: 15px;
+  width: 80%;
 }
 
 /* .Intro-button {
@@ -79,7 +79,7 @@
   color: #FFFFFF;
   background: #A177FA;
   background: linear-gradient(90deg, #A177FA 0%, #7535FE 100%);
-  border-radius: 1000px;
+  border-radius: 30px;
   box-shadow: .5vw .5vw 1vw #A177FA;
   transition: all 0.3s ease-in-out 0s;
   cursor: pointer;
