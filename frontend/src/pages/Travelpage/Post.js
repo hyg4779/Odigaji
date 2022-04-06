@@ -23,7 +23,7 @@ function Post() {
   });
   const MoveList = (cityId) => {
     //관광지 목록으로 이동
-    navigate('/local/travelDetail/board/' + cityId);
+    navigate('/local/' + cityId);
   };
 
   const deletePost = () => {
@@ -42,7 +42,7 @@ function Post() {
       .then((res) => {
         if (res.status == 200) {
           alert('게시글이 삭제되었습니다.');
-          navigate('/local/travelDetail/board/' + city);
+          navigate('/local/' + city);
         }
       })
       .catch((err) => {

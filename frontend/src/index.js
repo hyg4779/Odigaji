@@ -11,7 +11,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import SignupPage from './components/SignupPage/SignupPage';
 import reportWebVitals from './reportWebVitals';
 import TravelDetail from './pages/Travelpage/TravelDetail';
-import Board from './pages/Travelpage/Board';
+// import Board from './pages/Travelpage/Board';
 import Local from './pages/Travelpage/Local';
 import Write from './pages/Travelpage/write';
 import Post from './pages/Travelpage/Post';
@@ -39,7 +39,7 @@ ReactDOM.render(
         />
         <Route path="mypage" element={<Mypage />} />
         <Route path="mypage/userinfo" element={<ChangeInfo />} />
-        <Route path="local/travelDetail/board/:cityId" element={<Board />} />
+        {/* <Route path="local/travelDetail/board/:cityId" element={<Board />} /> */}
         <Route
           path="local/travelDetail/board/write/:cityId"
           element={<Write />}
