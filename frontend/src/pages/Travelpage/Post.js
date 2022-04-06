@@ -146,7 +146,7 @@ function Post() {
               </tr>
               <tr>
                 <th>내용</th>
-                <td>{content}</td>
+                <td dangerouslySetInnerHTML={{ __html: content }}></td>
                 {/* <div>{parse(content && content)}</div> */}
               </tr>
             </tbody>
