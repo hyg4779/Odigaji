@@ -325,3 +325,15 @@
   /* -webkit-text-fill-color: gold; */
 }
  
+a {
+  text-decoration-line: none;
+}
+
+.region, .headRegion, .textTitle, .headtitle{
+  width:45%;
+  float:left;
+}
+.time, .headtime {
+  width:10%;
+  float:right;
+}

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 function ReviewCommend({ reviewCommentData }) {
   console.log(reviewCommentData);
   return (
@@ -12,11 +14,17 @@ function ReviewCommend({ reviewCommentData }) {
         </div>
         {reviewCommentData.map((data, key) => {
           return (
-            <div key={key} className="item">
-              <div className="region">{data.content}</div>
-              <div className="textTitle">{data.user.username}</div>
-              <div className="time">{data.created}</div>
-            </div>
+            <Link
+              to={{
+                pathname: `/local/travelDetail/board/post/${data.review_id}`,
+              }}
+            >
+              <div key={key} className="item">
+                <div className="region">{data.content}</div>
+                <div className="textTitle">{data.user.username}</div>
+                <div className="time">{data.created}</div>
+              </div>
+            </Link>
           );
         })}
       </div>

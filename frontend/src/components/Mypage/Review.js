@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import server from '../../API/server';
+import { Link } from 'react-router-dom';
 
 function Review({ reviewData, CityData }) {
   console.log(reviewData);
@@ -17,11 +18,15 @@ function Review({ reviewData, CityData }) {
         {reviewData.map((data, key) => {
           console.log(data);
           return (
-            <div key={key} className="item">
-              <div className="region">{data.city}</div>
-              <div className="textTitle">{data.title}</div>
-              <div className="time">{data.updated}</div>
-            </div>
+            <Link
+              to={{ pathname: `/local/travelDetail/board/post/${data.id}` }}
+            >
+              <div key={key} className="item">
+                <div className="region">{data.city.name}</div>
+                <div className="textTitle">{data.title}</div>
+                <div className="time">{data.updated}</div>
+              </div>
+            </Link>
           );
         })}
       </div>
