@@ -21,9 +21,9 @@
 }
 
 .post{
-  border-style: solid;
+  /* border-style: solid;
   border-radius: 3px;
-  border-color: aquamarine;
+  border-color: aquamarine; */
   margin: 30px;
   padding: 10px;
   margin-left: 50px;
@@ -61,4 +61,8 @@
 
 #menu{
   float: right;
+}
+
+a:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

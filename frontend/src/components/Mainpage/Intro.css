@@ -1,5 +1,5 @@
 .Intro {
-  background-image: url(./korea-gab8d4235f_1920.jpg);
+  /* background-image: url(./korea-gab8d4235f_1920.jpg); */
   background-size: cover;
   box-sizing: border-box;
   display: flex;
@@ -21,7 +21,7 @@
 }
 
 .Intro-text {
-  width: 450px;
+  width: 40vw;
   font-weight: bold;
   display: flex;
   flex-direction: column;
@@ -29,6 +29,11 @@
 }
 
 .Intro-text-blur {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 43vh;
   border-radius: 5vh;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -38,13 +43,15 @@
   font-size: 4vh;
   width: 90%;
   padding: 15px;
+  text-align: center;
 }
 
 .Intro-text-content {
   color:white;
   font-size: 2.5vh;
   padding: 15px;
-  width: 80%;
+  width: 100%;
+  text-align: center;
 }
 
 /* .Intro-button {
@@ -105,8 +112,8 @@
 }
 
 .Intro-image {
-  width: 30%;
-  height: 50%;
+  width: 30vw;
+  height: 60vh;
   border: none;
   /* border: 5px solid black;
   border-radius: 2rem;

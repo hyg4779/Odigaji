@@ -19,9 +19,10 @@
 .Survey-progress {
   width: 6vw;
   height: 10vh;
-  top: 5vh;
+  top: 2vh;
   transform: translate(0, -40%);
   z-index: 1;
+  animation: float 3s ease-in-out infinite;
 }
 
 .Survey-progress-bg {

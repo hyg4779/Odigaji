@@ -26,12 +26,19 @@ function Nav() {
   }
   return (
     <div className="Nav">
-      <NavLink
+      <NavLink className="Nav-odi-wrap" to="/">
+        <img
+          className="Nav-odi"
+          alt="메인로고"
+          src={process.env.PUBLIC_URL + 'img/신난가지.png'}
+        />
+      </NavLink>
+      {/* <NavLink
         className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
         to="/"
       >
         메인페이지
-      </NavLink>
+      </NavLink> */}
       <div className="Nav-list">
         <NavLink
           className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}

@@ -13,7 +13,6 @@
   font-size: 2vw;
   max-width: 80vw;
   font-weight: bold;
-  color: #FFFFFF;
 }
 
 .Question-img-list {
@@ -53,8 +52,7 @@
   top: 1rem;
   left: 50%;
   transform: translate(-50%, 0);
-  color: #FFFFFF;
-  background-color: #A177FA;
+  background-color: #FFFFFF;
   border-radius: 1rem;
   padding: 0rem 10px;
 }
@@ -91,7 +89,7 @@
 }
 
 .Question-button path {
-  fill: #FFFFFF;
+  fill: black;
 }
 
 .Question-button:hover path {
