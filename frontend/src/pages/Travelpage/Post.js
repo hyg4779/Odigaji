@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { useEffect, useState, Helmet } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import server from '../../API/server';
-import parse from 'html-react-parser';
 import './Post.css';
 import { Table } from 'react-bootstrap';
 
@@ -15,7 +14,7 @@ function Post() {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
   const [createDay, setCreateDay] = useState();
-  const [updateDay, setUpdateDay] = useState();
+
   const [user, setUser] = useState();
   const [comments, setComments] = useState();
   const [city, setCity] = useState();
@@ -70,9 +69,6 @@ function Post() {
       });
   };
   const writeComment = () => {
-    let temp = {
-      content: newComment.content,
-    };
     console.log(newComment);
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
@@ -110,7 +106,7 @@ function Post() {
         setContent(res.data.content);
         setTitle(res.data.title);
         setCreateDay(res.data.created);
-        setUpdateDay(res.data.updated);
+
         setUser(res.data.user.username);
         setCity(res.data.city);
       });

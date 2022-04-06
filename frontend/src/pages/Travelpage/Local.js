@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import server from '../../API/server';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
 import './Local.css';
 import LocalModal from '../../components/Travelpage/LocalModal';
@@ -21,7 +21,7 @@ let cityId;
 function Local() {
   let params = useParams();
   cityId = params.cityId; // 시 아이디를 url에서 받아옴
-  const [id, setId] = useState(null); //시 아이디
+  // const [id, setId] = useState(null); //시 아이디
   const [info, setInfo] = useState(null); // 시 정보
   const [name, setName] = useState(null); // 시 명
   const [papulation, setPapulation] = useState(null); // 시 인구
@@ -71,7 +71,7 @@ function Local() {
     //도시정보 가져오기!!!
     axios.get(cityUrl).then((res) => {
       console.log(cityUrl, res);
-      setId(res.data.id);
+
       setInfo(res.data.info);
       setPapulation(res.data.population);
       setName(res.data.name);

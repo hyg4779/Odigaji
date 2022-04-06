@@ -1,6 +1,6 @@
 /*global kakao*/
 import React, { useEffect, useState } from 'react';
-import { Image, Row, Col, Container, Table, Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './TravelDetail.css';
@@ -17,7 +17,6 @@ function TravelDetail() {
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [city, setCity] = useState();
-  const [province, setProvince] = useState();
   const [search_image, setSearch_image] = useState();
   const [cityId, setCityId] = useState();
   const [cityLogo, setCityLogo] = useState();
@@ -27,11 +26,6 @@ function TravelDetail() {
   // console.log(longitude);
   //랜더링 이후 실행되는 함수
 
-  const attractionUrl =
-    server.BASE_URL +
-    server.ROUTES.allCities +
-    attractionId +
-    server.ROUTES.attraction;
   let navigate = useNavigate();
   function goback(id) {
     navigate('/local/' + id);
@@ -54,7 +48,6 @@ function TravelDetail() {
         setLongitude(res.data.longitude);
         setCity(res.data.city);
         setCityId(city);
-        setProvince(res.data.province);
         setSearch_image(res.data.search_image);
         attractionDetail = res.data;
         var container = document.getElementById('map');
