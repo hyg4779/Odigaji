@@ -38,9 +38,6 @@
   width: 80%;
   height: auto;
   position:relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-51%, -50%);
 }
 
 .Nav-item {
