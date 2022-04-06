@@ -32,7 +32,7 @@
 
 .Tourlist-content-input {
   width: 50%;
-  height: 30px;
+  height: 2vw;
   border-radius: 2rem;
   border-style: none;
   margin-bottom: 1rem;
@@ -42,7 +42,9 @@
 .Tourlist-content-button {
   background-color: transparent;
   border-style: none;
-  font-weight: bold;
+  font-size: 1.2vw;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .Tourlist-content-items {
@@ -95,7 +97,7 @@
   height: auto;
   font-weight: bold;
   border-style: none;
-  font-size: 20px;
+  font-size: 2vw;
 }
 
 .Tourlist-button:hover {

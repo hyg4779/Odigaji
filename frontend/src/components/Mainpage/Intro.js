@@ -1,10 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Intro.css';
+import Swal from 'sweetalert2';
 // import server from '../../API/server';
 
 function Intro({ randomData, moveCity }) {
   console.log('인트로 컴포넌트 렌더');
+
+  const Odi = () => {
+    Swal.fire({
+      text: '안녕하세요! 오디가지예요',
+      imageUrl: '../../../img/오디가지.png',
+      imageWidth: 150,
+      imageHeight: 150,
+      width: '300px',
+      imageAlt: 'Custom image',
+      timer: 1000,
+      showConfirmButton: false,
+    });
+  };
   return (
     <div className="Intro">
       <div className="Intro-bg-item"></div>
@@ -37,7 +51,7 @@ function Intro({ randomData, moveCity }) {
         className="Intro-image"
         alt="대표이미지"
         src="../../../img/오디가지.png"
-        // onClick={() => moveCity(randomData.id)}
+        onClick={Odi}
         loading="lazy"
       />
     </div>
