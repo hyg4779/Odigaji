@@ -115,7 +115,7 @@ function Board() {
               })}
           </tbody>
         </table>
-        {reviewData.length == 0 ? (
+        {Array.isArray(reviewData) && reviewData.length === 0 ? (
           <div className="NoneItems">
             해당 지역의 관광 후기 게시물이 없습니다.
           </div>

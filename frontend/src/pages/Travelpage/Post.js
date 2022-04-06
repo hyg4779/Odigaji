@@ -119,7 +119,7 @@ function Post() {
         setComments(res.data);
       });
   }, [title]);
-
+  console.log(comments);
   return (
     <div className="ReviewPost">
       <div className="PostWrap">
@@ -198,8 +198,11 @@ function Post() {
                 </div>
               );
             })}
-          {comments.length == 0 ? (
-            <div className="NoneItems">해당 게시물의 댓글이 없습니다.</div>
+
+          {Array.isArray(comments) && comments.length === 0 ? (
+            <div className="NoneCommentItems">
+              해당 게시물의 댓글이 없습니다.
+            </div>
           ) : (
             ''
           )}
