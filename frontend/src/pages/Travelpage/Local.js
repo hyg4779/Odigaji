@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
 import './Local.css';
 import LocalModal from '../../components/Travelpage/LocalModal';
+
 function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
 }
@@ -39,45 +40,32 @@ function Local() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
+  console.log(travelList);
   //////////////////// URL //////////////////////////////////////
   const cityUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
   const visitedUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/is-visited/';
   let isLogin = sessionStorage.getItem('jwt');
+  const MakeMarker = (positions, map) => {
+    let bounds = new kakao.maps.LatLngBounds();
 
-  const randerMap = (att_ListData) => {
-    console.log(att_ListData);
-    var mapContainer2 = document.getElementById('map2'), // 지도를 표시할 div
-      mapOption2 = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3, // 지도의 확대 레벨
-      };
-    var map2 = new kakao.maps.Map(mapContainer2, mapOption2); // 지도를 생성합니다
-    // 마커가 표시될 위치입니다
-    att_ListData &&
-      att_ListData.forEach((data, key) => {
-        console.log(data);
-        var markerPosition = new kakao.maps.LatLng(
-          data.latitude,
-          data.longitude
-        );
-        var marker = new kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(map2);
+    for (var i = 0; i < positions.length; i++) {
+      console.log(positions);
+      // 마커 이미지의 이미지 크기 입니다
+      let marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
       });
-    // var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-    // 마커를 생성합니다
-    // var marker = new kakao.maps.Marker({
-    //   position: markerPosition,
-    // });
-    // 마커가 지도 위에 표시되도록 설정합니다
+      bounds.extend(new kakao.maps.LatLng(positions[i].latlng));
+    }
+    console.log(bounds);
+    return map.setBounds(bounds);
   };
   useEffect(() => {
     isLogin = sessionStorage.getItem('jwt');
-    let att_ListData = [];
+    let positions = [];
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
@@ -91,11 +79,10 @@ function Local() {
       setTravelList(res.data.att_data);
 
       res.data.att_data.map((data) => {
-        att_ListData.push({
-          latitude: data.latitude,
-          longitude: data.longitude,
+        positions.push({
+          // eslint-disable-next-line prettier/prettier
+          latlng: new kakao.maps.LatLng(data.latitude, data.longitude)
         });
-        // console.log(data.latitude, data.longitude);
       });
       setLocalLogo(res.data.photo);
       setLocalImg(res.data.background_photo);
@@ -113,7 +100,16 @@ function Local() {
       .catch((err) => {
         isLogin = false;
       });
-    randerMap(att_ListData);
+    // var mapContainer = document.getElementById('map2'), // 지도를 표시할 div
+    //   mapOption = {
+    //     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    //     level: 3, // 지도의 확대 레벨
+    //   };
+    // var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    // // MakeMarker(positions, map);
+
+    // console.log(positions);
+    // randerMap(positions);
   }, [isLogin]);
 
   return (
@@ -191,7 +187,7 @@ function Local() {
               리뷰 게시판
             </button>
           </div>
-          <div id="map2" style={{ width: '100%', height: '350px' }}></div>
+          {/* <div id="map2" style={{ width: '100%', height: '350px' }}></div> */}
           <Table striped bordered hover>
             <tbody>
               {/* &&양옆에 2개쓰면  */}
@@ -199,8 +195,13 @@ function Local() {
                 travelList.map((data, idx) => {
                   return (
                     //무명함수 호출안하면 강제로 이동한다....
-                    <tr key={idx} onClick={() => MovetravelPage(data.id)}>
-                      <td className="m-2">{data.name}</td>
+                    <tr
+                      key={idx}
+                      className="LocalTableItems"
+                      onClick={() => MovetravelPage(data.id)}
+                    >
+                      <td>{data.name}</td>
+                      <td>{data.address}</td>
                     </tr>
                   );
                 })}
