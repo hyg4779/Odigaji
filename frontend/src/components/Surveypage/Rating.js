@@ -1,6 +1,7 @@
 import React from 'react';
 import './Rating.css';
 import { AddSelCity } from './SurveyAxios';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 function Rating({ tour, tours, setTours }) {
   const stars = [1, 2, 3, 4, 5];
@@ -33,8 +34,16 @@ function Rating({ tour, tours, setTours }) {
     <div className="Rating">
       {stars.map((idx) => {
         return (
-          <div key={idx} onClick={() => chooseStar(idx)}>
-            {isFill(idx) ? <>★</> : <>☆</>}
+          <div
+            className="Rating-star"
+            key={idx}
+            onClick={() => chooseStar(idx)}
+          >
+            {isFill(idx) ? (
+              <AiFillStar className="Rating-star-icon" />
+            ) : (
+              <AiOutlineStar className="Rating-star-icon" />
+            )}
           </div>
         );
       })}

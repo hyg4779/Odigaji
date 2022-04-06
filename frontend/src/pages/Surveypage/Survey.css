@@ -34,3 +34,42 @@
   top: 5vh;
   left: 15vw;
 }
+
+.Survey-button-group {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  column-gap: 5vw;
+}
+
+.Survey-tooltip {
+  position: fixed;
+  width: auto;
+  color: black;
+  font-weight: normal;
+  background-color: #FFFFFF;
+  border-radius: 1rem;
+  padding: 5px 10px;
+  transform: translate(-50%, -150%);
+}
+
+.Survey-button {
+  width: auto;
+  height: auto;
+  font-weight: bold;
+  border-style: none;
+  font-size: 2vw;
+}
+
+.Survey-button:hover {
+  cursor: pointer;
+}
+
+.Survey-button path {
+  fill: black;
+}
+
+.Survey-button:hover path {
+  fill: purple;
+}
