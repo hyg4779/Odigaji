@@ -165,3 +165,6 @@
 .TableContainer{
   padding: 20px;
 }
+.LocalTableItems th{
+  background-color: aquamarine;
+}

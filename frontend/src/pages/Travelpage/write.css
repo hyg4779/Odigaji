@@ -23,6 +23,7 @@
   height: 40px;
   margin: 10px;
   border-radius: 20px;
+  box-shadow: 10px;
 }
 
 .submit-button {
@@ -31,13 +32,23 @@
   font-size: 20px;
   padding: 20px;
   border: none;
-  background-color: aquamarine;
+  background-color: purple;
   border-radius: 5px;
   margin-top: 40px;
   vertical-align: middle;
+  box-shadow: 10px;
+  color: aliceblue;
+  text-align: center;
 }
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 500px;
+  box-shadow: 10px;
   
+}
+.ck.ck-toolbar__items{
+  background-color: aquamarine;
+}
+.ck.ck-content.ck-editor__editable{
+  border-radius: 20px;
 }

@@ -193,7 +193,7 @@ function Local() {
                         className="LocalTableItems"
                         onClick={() => MovetravelPage(data.id)}
                       >
-                        <td>{data.name}</td>
+                        <th>{data.name}</th>
                         <td>{data.address}</td>
                       </tr>
                     );
