@@ -32,6 +32,7 @@ function TravelDetail() {
     server.ROUTES.allCities +
     attractionId +
     server.ROUTES.attraction;
+  let navigate = useNavigate();
   function goback(id) {
     navigate('/local/' + id);
   }
