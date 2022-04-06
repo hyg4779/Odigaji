@@ -7,7 +7,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:space-around;
   padding: 1rem 0rem;
   background-color: rgba(220,220,220,0.5);
   box-shadow: .1vw 0 .8vw rgba(220,220,220,0.8);
@@ -25,7 +25,7 @@
 
 .Nav-item {
   border-style: none;
-  width: 70%;
+  width: 95%;
   background-color: transparent;
   text-decoration: none;
   color: black;
@@ -39,6 +39,8 @@
 
 .Nav-item:hover{
   color: #A177FA;
+  background-color: beige;
+  border-radius: 5px;
 }
 
 /* 
