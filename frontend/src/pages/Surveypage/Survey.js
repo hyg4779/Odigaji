@@ -4,11 +4,7 @@ import './Survey.css';
 import Intro from '../../components/Surveypage/Intro';
 import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
-import Result from '../../components/Surveypage/Result';
-import {
-  AllCitiesList,
-  AddTaste,
-} from '../../components/Surveypage/SurveyAxios';
+import { AllCitiesList } from '../../components/Surveypage/SurveyAxios';
 import axios from 'axios';
 
 function Survey() {
@@ -113,7 +109,6 @@ function Survey() {
   const [pageIndex, setPageIndex] = useState(-2);
   const [tastes, setTastes] = useState([]);
   const [tours, setTours] = useState([]);
-  const [surveyResult, setSurveyResult] = useState([]);
   const navigate = useNavigate();
 
   let leftLoc = String(13 + (pageIndex + 1) * 7.7) + 'vw';
@@ -121,21 +116,10 @@ function Survey() {
   // 10개의 취향 설문 + 1개의 지역 설문이 진행되니까
   // 11번째 페이지에서 진행도가 맨 끝으로 가 있어야 한다
 
-  function getResult() {
-    AddTaste(tastes)
-      .then((response) => {
-        console.log('취향 데이터 연결 후 응답 완료', response);
-        setSurveyResult(response.data);
-      })
-      .catch((error) => {
-        console.log('취향 데이터 연결 실패', error);
-      });
-  }
-
   function nextPage() {
     setPageIndex(pageIndex + 1);
     if (pageIndex >= 9) {
-      getResult();
+      navigate('/result', { state: tastes });
     }
   }
 
@@ -243,9 +227,6 @@ function Survey() {
           lastPage={lastPage}
           tasteSurveys={tasteSurveys}
         />
-      )}
-      {pageIndex === 10 && (
-        <Result surveyResult={surveyResult} startPage={startPage} />
       )}
     </div>
   );

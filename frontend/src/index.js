@@ -19,6 +19,7 @@ import Random from './pages/Randompage/Random';
 import Survey from './pages/Surveypage/Survey';
 import Search from './pages/Searchpage/Search';
 import Notfound from './pages/Mainpage/Notfound';
+import SurveyResult from './pages/Surveypage/SurveyResult';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -46,6 +47,7 @@ ReactDOM.render(
         <Route path="random" element={<Random />} />
         <Route path="survey" element={<Survey />} />
         <Route path="search" element={<Search />} />
+        <Route path="result" element={<SurveyResult />} />
         <Route path="*" element={<Notfound />} />
       </Route>
     </Routes>
