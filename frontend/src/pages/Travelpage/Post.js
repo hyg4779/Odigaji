@@ -7,11 +7,6 @@ import './Post.css';
 import { Table } from 'react-bootstrap';
 
 let postId;
-function MoveList() {
-  let navigate = useNavigate();
-  window.history.back();
-  // navigate('/mypage/userinfo');
-}
 
 function Post() {
   let params = useParams();
@@ -27,10 +22,13 @@ function Post() {
   const [newComment, setNewComment] = useState({
     content: 'string',
   });
+  const MoveList = (cityId) => {
+    //관광지 목록으로 이동
+    navigate('/local/travelDetail/board/' + cityId);
+  };
+
   const deletePost = () => {
-    // console.log(
-    //   server.BASE_URL + server.ROUTES.getReview + postId + '/' + 'review_info/'
-    // );
+    //게시글 삭제
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
 
@@ -54,6 +52,7 @@ function Post() {
       });
   };
   const deleteComment = (id) => {
+    //댓글삭제
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
 
@@ -224,7 +223,7 @@ function Post() {
             className="btn list-btn"
             id="menu"
             onClick={() => {
-              MoveList();
+              MoveList(city);
             }}
           >
             목록으로
