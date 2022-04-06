@@ -19,21 +19,23 @@
   width: 90%;
   height: 100vh;
   overflow-y: auto;
- 
 }
+
+.LocalBackImage{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .DetailContent{
    padding: 50px; 
-
-  
-   background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%);
 }
-.LocalInfoBox{
 
- 
+.LocalInfoBox{
   /* border: 1px solid; */
   border-radius: 10px;
   padding: 10px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
 }
 .LocalInfoBox2{
 
@@ -41,12 +43,13 @@
   margin-top: 20px;
   border-radius: 10px;
   padding: 10px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
 }
 .LocalWrap{
   justify-content: center;
   display: flex;
 }
+
 .LocalTitle{
 
   font-size: 20px;

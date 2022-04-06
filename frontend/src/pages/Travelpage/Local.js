@@ -48,6 +48,7 @@ function Local() {
   const [area, setArea] = useState(null); // 시 넓이
   const [travelList, setTravelList] = useState(null); // 시 내 관광지목록
   const [localLogo, setLocalLogo] = useState(null); // 시 로고 이미지
+  const [LocalBack, setLocalBack] = useState(null); // 시 배경 이미지
   const [avg_rate, setAvg_rate] = useState(null);
   const [rating, setRating] = useState(null);
 
@@ -73,6 +74,7 @@ function Local() {
       setArea(res.data.area);
       setTravelList(res.data.att_data);
       setLocalLogo(res.data.photo);
+      setLocalBack(res.data.background_photo);
       setAvg_rate(res.data.avg_rate);
       console.log(server.BASE_URL + localLogo);
     });
@@ -95,6 +97,7 @@ function Local() {
   console.log(travelList);
   return (
     <div className="LocalContainer">
+      <img className="LocalBackImage" src={server.BASE_URL + LocalBack} />
       <div className="DetailContent">
         <div className="LocalInfoBox">
           <div className="LocalWrap">
@@ -111,8 +114,8 @@ function Local() {
               <div className="spaceArea"></div>
               <div className="LcoalText">{info}</div>
               <div className="spaceArea"></div>
-              <div>인구수 : {papulation}</div>
-              <div>면적 : {area}</div>
+              <div>인구수 : 약 {papulation}명</div>
+              <div>면적 : {area}km²</div>
             </div>
           </div>
 
