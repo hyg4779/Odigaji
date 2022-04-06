@@ -7,8 +7,10 @@ import './Post.css';
 import { Table } from 'react-bootstrap';
 
 let postId;
-function moveBack() {
+function MoveList() {
+  let navigate = useNavigate();
   window.history.back();
+  // navigate('/mypage/userinfo');
 }
 
 function Post() {
@@ -168,7 +170,7 @@ function Post() {
             <thead>
               <tr>
                 <th>작성자</th>
-                <th className="comment-content">내용</th>
+                <th className="comment-content">댓글내용</th>
                 <th>작성일시</th>
                 <th>삭제</th>
               </tr>
@@ -222,7 +224,7 @@ function Post() {
             className="btn list-btn"
             id="menu"
             onClick={() => {
-              moveBack();
+              MoveList();
             }}
           >
             목록으로
