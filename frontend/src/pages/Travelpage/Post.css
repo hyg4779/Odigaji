@@ -7,7 +7,7 @@
 .comment{
 
   height: 400px;
-  width: fit-content;
+  width: 85%;
   
   margin: 30%;
 }
@@ -28,6 +28,7 @@
   padding: 10px;
   margin-left: 50px;
   overflow-y: auto;
+  width: 95%;
 }
 
 #button-addon2{
@@ -45,6 +46,7 @@
 
 .comment-table{
   height: 100px;
+
 }
 
 .comment-content{
