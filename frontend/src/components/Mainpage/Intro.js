@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Intro.css';
-import server from '../../API/server';
+// import server from '../../API/server';
 
 function Intro({ randomData, moveCity }) {
   console.log('인트로 컴포넌트 렌더');
