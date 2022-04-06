@@ -88,9 +88,12 @@ function TourList({
         <Map tours={tours} />
         <div className="Tourlist-text-content">
           <form onSubmit={(event) => addTour(event)}>
-            <input list="tourInput" className="Tourlist-content-input" />
-            <datalist id="tourInput">{makeList()}</datalist>
-            <button className="Tourlist-content-button">추가하기</button>
+            <h4>빈칸을 클릭해서 선택해주세요</h4>
+            <div className="Tourlist-content-data">
+              <input list="tourInput" className="Tourlist-content-input" />
+              <datalist id="tourInput">{makeList()}</datalist>
+              <button className="Tourlist-content-button">추가하기</button>
+            </div>
           </form>
           <div className="Tourlist-content-items">
             {tours.map((tour, idx) => {

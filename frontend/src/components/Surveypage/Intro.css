@@ -19,7 +19,7 @@
   height: 100px;
 }
 
-.Survey-intro-button {
+/* .Survey-intro-button {
   background-color: #7535FE;
   width: 20vw;
   height: 20vw;
@@ -32,4 +32,28 @@
 
 .Survey-intro-button:hover {
   background-color: #CAB8FF;
+} */
+
+.Survey-intro-button {
+  background-color: #7535ff;
+  border-radius: 50%;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 3vw;
+  width: 20vw;
+  height: 20vw;
+  text-align: center;
+  transition: all .15s linear;
+}
+
+.Survey-intro-button:hover {
+  box-shadow: rgba(100, 63, 45, 0.5) 0 1px 30px;
+  transition-duration: .1s;
+}
+
+@media (min-width: 768px) {
+  .Survey-intro-button {
+    padding: 0 2.6rem;
+  }
 }
