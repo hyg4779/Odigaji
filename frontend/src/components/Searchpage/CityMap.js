@@ -23,7 +23,6 @@ function CityMap({ cityId, setCityShow, cityData, clickCity }) {
   }
 
   function mouseOutCity() {
-    console.log();
     setShow(false);
   }
 
