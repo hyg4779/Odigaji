@@ -36,7 +36,7 @@ function Write() {
         console.log('then active');
       });
     alert('글작성완료');
-    window.location.href = '/local/travelDetail/board/' + cityId + '/';
+    window.location.href = '/local/' + cityId;
   }
 
   // 입력내용 누르면 저장 시키는 변수 현재는 화면 위에 띄어주기만함,,
