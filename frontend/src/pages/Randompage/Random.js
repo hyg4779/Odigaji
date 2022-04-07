@@ -81,7 +81,7 @@ function Random() {
         <img
           className="Random-header-odi"
           alt="메인로고"
-          src={'/img/오디가지.png'}
+          src={'/img/오디가지_좌우반전.png'}
         />
       </div>
       <div className="Random-content">
