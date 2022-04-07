@@ -14,7 +14,6 @@ function TravelRating({ cityId, rating, setRating }) {
 
     AddSelCity(TourData)
       .then((response) => {
-        console.log('지역 데이터 전송', response.data);
         setRating(TourData.rate);
       })
       .catch((error) => {
