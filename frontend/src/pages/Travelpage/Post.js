@@ -29,16 +29,16 @@ function Post() {
 
   const deletePost = () => {
     //게시글 삭제
+
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
-
     axios
       .delete(
         server.BASE_URL +
           server.ROUTES.getReview +
           postId +
           '/' +
-          'review_info/'
+          'review-info/'
       )
       .then((res) => {
         if (res.status == 200) {
