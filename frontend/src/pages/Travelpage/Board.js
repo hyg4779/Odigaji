@@ -48,7 +48,6 @@ function Board() {
       .get(server.BASE_URL + server.ROUTES.review + cityId + '/')
       .then((response) => {
         setTotalLength(response.data.total_pages);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
