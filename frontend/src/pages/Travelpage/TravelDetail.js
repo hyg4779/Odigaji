@@ -89,7 +89,7 @@ function TravelDetail() {
             <div className="DetailTitleWrap">
               <div className="DetailTitle">{name} </div>
 
-              <button className="TravelBackButton" onClick={() => goback()}>
+              <button className="TravelBackButton" onClick={() => goback(city)}>
                 이전 목록
               </button>
             </div>
