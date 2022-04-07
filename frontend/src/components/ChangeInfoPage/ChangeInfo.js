@@ -43,18 +43,14 @@ function ChangeInfo() {
     if (!PasswordErrors && !PasswordConErrors) {
       await axios
         .put(server.BASE_URL + server.ROUTES.mypage, formData)
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => {
           console.log(error);
         });
 
       await axios
         .put(server.BASE_URL + server.ROUTES.password, passwordData)
-        .then((response) => {
-          console.log(response);
-        })
+        .then((response) => {})
         .catch((error) => {
           console.log(error);
         });

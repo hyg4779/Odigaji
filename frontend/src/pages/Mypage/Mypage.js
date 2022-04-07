@@ -83,7 +83,6 @@ function Mypage() {
     await axios
       .get(server.BASE_URL + server.ROUTES.userReview)
       .then((response) => {
-        console.log(response);
         setReviewLength(response.data.data.length);
         setReviewData(response.data.data);
       })
@@ -96,7 +95,6 @@ function Mypage() {
     await axios
       .get(server.BASE_URL + server.ROUTES.city)
       .then((response) => {
-        console.log(response);
         setCityData(response.data);
       })
       .catch((error) => {
@@ -113,7 +111,6 @@ function Mypage() {
         },
       })
       .then((response) => {
-        console.log('추천 결과 받아오기 성공', response.data);
         setIsHaveResult(true);
       })
       .catch((error) => {
@@ -146,7 +143,6 @@ function Mypage() {
     getResult();
   }, []);
 
-  console.log(Userdata);
   return (
     <div className="My">
       <div className="TitleContainer">

@@ -2,8 +2,6 @@ import React from 'react';
 import server from '../../API/server';
 import { Link } from 'react-router-dom';
 function visitedCity({ selCityData }) {
-  console.log(selCityData);
-
   const starRating = (num) => {
     let result = [];
     for (let i = 0; i < num; i++) {
