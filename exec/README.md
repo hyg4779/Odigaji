@@ -24,7 +24,10 @@
 - Management : `MySQL Workbench` : 8.0.26
 - User : `name` : root, `password` : ssafy103
 - URL : 3.38.250.117:3333
-- 
+
+### Datas
+
+프로젝트 메인 폴더에 있는 `Datas` 폴더에는, 서비스를 구성하는데 사용한 데이터들과 데이터를 전처리, db에 입력하는데 사용한 python 프로그램들이 있습니다.
 
 ## 실행
 
