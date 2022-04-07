@@ -12,15 +12,15 @@
 }
 
 .Random-result {
-  height: 70px;
-  font-size: 25px;
+  height: auto;
+  font-size: 2vw;
   text-align: center;
   font-weight: bold;
   color: #FFFFFF;
   background-color: #BC8CF2;
-  border-radius: 2rem;
-  padding: 0 10px;
-  border-style: none;
+  padding: 0.6vw 1vw;
+  border: 2px solid #ffffff;
+  border-radius: 2vw;
 }
 
 .Random-result:hover {
