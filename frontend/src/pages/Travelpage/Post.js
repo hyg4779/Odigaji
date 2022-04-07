@@ -70,7 +70,7 @@ function Post() {
       });
   };
   const writeComment = () => {
-    console.log(newComment);
+    // console.log(newComment);
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     axios
@@ -101,7 +101,7 @@ function Post() {
           server.ROUTES.reviewInfo
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setContent(res.data.content);
         setTitle(res.data.title);
         setCreateDay(res.data.created);
@@ -115,11 +115,11 @@ function Post() {
     axios
       .get(server.BASE_URL + server.ROUTES.comment + postId + '/')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setComments(res.data);
       });
   }, [title]);
-  console.log(comments);
+  // console.log(comments);
   return (
     <div className="ReviewPost">
       <div className="PostWrap">
