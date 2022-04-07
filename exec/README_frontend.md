@@ -48,14 +48,14 @@
    3. ![image-20220407111239711](README_frontend.assets/image-20220407111239711.png)
    4. `>`버튼을 눌러 다음 페이지로 이동한다.
 7. 설문을 진행한다.
-   1. ![chrome-capture-2022-3-7 (../../../2nd_sem_spe project/S06P22B103/frontend/README_Front.assets/chrome-capture-2022-3-7 (1).gif)](README_Front.assets/chrome-capture-2022-3-7 (1).gif)
-   2. ![chrome-capture-2022-3-7 (../../../2nd_sem_spe project/S06P22B103/frontend/README_Front.assets/chrome-capture-2022-3-7 (2).gif)](README_Front.assets/chrome-capture-2022-3-7 (2).gif)
+   1. ![chrome-capture-2022-3-7 (1)](README_frontend.assets/chrome-capture-2022-3-7 (1).gif)
+   2. ![chrome-capture-2022-3-7 (2)](README_frontend.assets/chrome-capture-2022-3-7 (2).gif)
       1. 마지막 설문까지 마치면 추천결과가 나타난다.
       2. 약 3초정도 소요된후 결과가 나타난다.
    3. 결과페이지에서 추천지역의 '도'에 해당하는 지역의 색이 보라색으로 표시된다. 그 지도에 마우스를 올리면 추천 지역의 이미지슬라이드가 나타난다.
-      1. ![chrome-capture-2022-3-7 (../../../2nd_sem_spe project/S06P22B103/frontend/README_Front.assets/chrome-capture-2022-3-7 (3).gif)](README_Front.assets/chrome-capture-2022-3-7 (3).gif)
+      1. ![chrome-capture-2022-3-7 (3)](README_frontend.assets/chrome-capture-2022-3-7 (3).gif)
    4. 이미지를 클릭해 `지역페이지`로 이동하여 지역 게시판과 지역의 평점을 수정할 수 있다.
-      1. ![chrome-capture-2022-3-7 (../../../2nd_sem_spe project/S06P22B103/frontend/README_Front.assets/chrome-capture-2022-3-7 (4).gif)](README_Front.assets/chrome-capture-2022-3-7 (4).gif) 
+      1. ![chrome-capture-2022-3-7 (4)](README_frontend.assets/chrome-capture-2022-3-7 (4).gif)
    5. 추천여행지중 하나를 누르면 여행지 정보와함께 카카오지도를 불러온다.
       1. ![2022-04-07 11;41;52](README_frontend.assets/2022-04-07 11;41;52.gif)
    6. 게시판에 들어가서 댓글을 달고 삭제할 수 있다.
