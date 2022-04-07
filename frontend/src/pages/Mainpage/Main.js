@@ -36,7 +36,6 @@ function Main() {
     const pageH = window.innerHeight;
 
     if (deltaY > 0 && scrollTop === 0) {
-      console.log('스크롤을 내립니다');
       // 스크롤을 내릴 때
       // scrollTop === 0 조건을 걸지 않으면 휠을 연속으로 돌릴 때 버벅거린다
       if (scrollTop >= 0 && scrollTop < pageH) {
@@ -48,7 +47,6 @@ function Main() {
         setPageIndex(2);
       }
     } else if (deltaY < 0 && scrollTop > pageH) {
-      console.log('스크롤을 올립니다');
       // 스크롤을 올릴 때
       // scrollTop > pageH 조건을 걸지 않으면 휠을 연속으로 위로 돌릴 때 버벅거린다
       if (scrollTop >= 0 && scrollTop > pageH) {
@@ -70,7 +68,6 @@ function Main() {
   useEffect(() => {
     RandomCity()
       .then((response) => {
-        console.log('랜덤 여행지 1곳', response.data);
         setRandomData(response.data);
       })
       .catch((error) => {
@@ -79,7 +76,6 @@ function Main() {
 
     PopularCity(6)
       .then((response) => {
-        console.log('인기 여행지 6곳', response.data);
         setPopularData(response.data);
       })
       .catch((error) => {

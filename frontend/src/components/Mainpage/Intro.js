@@ -5,8 +5,6 @@ import Swal from 'sweetalert2';
 // import server from '../../API/server';
 
 function Intro({ randomData, moveCity }) {
-  console.log('인트로 컴포넌트 렌더');
-
   const Odi = () => {
     Swal.fire({
       text: '안녕하세요! 오디가지예요',
@@ -25,9 +23,8 @@ function Intro({ randomData, moveCity }) {
       <div className="Intro-text">
         <div className="Intro-text-blur">
           <div className="Intro-text-header">
-            <div>오디가지와 함께</div>
-            <div>나와 맞는 여행지를</div>
-            <div>찾아보세요</div>
+            <div>오디가지에게 당신을 소개하면</div>
+            <div>새로운 여행지를 추천해줄 거에요</div>
           </div>
           <div className="Intro-text-content">
             <div>나와 취향이 비슷한 사람들이</div>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function ReviewCommend({ reviewCommentData }) {
-  console.log(reviewCommentData);
   return (
     <div className="ReviewListContainer">
       <div className="Reviewtitle">작성한 댓글 목록</div>

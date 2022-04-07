@@ -3,7 +3,6 @@ import PopularItem from './PopularItem';
 import './Popular.css';
 
 function Popular({ popularData, moveCity }) {
-  console.log('인기있는 여행지 컴포넌트 렌더');
   return (
     <div className="Popular">
       <div className="Popular-header">인기있는 여행지</div>
