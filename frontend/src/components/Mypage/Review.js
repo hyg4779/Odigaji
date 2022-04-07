@@ -4,7 +4,6 @@ import server from '../../API/server';
 import { Link } from 'react-router-dom';
 
 function Review({ reviewData, CityData }) {
-  console.log(reviewData);
   return (
     <div className="ReviewListContainer">
       <div className="Reviewtitle">관광지 리뷰 목록</div>
@@ -15,7 +14,6 @@ function Review({ reviewData, CityData }) {
           <div className="headtime">작성일자</div>
         </div>
         {reviewData.map((data, key) => {
-          console.log(data);
           return (
             <Link
               to={{ pathname: `/local/travelDetail/board/post/${data.id}` }}

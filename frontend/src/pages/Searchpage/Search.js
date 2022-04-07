@@ -26,7 +26,6 @@ function Search() {
     setCityId(id);
     provinceCities(id)
       .then((response) => {
-        console.log('도시 정보 받아오기 성공', response.data);
         setCityData(response.data);
       })
       .catch((error) => {

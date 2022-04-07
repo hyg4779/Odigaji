@@ -5,8 +5,6 @@ import Swal from 'sweetalert2';
 // import server from '../../API/server';
 
 function Intro({ randomData, moveCity }) {
-  console.log('인트로 컴포넌트 렌더');
-
   const Odi = () => {
     Swal.fire({
       text: '안녕하세요! 오디가지예요',

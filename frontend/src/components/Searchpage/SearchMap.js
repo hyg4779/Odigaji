@@ -32,7 +32,6 @@ function SearchMap({
   }
 
   function mouseOutCity() {
-    console.log();
     setShow(false);
   }
 
