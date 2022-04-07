@@ -1,6 +1,7 @@
 .RandomButton {
   box-sizing: border-box;
-  padding: 0.6vw 1vw;
+  padding: 0px 2vw;
+  text-align: center;
   width: auto;
   height: auto;
   min-height: 30px;
