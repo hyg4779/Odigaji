@@ -202,7 +202,7 @@ function Survey() {
     const source = axios.CancelToken.source();
     AllCitiesList()
       .then((response) => {
-        console.log('여행지 전체 목록 가져오기 성공', response.data);
+        // 여행지 전체 목록 가져오기 성공
         setTourData(response.data);
       })
       .catch((error) => {

@@ -15,7 +15,7 @@ function AddSelCity(data) {
     city: data.id,
     rate: data.rate,
   };
-  console.log('다녀온 지역 정보', cityData);
+  // cityData: 다녀온 지역 정보
   return axios.post(selCityUrl, cityData, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,
@@ -28,7 +28,7 @@ function AddTaste(data) {
   data.forEach((ele) => {
     return (tasteData[ele.title] = ele.id);
   });
-  console.log('취향 설문 결과', tasteData);
+  // tasteData: 취향 설문 결과
   return axios.post(tasteUrl, tasteData, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem('jwt')}`,

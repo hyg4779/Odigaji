@@ -65,7 +65,7 @@ function SurveyResult() {
       setIdx(3);
       GetResult()
         .then((response) => {
-          console.log('마지막 추천 결과 받아오기 성공', response.data);
+          // 마지막 추천 결과 받아오기 성공
           devideData(response.data);
           setInputData(response.data);
         })
@@ -76,7 +76,7 @@ function SurveyResult() {
       setTime(2000);
       AddTaste(location.state)
         .then((response) => {
-          console.log('추천 결과 받아오기 성공', response.data);
+          // 추천 결과 받아오기 성공
           devideData(response.data);
           setInputData(response.data);
         })

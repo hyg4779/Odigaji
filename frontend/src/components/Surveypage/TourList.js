@@ -55,7 +55,7 @@ function TourList({ tourData, tours, setTours }) {
     setTours(tours.concat(newTour));
     AddSelCity(newTour)
       .then(() => {
-        console.log('지역-평점 정보 서버 연동 성공');
+        // console.log('지역-평점 정보 서버 연동 성공');
       })
       .catch((error) => {
         console.log(error);
