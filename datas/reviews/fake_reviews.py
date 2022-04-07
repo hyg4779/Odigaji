@@ -2,7 +2,7 @@ import datetime as dt
 import pymysql
 import random
 
-user_ids = list(range(1, 8)) + list(range(9, 22))
+user_ids = list(range(1, 9)) + list(range(10, 22))
 
 titles = {
     1 : ' 다시 가고 싶어요!',
