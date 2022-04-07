@@ -12,12 +12,12 @@
   /* background-image: linear-gradient(to right, #74ebd5 0%, #9face6 100%); */
 }
 .DetailImage{
-  width: 600px;
-  height: 400px;
-  margin-right: 10px;
+  width: 400px;
+  height: 300px;
+  
   margin-bottom: 10px;
-  padding: 20px;
-  border-radius: 30px;
+  padding: 10px;
+  border-radius: 15px;
   object-fit: cover;
 }
 
@@ -38,30 +38,38 @@
   background-color: rgba(255, 255, 255, 0.4);
 }
 .TravelDetailTitleName{
-  padding: 10px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+ 
   
 }
 .DetailTitleWrap{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
+}
+.DetailTitle{
+  font-size: 23px;
 }
 .TravelDetaiLocationTitle{
   padding: 10px;
+  
 }
 #map {
   width:auto;
   height:500px;
   margin: (0,auto);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 .TravelDetailWrap{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
 }
 .TravelDetailMapWrap{
-  padding: 30px;
+  margin: 23px;
+  border: 10px solid;
+  border-radius: 6px;
+  border-color:  rgb(117,53,254,0.7)
 }
 
 .travel-info-table .tbody {
