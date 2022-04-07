@@ -30,7 +30,7 @@ function Nav() {
         <img
           className="Nav-odi"
           alt="메인로고"
-          src={process.env.PUBLIC_URL + 'img/신난가지.png'}
+          src={process.env.PUBLIC_URL + 'img/오디가지main.png'}
         />
       </NavLink>
       {/* <NavLink

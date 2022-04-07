@@ -63,9 +63,7 @@ function Local() {
     console.log(bounds);
     return map.setBounds(bounds);
   };
-  useEffect(() => {
-    isLogin = sessionStorage.getItem('jwt');
-    let positions = [];
+  const getCities = () => {
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
@@ -79,17 +77,14 @@ function Local() {
       setArea(res.data.area);
       setTravelList(res.data.att_data);
 
-      res.data.att_data.map((data) => {
-        positions.push({
-          // eslint-disable-next-line prettier/prettier
-          latlng: new kakao.maps.LatLng(data.latitude, data.longitude)
-        });
-      });
       setLocalLogo(res.data.photo);
       setLocalImg(res.data.background_photo);
       setAvg_rate(res.data.avg_rate);
     });
-    //내 별점 가져오기
+  };
+  const getStarRating = (isLogin) => {
+    const jwt = sessionStorage.getItem('jwt');
+    axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     axios
       .get(visitedUrl)
       .then((res) => {
@@ -102,6 +97,12 @@ function Local() {
       .catch((err) => {
         isLogin = false;
       });
+  };
+  useEffect(() => {
+    isLogin = sessionStorage.getItem('jwt');
+    getCities();
+    getStarRating(isLogin);
+    //내 별점 가져오기
   }, [isLogin]);
   console.log('여행지목록', travelList);
   return (
