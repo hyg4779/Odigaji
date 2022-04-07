@@ -181,7 +181,7 @@ function Local() {
           </div>
           {/* <div id="map2" style={{ width: '100%', height: '350px' }}></div> */}
           <div className="TableContainer">
-            <Table striped bordered hover>
+            <Table bordered hover>
               <tbody>
                 {/* &&양옆에 2개쓰면  */}
                 {travelList &&
