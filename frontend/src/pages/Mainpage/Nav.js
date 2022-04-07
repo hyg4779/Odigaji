@@ -27,11 +27,7 @@ function Nav() {
   return (
     <div className="Nav">
       <NavLink className="Nav-odi-wrap" to="/">
-        <img
-          className="Nav-odi"
-          alt="메인로고"
-          src={process.env.PUBLIC_URL + 'img/오디가지main.png'}
-        />
+        <img className="Nav-odi" alt="메인로고" src={'/img/오디가지main.png'} />
       </NavLink>
       {/* <NavLink
         className={({ isActive }) => (isActive ? 'Nav-item-on' : 'Nav-item')}
