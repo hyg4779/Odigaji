@@ -14,7 +14,7 @@ function Intro({ nextPage, tourData }) {
         />
       ) : (
         <button className="Survey-intro-button" onClick={nextPage}>
-          시작하기
+          추천 시작
         </button>
       )}
     </div>

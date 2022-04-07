@@ -10,7 +10,7 @@
 .Survey-intro-header {
   font-size: 5vw;
   font-weight: bold;
-  color: #ffffff;
+  color: #8C54FE;
 }
 
 .Survey-spinner {
@@ -35,10 +35,10 @@
 } */
 
 .Survey-intro-button {
-  background-color: #7535ff;
+  background-color: #84e0ff;
   border-radius: 50%;
   border: none;
-  color: #FFFFFF;
+  color: #8C54FE;
   cursor: pointer;
   font-size: 3vw;
   width: 20vw;
