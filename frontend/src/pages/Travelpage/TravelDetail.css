@@ -17,7 +17,7 @@
   
   margin-bottom: 10px;
   padding: 10px;
-  border-radius: 30px;
+  border-radius: 15px;
   object-fit: cover;
 }
 
@@ -45,6 +45,7 @@
 .DetailTitleWrap{
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 .DetailTitle{
   font-size: 23px;
@@ -58,14 +59,17 @@
   height:500px;
   margin: (0,auto);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 .TravelDetailWrap{
   display: flex;
   justify-content: space-around;
 }
 .TravelDetailMapWrap{
-  padding: 30px;
+  margin: 23px;
+  border: 10px solid;
+  border-radius: 6px;
+  border-color:  rgb(117,53,254,0.7)
 }
 
 .travel-info-table .tbody {
