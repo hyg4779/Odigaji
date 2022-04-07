@@ -77,7 +77,7 @@ function TravelDetail() {
       server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
     axios.get(cityUrl).then((res) => {
       setCityLogo(res.data.photo);
-      console.log(cityLogo);
+      // console.log(cityLogo);
     });
   }, [cityId]);
 

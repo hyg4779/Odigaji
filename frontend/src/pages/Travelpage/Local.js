@@ -40,7 +40,7 @@ function Local() {
   const closeModal = () => {
     setModalOpen(false);
   };
-  console.log(travelList);
+  // console.log(travelList);
   //////////////////// URL //////////////////////////////////////
   const cityUrl =
     server.BASE_URL + server.ROUTES.allCities + cityId + '/' + 'get-city/';
@@ -51,7 +51,7 @@ function Local() {
     let bounds = new kakao.maps.LatLngBounds();
 
     for (var i = 0; i < positions.length; i++) {
-      console.log(positions);
+      // console.log(positions);
       // 마커 이미지의 이미지 크기 입니다
       let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
@@ -60,7 +60,7 @@ function Local() {
       });
       bounds.extend(new kakao.maps.LatLng(positions[i].latlng));
     }
-    console.log(bounds);
+    // console.log(bounds);
     return map.setBounds(bounds);
   };
   const getCities = () => {
@@ -68,7 +68,7 @@ function Local() {
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
     axios.get(cityUrl).then((res) => {
-      console.log(cityUrl, res);
+      // console.log(cityUrl, res);
 
       setInfo(res.data.info);
       setPapulation(res.data.population);
@@ -88,7 +88,7 @@ function Local() {
     axios
       .get(visitedUrl)
       .then((res) => {
-        console.log(visitedUrl, res);
+        // console.log(visitedUrl, res);
         setRating(res.data.rate);
         if (res.status === 200) {
           isLogin = true;
@@ -104,7 +104,7 @@ function Local() {
     getStarRating(isLogin);
     //내 별점 가져오기
   }, [isLogin]);
-  console.log('여행지목록', travelList);
+  // console.log('여행지목록', travelList);
   return (
     <div className="LocalContainer">
       <div className="DetailContent">

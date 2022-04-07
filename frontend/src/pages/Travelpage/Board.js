@@ -67,7 +67,7 @@ function Board() {
             currentPage
         )
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           let data = response.data.data;
           data.slice(-1, 1);
 
@@ -150,7 +150,7 @@ function Board() {
                   setIsClick(true);
                   // currentPage == num ? setColor('red') : setColor('white')
                   // if (!isClick) {
-                  console.log(e.view);
+                  // console.log(e.view);
                   // e.target.style.backgroundColor = 'red';
                   // }
 

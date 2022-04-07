@@ -26,7 +26,7 @@ function Write() {
       content: reviewContent.content,
     };
 
-    console.log(data);
+    // console.log(data);
     if (reviewContent.title) {
       const jwt = sessionStorage.getItem('jwt');
       axios.defaults.headers.common['Authorization'] = jwt
@@ -36,7 +36,7 @@ function Write() {
       axios
         .post(server.BASE_URL + server.ROUTES.writeReview + cityId + '/', data)
         .then(() => {
-          console.log('then active');
+          // console.log('then active');
         });
       alert('게시글이 작성되었습니다.');
       window.location.href = '/local/' + cityId;
@@ -54,7 +54,7 @@ function Write() {
       ...reviewContent,
       [name]: value,
     });
-    console.log(reviewContent);
+    // console.log(reviewContent);
   };
 
   return (
@@ -83,22 +83,22 @@ function Write() {
               data=""
               onReady={(editor) => {
                 // You can store the "editor" and use when it is needed.
-                console.log('Editor is ready to use!', editor);
+                // console.log('Editor is ready to use!', editor);
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();
-                console.log({ event, editor, data });
+                // console.log({ event, editor, data });
                 setReviewContent({
                   ...reviewContent,
                   content: data,
                 });
-                console.log(reviewContent);
+                // console.log(reviewContent);
               }}
               onBlur={(event, editor) => {
-                console.log('Blur.', editor);
+                // console.log('Blur.', editor);
               }}
               onFocus={(event, editor) => {
-                console.log('Focus.', editor);
+                // console.log('Focus.', editor);
               }}
             />
             <div className="SendButtonWrap">
