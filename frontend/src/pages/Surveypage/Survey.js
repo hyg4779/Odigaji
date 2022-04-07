@@ -6,6 +6,12 @@ import Question from '../../components/Surveypage/Question';
 import TourList from '../../components/Surveypage/TourList';
 import { AllCitiesList } from '../../components/Surveypage/SurveyAxios';
 import axios from 'axios';
+import {
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+} from 'react-icons/fa';
 
 function Survey() {
   const surveyData = [
@@ -105,6 +111,12 @@ function Survey() {
     '여행을 준비할 때',
     '일상 스타일',
   ];
+  const textList = [
+    '처음으로',
+    '이전으로',
+    '다음으로',
+    '진행한 마지막 설문으로',
+  ];
   const [tourData, setTourData] = useState([]);
   const [pageIndex, setPageIndex] = useState(-2);
   const [tastes, setTastes] = useState([]);
@@ -139,6 +151,10 @@ function Survey() {
 
   function lastPage() {
     setPageIndex(tastes.length - 1);
+  }
+
+  function alertMessage() {
+    alert('다녀온 지역은 한 개 이상 추가해줘야 합니다!');
   }
 
   function buttonOver(event, id) {
@@ -219,22 +235,7 @@ function Survey() {
       )}
       {pageIndex === -2 && <Intro nextPage={nextPage} tourData={tourData} />}
       {pageIndex === -1 && (
-        <TourList
-          pageIndex={pageIndex}
-          tourData={tourData}
-          tours={tours}
-          beforePage={beforePage}
-          nextPage={nextPage}
-          startPage={startPage}
-          lastPage={lastPage}
-          setTours={setTours}
-          mouseX={mouseX}
-          mouseY={mouseY}
-          textIdx={textIdx}
-          textShow={textShow}
-          buttonOver={buttonOver}
-          buttonOut={buttonOut}
-        />
+        <TourList tourData={tourData} tours={tours} setTours={setTours} />
       )}
       {pageIndex >= 0 && pageIndex <= 9 && (
         <Question
@@ -254,6 +255,42 @@ function Survey() {
           buttonOver={buttonOver}
           buttonOut={buttonOut}
         />
+      )}
+      {pageIndex >= -1 && textShow && (
+        <div
+          className="Survey-tooltip"
+          style={{ top: `${mouseY}px`, left: `${mouseX}px` }}
+        >
+          {textList[textIdx]}
+        </div>
+      )}
+      {pageIndex >= -1 && (
+        <div className="Survey-button-group">
+          <FaAngleDoubleLeft
+            onClick={startPage}
+            onMouseMove={(event) => buttonOver(event, 0)}
+            onMouseOut={() => buttonOut()}
+            className="Survey-button"
+          />
+          <FaAngleLeft
+            onClick={beforePage}
+            onMouseMove={(event) => buttonOver(event, 1)}
+            onMouseOut={() => buttonOut()}
+            className="Survey-button"
+          />
+          <FaAngleRight
+            onClick={tours.length >= 1 ? nextPage : alertMessage}
+            onMouseMove={(event) => buttonOver(event, 2)}
+            onMouseOut={() => buttonOut()}
+            className="Survey-button"
+          />
+          <FaAngleDoubleRight
+            onClick={lastPage}
+            onMouseMove={(event) => buttonOver(event, 3)}
+            onMouseOut={() => buttonOut()}
+            className="Survey-button"
+          />
+        </div>
       )}
     </div>
   );

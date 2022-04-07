@@ -37,8 +37,9 @@ function Random() {
   function selectProvince(provinceId) {
     provinceCities(provinceId)
       .then((response) => {
-        console.log(response.data);
         setCities(response.data);
+        const newCityNumber = Math.floor(Math.random() * response.data.length);
+        setCityNumber(newCityNumber);
       })
       .catch((error) => {
         console.log(error);
@@ -54,12 +55,6 @@ function Random() {
     setProvinceSpin(true);
   }
 
-  function cityStart() {
-    const newCityNumber = Math.floor(Math.random() * cities.length);
-    setCityNumber(newCityNumber);
-    setCitySpin(true);
-  }
-
   function stopProvinceSpin() {
     setProvinceSpin(false);
     const newRandomResult = provinceData[provinceNumber].option;
@@ -68,7 +63,7 @@ function Random() {
     setTimeout(() => {
       setTextShow(false);
       setTimeout(() => {
-        cityStart();
+        setCitySpin(true);
       }, 10);
       setCityShow(true);
     }, 1500);

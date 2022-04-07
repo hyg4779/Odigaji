@@ -1,41 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Question.css';
-import {
-  FaAngleLeft,
-  FaAngleRight,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-} from 'react-icons/fa';
 
 function Question({
   surveyData,
   questionList,
   pageIndex,
   tastes,
-  nextPage,
-  beforePage,
-  startPage,
-  lastPage,
   tasteSurveys,
-  mouseX,
-  mouseY,
-  textIdx,
-  textShow,
-  buttonOver,
-  buttonOut,
 }) {
   const [selectName, setSelectName] = useState();
   const imgCnt = surveyData[pageIndex].length;
-  const textList = [
-    '처음으로',
-    '이전으로',
-    '다음으로',
-    '진행한 마지막 설문으로',
-  ];
-
-  function alertMessage() {
-    alert('항목을 선택해주세요!');
-  }
 
   useEffect(() => {
     // 하나의 컴포넌트를 이용해서 10개의 설문을 진행하기 때문에
@@ -81,40 +55,6 @@ function Question({
             </div>
           );
         })}
-      </div>
-      {textShow && (
-        <div
-          className="Question-tooltip"
-          style={{ top: `${mouseY}px`, left: `${mouseX}px` }}
-        >
-          {textList[textIdx]}
-        </div>
-      )}
-      <div className="Question-button-group">
-        <FaAngleDoubleLeft
-          onClick={startPage}
-          onMouseMove={(event) => buttonOver(event, 0)}
-          onMouseOut={() => buttonOut()}
-          className="Question-button"
-        />
-        <FaAngleLeft
-          onClick={beforePage}
-          onMouseMove={(event) => buttonOver(event, 1)}
-          onMouseOut={() => buttonOut()}
-          className="Question-button"
-        />
-        <FaAngleRight
-          onClick={selectName ? nextPage : alertMessage}
-          onMouseMove={(event) => buttonOver(event, 2)}
-          onMouseOut={() => buttonOut()}
-          className="Question-button"
-        />
-        <FaAngleDoubleRight
-          onClick={lastPage}
-          onMouseMove={(event) => buttonOver(event, 3)}
-          onMouseOut={() => buttonOut()}
-          className="Question-button"
-        />
       </div>
     </div>
   );

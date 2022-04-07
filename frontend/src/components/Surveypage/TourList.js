@@ -1,95 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './TourList.css';
 import Rating from './Rating';
 import Map from './Map';
 import { AddSelCity } from './SurveyAxios';
 import {
-  FaAngleLeft,
-  FaAngleRight,
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-} from 'react-icons/fa';
+  AiFillDelete,
+  AiFillPlusCircle,
+  AiOutlinePlusCircle,
+} from 'react-icons/ai';
 
-function TourList({
-  tourData,
-  tours,
-  beforePage,
-  nextPage,
-  startPage,
-  lastPage,
-  setTours,
-  mouseX,
-  mouseY,
-  textIdx,
-  textShow,
-  buttonOver,
-  buttonOut,
-}) {
-  const textList = [
-    '처음으로',
-    '이전으로',
-    '다음으로',
-    '진행한 마지막 설문으로',
+function TourList({ tourData, tours, setTours }) {
+  const provinceData = [
+    { id: 1, name: '강원도' },
+    { id: 2, name: '경기도' },
+    { id: 3, name: '경상남도' },
+    { id: 4, name: '경상북도' },
+    { id: 5, name: '전라남도' },
+    { id: 6, name: '전라북도' },
+    { id: 7, name: '충청남도' },
+    { id: 8, name: '충청북도' },
+    { id: 100, name: '자치시도' },
   ];
+  const [cities, setCities] = useState([]);
+  const [selectCityId, setSelectCityId] = useState(0);
+  const [selectCity, setSelectCity] = useState(null);
+
+  function changeProvince(event) {
+    const provinceId = Number(event.target.value);
+    const tempCities = tourData.filter(
+      (data) => data.province_data.id === provinceId
+    );
+    setCities(tempCities);
+    setSelectCity(null);
+    setSelectCityId(0);
+  }
+
+  function changeCity(event) {
+    const tempSelctCity = cities.find(
+      (data) => data.id === Number(event.target.value)
+    );
+    setSelectCity(tempSelctCity);
+    setSelectCityId(Number(event.target.value));
+  }
+
+  function addCity() {
+    const newTour = {
+      id: selectCity.id,
+      name: selectCity.name,
+      provinceName: selectCity.province_data.name,
+      rate: 1,
+    };
+    setSelectCity(null);
+    setSelectCityId(0);
+    setTours(tours.concat(newTour));
+    AddSelCity(newTour)
+      .then(() => {
+        console.log('지역-평점 정보 서버 연동 성공');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   function isVisit(id) {
     // 이미 방문했다고 추가한 지역인지 판단하는 함수
     return tours.find((tour) => tour.id === id);
   }
 
-  function isInTourData(name, provinceName) {
-    // 지역 데이터로 가지고 있는 지역인지 판단하는 함수
-    return tourData.find(
-      (tour) => tour.name === name && tour.province_data.name === provinceName
-    );
-  }
-
-  function addTour(event) {
-    event.preventDefault();
-    const inputWords = event.target[0].value.split('(');
-    const inputName = inputWords[0];
-    const inputProvince = String(inputWords[1]).slice(0, -1);
-    const inputData = isInTourData(inputName, inputProvince);
-
-    if (inputData === undefined) {
-      // 지역 데이터에 없는 입력값을 사용한 경우
-      alert('서비스에 정보가 없거나 입력 양식이 잘못되었습니다');
-    } else {
-      const newTour = {
-        id: inputData.id,
-        name: inputName,
-        provinceName: inputProvince,
-        rate: 1,
-      };
-      setTours(tours.concat(newTour));
-      AddSelCity(newTour)
-        .then(() => {
-          console.log('지역-평점 정보 서버 연동 성공');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      event.target[0].value = '';
-    }
-  }
-
   function deleteTour(target) {
     const newTours = tours.filter((tour) => !(tour.id === target.id));
     setTours(newTours);
-  }
-
-  function alertMessage() {
-    alert('다녀온 지역은 한 개 이상 추가해줘야 합니다!');
-  }
-
-  function makeList() {
-    return tourData.map((data) => {
-      return (
-        <option key={data.id} id={data.id} disabled={isVisit(data.id)}>
-          {data.name}({data.province_data.name})
-        </option>
-      );
-    });
   }
 
   return (
@@ -100,14 +80,49 @@ function TourList({
       <div className="Tourlist-content">
         <Map tours={tours} />
         <div className="Tourlist-text-content">
-          <form onSubmit={(event) => addTour(event)}>
-            <h4>빈칸을 클릭해서 선택해주세요</h4>
-            <div className="Tourlist-content-data">
-              <input list="tourInput" className="Tourlist-content-input" />
-              <datalist id="tourInput">{makeList()}</datalist>
-              <button className="Tourlist-content-button">추가하기</button>
-            </div>
-          </form>
+          <h4>빈칸을 클릭해서 선택해주세요</h4>
+          <div className="Tourlist-select-list">
+            <select
+              className="Tourlist-select-content"
+              onChange={(event) => changeProvince(event)}
+            >
+              <option value={0}>--도 선택--</option>;
+              {provinceData.map((data) => {
+                return (
+                  <option key={data.id} value={data.id}>
+                    {data.name}
+                  </option>
+                );
+              })}
+            </select>
+            <select
+              className="Tourlist-select-content"
+              value={selectCityId}
+              onChange={(event) => changeCity(event)}
+            >
+              <option value={0}>--시,군 선택--</option>;
+              {cities.map((data) => {
+                return (
+                  <option
+                    key={data.id}
+                    value={data.id}
+                    disabled={isVisit(data.id)}
+                  >
+                    {data.name}
+                  </option>
+                );
+              })}
+            </select>
+            {selectCityId !== 0 ? (
+              <AiFillPlusCircle
+                className="Tourlist-content-button"
+                size="40px"
+                onClick={() => addCity()}
+              />
+            ) : (
+              <AiOutlinePlusCircle size="40px" />
+            )}
+          </div>
           <div className="Tourlist-content-items">
             {tours.map((tour, idx) => {
               return (
@@ -117,52 +132,16 @@ function TourList({
                   </div>
                   <div className="Tourlist-content-item-rate">
                     <Rating tour={tour} tours={tours} setTours={setTours} />
-                    <button
+                    <AiFillDelete
                       onClick={() => deleteTour(tour)}
-                      className="Tourlist-content-button"
-                    >
-                      X
-                    </button>
+                      className="Tourlist-content-item-delete"
+                    />
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
-      </div>
-      {textShow && (
-        <div
-          className="Tourlist-tooltip"
-          style={{ top: `${mouseY}px`, left: `${mouseX}px` }}
-        >
-          {textList[textIdx]}
-        </div>
-      )}
-      <div className="Tourlist-button-group">
-        <FaAngleDoubleLeft
-          onClick={startPage}
-          onMouseMove={(event) => buttonOver(event, 0)}
-          onMouseOut={() => buttonOut()}
-          className="Tourlist-button"
-        />
-        <FaAngleLeft
-          onClick={beforePage}
-          onMouseMove={(event) => buttonOver(event, 1)}
-          onMouseOut={() => buttonOut()}
-          className="Tourlist-button"
-        />
-        <FaAngleRight
-          onClick={tours.length >= 1 ? nextPage : alertMessage}
-          onMouseMove={(event) => buttonOver(event, 2)}
-          onMouseOut={() => buttonOut()}
-          className="Tourlist-button"
-        />
-        <FaAngleDoubleRight
-          onClick={lastPage}
-          onMouseMove={(event) => buttonOver(event, 3)}
-          onMouseOut={() => buttonOut()}
-          className="Tourlist-button"
-        />
       </div>
     </div>
   );

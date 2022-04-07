@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 10vh;
-  margin-bottom: 1vh;
   align-items: center;
 }
 
@@ -55,44 +54,4 @@
   background-color: #FFFFFF;
   border-radius: 1rem;
   padding: 0rem 10px;
-}
-
-.Question-tooltip {
-  position: fixed;
-  width: auto;
-  background-color: #FFFFFF;
-  border-radius: 1rem;
-  padding: 5px 10px;
-  transform: translate(-50%, -150%);
-}
-
-.Question-button-group {
-  position: relative;
-  width: 80vw;
-  display: flex;
-  justify-content: center;
-  column-gap: 5vw;
-}
-
-.Question-button {
-  width: auto;
-  height: auto;
-  font-weight: bold;
-  color: #FFFFFF;
-  border-radius: 2rem;
-  border-style: none;
-  font-size: 2vw;
-  cursor: pointer;
-}
-
-.Question-button:hover {
-  cursor: pointer;
-}
-
-.Question-button path {
-  fill: black;
-}
-
-.Question-button:hover path {
-  fill: purple;
 }
