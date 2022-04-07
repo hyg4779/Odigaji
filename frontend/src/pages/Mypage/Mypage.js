@@ -160,16 +160,19 @@ function Mypage() {
       </div>
       <div className="userContainer">
         <div className="userbutton">
-          <div className="userName">{Userdata.username}</div>
-          <button onClick={() => moveResult()} className="Editinfo">
+          <div>
+            <div className="userName">{Userdata.username}</div>
+            <div className="userNick">{Userdata.nickname}</div>
+            <div className="userPoint">포인트 {Userdata.point}</div>
+          </div>
+
+          <button className="EditinfoButton" onClick={() => moveResult()}>
             추천결과
           </button>
-          <button onClick={InfoClick} className="Editinfo">
+          <button className="EditinfoButton" onClick={InfoClick}>
             회원수정
           </button>
         </div>
-        <div className="userNick">{Userdata.nickname}</div>
-        <div className="userPoint">포인트 {Userdata.point}</div>
       </div>
 
       <Active
