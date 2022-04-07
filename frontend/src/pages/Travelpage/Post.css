@@ -158,6 +158,21 @@ a:hover {
 .ReviewText{
   padding: 30px;
   height: auto;
+
+  align-items: center;
+  /* overflow: hidden; */
+}
+.FixText{
+  width: 500px;
+  overflow: visible;
+	white-space: normal; /* 넘치면 줄바꿈 */
+	
+	word-wrap: break-word; /* 긴 단어를 분리해서 줄바꿈해라 */
+	
+	
+	
+	word-break: keep-all; 
+  /* overflow: hidden; */
 }
 .DeleteButton{
   font-size: 12px;

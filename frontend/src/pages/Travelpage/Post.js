@@ -147,7 +147,10 @@ function Post() {
         </div>
         <div className="ReviewInfoBox2">
           <div className="ReviewText">
-            <div dangerouslySetInnerHTML={{ __html: content }}></div>
+            <div
+              className="FixText"
+              dangerouslySetInnerHTML={{ __html: content }}
+            ></div>
           </div>
         </div>
         <div className="ReviewInfoBox5">
