@@ -44,6 +44,11 @@ function ReviewCommend({ reviewCommentData }) {
             </Link>
           );
         })}
+        {Array.isArray(reviewCommentData) && reviewCommentData.length === 0 ? (
+          <div className="VisitedNoneItems">작성한 댓글 게시물이 없습니다.</div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

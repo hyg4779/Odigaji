@@ -9,8 +9,8 @@ import Review from '../../components/Mypage/Review';
 import ReviewCommend from '../../components/Mypage/ReviewCommend';
 function Mypage() {
   let imageCondition = false;
-  const Defaultimg =
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+  const Defaultimg = '/img/오디가지.png';
+
   const [Userdata, setUserData] = useState({ hits: [] });
   const [selCityData, setselCityData] = useState([]);
   const [selCityLength, setselCityLength] = useState(0);
@@ -166,10 +166,10 @@ function Mypage() {
             <div className="userPoint">포인트 {Userdata.point}</div>
           </div>
 
-          <button className="EditinfoButton" onClick={() => moveResult()}>
+          <button className="EditinfoButton1" onClick={() => moveResult()}>
             추천결과
           </button>
-          <button className="EditinfoButton" onClick={InfoClick}>
+          <button className="EditinfoButton2" onClick={InfoClick}>
             회원수정
           </button>
         </div>

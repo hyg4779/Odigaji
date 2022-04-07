@@ -18,7 +18,7 @@ function visitedCity({ selCityData }) {
   };
   return (
     <div className="VisitedCityContainer">
-      <div className="title">다녀온 도시</div>
+      <div className="title">방문한 도시</div>
       <div className="VisitedCardWrap">
         <div className="status">
           {selCityData.map((data, key) => {
@@ -46,6 +46,11 @@ function visitedCity({ selCityData }) {
             );
           })}
         </div>
+        {Array.isArray(selCityData) && selCityData.length === 0 ? (
+          <div className="VisitedNoneItems">방문한 도시가 없습니다.</div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
