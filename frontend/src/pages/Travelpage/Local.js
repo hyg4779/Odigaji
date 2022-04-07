@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import TravelRating from '../../components/Travelcomponents/TravelRating';
 import './Local.css';
 import LocalModal from '../../components/Travelpage/LocalModal';
-
+import Board from './Board';
 function MovetravelPage(id) {
   window.location.href = 'travelDetail/' + id + '/';
 }
@@ -63,9 +63,7 @@ function Local() {
     console.log(bounds);
     return map.setBounds(bounds);
   };
-  useEffect(() => {
-    isLogin = sessionStorage.getItem('jwt');
-    let positions = [];
+  const getCities = () => {
     const jwt = sessionStorage.getItem('jwt');
     axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     //도시정보 가져오기!!!
@@ -79,17 +77,14 @@ function Local() {
       setArea(res.data.area);
       setTravelList(res.data.att_data);
 
-      res.data.att_data.map((data) => {
-        positions.push({
-          // eslint-disable-next-line prettier/prettier
-          latlng: new kakao.maps.LatLng(data.latitude, data.longitude)
-        });
-      });
       setLocalLogo(res.data.photo);
       setLocalImg(res.data.background_photo);
       setAvg_rate(res.data.avg_rate);
     });
-    //내 별점 가져오기
+  };
+  const getStarRating = (isLogin) => {
+    const jwt = sessionStorage.getItem('jwt');
+    axios.defaults.headers.common['Authorization'] = jwt ? `Bearer ${jwt}` : '';
     axios
       .get(visitedUrl)
       .then((res) => {
@@ -102,6 +97,12 @@ function Local() {
       .catch((err) => {
         isLogin = false;
       });
+  };
+  useEffect(() => {
+    isLogin = sessionStorage.getItem('jwt');
+    getCities();
+    getStarRating(isLogin);
+    //내 별점 가져오기
   }, [isLogin]);
   console.log('여행지목록', travelList);
   return (
@@ -172,16 +173,16 @@ function Local() {
         <div className="LocalInfoBox2">
           <div className="LocalAttraction">{name} 추천 여행지</div>
           <div className="IntoReview">
-            <button
+            {/* <button
               className="reviewButton"
               onClick={() => MoveBoardPage(params.cityId)}
             >
               리뷰 게시판
-            </button>
+            </button> */}
           </div>
           {/* <div id="map2" style={{ width: '100%', height: '350px' }}></div> */}
           <div className="TableContainer">
-            <Table striped bordered hover>
+            <Table bordered hover>
               <tbody>
                 {/* &&양옆에 2개쓰면  */}
                 {travelList &&
@@ -202,9 +203,10 @@ function Local() {
             </Table>
           </div>
         </div>
-      </div>
-      <div className="modal">
-        <div className="modal_body">Modal</div>
+        <div className="LocalInfoBox3">
+          <div className="LocalBoardInfo">{name} 관광 후기</div>
+          <Board></Board>
+        </div>
       </div>
     </div>
   );

@@ -132,6 +132,10 @@ function SignupPage() {
   return (
     <div className="wrap">
       <div className="signup">
+        <img
+          className="TitleImage2"
+          src={process.env.PUBLIC_URL + 'img/오디가지main.png'}
+        />
         <form onSubmit={onSubmit}>
           <div className="id">
             <input
