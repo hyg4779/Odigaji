@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Active({ selCityLength, reviewCommentLength, reviewLength }) {
-  console.log(reviewLength);
   return (
     <div className="ActivityContainer">
       <div className="item">

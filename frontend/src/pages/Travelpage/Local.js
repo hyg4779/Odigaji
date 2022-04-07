@@ -125,7 +125,7 @@ function Local() {
                 ></img>
               </div>
               <div className="spaceArea"></div>
-              <div className="LcoalText">{info}</div>
+              <div className="LocalText">{info}</div>
               <div className="spaceArea"></div>
               <div>인구수 : 약 {papulation} 명 </div>
               <div>면적 : {area} km²</div>
