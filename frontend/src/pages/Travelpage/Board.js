@@ -17,7 +17,12 @@ function Board() {
   const [color, setColor] = useState('white');
 
   const writeReview = () => {
-    navigate('/local/travelDetail/board/write/' + params.cityId);
+    const jwt = sessionStorage.getItem('jwt');
+    if (jwt) {
+      navigate('/local/travelDetail/board/write/' + params.cityId);
+    } else {
+      alert('로그인이 필요합니다.');
+    }
   };
   const movePost = (Postid) => {
     navigate('/local/travelDetail/board/post/' + Postid);
