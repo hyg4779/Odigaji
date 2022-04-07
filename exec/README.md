@@ -8,7 +8,7 @@
 
 ### Frontend
 
-- Python:3.9.6
+- `Node`:16.0.1, `React`:17.0.2
 - URL : j6b103.p.ssafy.io
 
 ### Backend
@@ -31,11 +31,11 @@
 ```shell
 # backend 폴더에서
 pip install -r requirements.txt
-python manage.py runserver
+python manage.py runserver	# 기본은 8000번 포트로 실행
 
 # frontend 폴더에서
 npm install
-npm start
+npm start  # 기본은 3000번 포트로 실행
 ```
 
 자세한 내용은 README_front, back 을 참조해주세요.
