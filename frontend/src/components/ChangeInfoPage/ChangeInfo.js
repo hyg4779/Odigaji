@@ -9,9 +9,7 @@ function ChangeInfo() {
   const [fileImage, setFileImage] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [Image, setImage] = useState(
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-  );
+  const [Image, setImage] = useState('/img/오디가지.png');
   let navigate = useNavigate();
   const fileInput = useRef(null);
   const [PasswordErrors, setPasswordErrors] = useState('');
