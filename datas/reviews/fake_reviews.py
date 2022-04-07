@@ -17,6 +17,12 @@ contents = {
     3 : '강추합니다.'
 }
 
+comments = {
+    1 : '인정합니다.',
+    2 : '여행 좀 치시네요',
+    3 : '당신 말이 다 맞습니다.'
+}
+
 date = dt.date.today()
 
 # db와 python연결
@@ -25,9 +31,11 @@ curs = conn.cursor()
 conn.commit()
 
 # Attaction 테이블에 컬럼을 지정해 넣는 sql문
-insert_sql = "INSERT INTO reviews_cityreview (title, content, created, updated, city_id, user_id) values(%s, %s, %s, %s, %s, %s)"
+review_sql = "INSERT INTO reviews_cityreview (title, content, created, updated, city_id, user_id) values(%s, %s, %s, %s, %s, %s)"
 
 select_sql = 'SELECT name FROM cities_city WHERE id=%s'
+
+comment_sql = "INSERT INTO reviews_comment (content, created, review_id, user_id) values(%s, %s, %s, %s)"
 
 for i in range(1, 396):
 
@@ -43,5 +51,13 @@ for i in range(1, 396):
     title = city_name + titles[title_n]
     print((title, content, created, updated, city_id, user_id))
 
-    curs.execute(insert_sql, (title, content, created, updated, city_id, user_id))
+    curs.execute(review_sql, (title, content, created, updated, city_id, user_id))
+    curs.execute('SELECT last_insert_id()')
+    review_id = curs.fetchone()[0]
+
+    for i in range(1, 4):
+        c_content = comments[i]
+        c_user_id = random.choices(user_ids)[0]
+        curs.execute(comment_sql, (c_content, created, review_id, c_user_id))
+
 conn.commit()
