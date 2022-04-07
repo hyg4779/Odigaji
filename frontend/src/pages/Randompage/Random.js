@@ -71,7 +71,19 @@ function Random() {
 
   return (
     <div className="Random">
-      <div className="Random-header">어디든 떠나고 싶을 때</div>
+      <div className="Random-header">
+        <img
+          className="Random-header-odi"
+          alt="메인로고"
+          src={'/img/오디가지.png'}
+        />
+        오디가지 마음대로 랜덤 추천
+        <img
+          className="Random-header-odi"
+          alt="메인로고"
+          src={'/img/오디가지.png'}
+        />
+      </div>
       <div className="Random-content">
         {!cityShow && (
           <RouletteDo
