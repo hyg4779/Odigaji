@@ -26,6 +26,11 @@ function Review({ reviewData, CityData }) {
             </Link>
           );
         })}
+        {Array.isArray(reviewData) && reviewData.length === 0 ? (
+          <div className="VisitedNoneItems">관광 리뷰 게시물이 없습니다.</div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
