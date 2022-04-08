@@ -13,7 +13,7 @@ function ResultList({ resultData, inputData }) {
   const [count, setCount] = useState(0);
   const [cityName, setCityName] = useState('');
   const colors = [
-    '#d1aef8',
+    '#edcdf2',
     '#ba7dff',
     '#a354fd',
     '#9030fd',
