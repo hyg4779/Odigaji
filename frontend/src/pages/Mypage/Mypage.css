@@ -192,11 +192,17 @@
   flex-grow: 1;
   margin-right: 14px;
 }
-.ReviewListContainer .headtitle{
+.ReviewListContainer .headtitle1{
   flex-grow: 1;
   font-size: 15px;
   position: relative;
- 
+
+}
+.ReviewListContainer .headtitle2{
+  flex-grow: 1;
+  font-size: 15px;
+  position: relative;
+
 }
 .ReviewListContainer .headtime{
   padding-right: 25px;
@@ -232,7 +238,7 @@
   
 
 .ReviewListContainer .textTitle{
-
+  
   flex-grow: 1;
   font-size: 16px;
   position: relative;
@@ -350,8 +356,17 @@
 a {
   text-decoration-line: none;
 }
-
-.region, .headRegion, .textTitle, .headtitle{
+.ReviewListContainer .ListTitle .headtitle1{
+  padding-left: 10px;
+}
+.ReviewListContainer .ListTitle .headtitle2{
+  padding-left: 50px;
+}
+.region, .headRegion, .textTitle, .headtitle1{
+  width:45%;
+  float:left;
+}
+.region, .headRegion, .textTitle, .headtitle2{
   width:45%;
   float:left;
 }
