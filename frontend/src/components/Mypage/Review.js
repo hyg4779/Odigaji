@@ -10,7 +10,7 @@ function Review({ reviewData, CityData }) {
       <div className="ReviewWrap">
         <div className="ListTitle">
           <div className="headRegion">지역</div>
-          <div className="headtitle">제목</div>
+          <div className="headtitle2">제목</div>
           <div className="headtime">작성일자</div>
         </div>
         {reviewData.map((data, key) => {

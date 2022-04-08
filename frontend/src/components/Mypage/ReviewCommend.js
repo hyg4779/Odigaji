@@ -8,7 +8,7 @@ function ReviewCommend({ reviewCommentData }) {
       <div className="ReviewWrap">
         <div className="ListTitle">
           <div className="headRegion">댓글내용</div>
-          <div className="headtitle">작성자</div>
+          <div className="headtitle1">작성자</div>
           <div className="headtime">작성일자</div>
         </div>
         {reviewCommentData.map((data, key) => {
@@ -38,7 +38,7 @@ function ReviewCommend({ reviewCommentData }) {
             >
               <div key={key} className="item">
                 <div className="region">{content}</div>
-                <div className="textTitle">{data.user.username}</div>
+                <div className="textTitle">{data.user.nickname}</div>
                 <div className="time">{data.created}</div>
               </div>
             </Link>
