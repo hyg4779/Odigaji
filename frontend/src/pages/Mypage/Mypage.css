@@ -78,78 +78,74 @@
   color:rgb(255, 255, 255)
 }
 
-
 .VisitedCityContainer{
-  margin: 1%;
+  padding: 30px 60px;
   background-color: rgba(255, 255, 255, 0.5);
-
-  border-radius: 10px;
+  margin-bottom: 10px;
 
 }
 
 
 .VisitedCityContainer .title{
-  font-size: 15pt;
+  font-size: 23px;
   font-weight: bold;
-  padding: 2%;
-  padding-top: 1% ;
-  
+  margin-bottom: 20px;
+ 
 }
 
-.VisitedCardWrap{
 
-}
 .VisitedCityContainer .status{
-
-  display: grid;
-	grid-template-columns: 15% 15% 15% 15% 15% 15%;
-	grid-template-rows: 15% 15%;
-  place-content: center;
-  
+  margin-left: 30px;
+  display: flex;
+  flex-wrap: wrap;
   /* justify-content: space-evenly; */
   /* justify-content: center; */
- 
-  /* width: 100%; */
+  justify-content: start;
+  width: 100%;
+  min-width: 1400px;
 
 }
-.CardItem{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
+
 .VisitedCityContainer .item{
-  
-  margin: 5%;
+
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  margin: 10px;
   border-radius: 10%;
-  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 .VisitedCityContainer .item:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-.Imagenumber{
-  padding: 10%;
-  object-fit: fill;
-  width: 80%;
-  height: 100px;
+
+.VisitedCityContainer .number{
+  width: 240px;
+  height: 160px;
+  padding: 20px;
+  text-align: center;
+  /* border: 1px solid; */
+  border-radius: 10%;
+  /* margin: 10px; */
+  object-fit: contain;
 }
 
-.InnerItems{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: (0,auto,0,auto);
-}
 .VisitedCityContainer .text{
   font-size: 15px;
   font-weight: normal;
-  color: #c2c2c2;
+  color: #000000;
   text-align: center;
-
- 
+  padding-top:  20px;
 }
+.VisitedCityContainer .space{
+  display: flex;
+  padding: 20px;
+
+}
+
+
+
+
 .VisitedNoneItems{
 
   text-align: center;
@@ -206,7 +202,9 @@
   padding-right: 25px;
   margin-left: auto;
 }
-
+.status .item{
+  background-color: #fff;
+}
 .ReviewListContainer .item{  
   display: flex;
   align-items: center;
@@ -216,7 +214,7 @@
   height: 56px;
   border-radius: 10px;
   box-shadow: 1px 1px 10px #ddd;
-  margin: 5px;
+  background-color: #fff; margin: 5px;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
@@ -324,7 +322,6 @@
 
 
 .star-ratings {
-  padding-bottom:10% ;
   display: flex;
   color: #eeeeee; 
   position: relative;
@@ -337,7 +334,7 @@
 
 }
 .starLine{
-
+  transform: translate(80px, 0px);
 }
 .star-ratings-fill {
  
