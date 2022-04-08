@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import server from '../../API/server';
 import './Post.css';
-import { Table } from 'react-bootstrap';
-
+import { AiFillDelete } from 'react-icons/ai';
 let postId;
 
 function Post() {
@@ -127,15 +126,13 @@ function Post() {
           <div className="WriterHeadInfo">
             <div className="reviewTitle">{title}</div>
             <div id="post-del-div">
-              <button
+              <AiFillDelete
                 className="DeleteButton"
                 type="button"
                 onClick={() => {
                   deletePost();
                 }}
-              >
-                글삭제
-              </button>
+              />
             </div>
           </div>
 
@@ -184,17 +181,15 @@ function Post() {
                 <div key={key} className="ReviewInfoBox4">
                   <div className="ReviewInfoTitle">
                     {data.user.nickname}{' '}
-                    <span>
+                    <span className="DateandDelete">
                       {data.created}
-                      <button
-                        className="ReviewCommentWriteDate"
+                      <AiFillDelete
+                        className="DeleteButton"
                         type="button"
                         onClick={() => {
                           deleteComment(data.id);
                         }}
-                      >
-                        삭제
-                      </button>
+                      />
                     </span>
                   </div>
                   <div className="CommentReview">{data.content}</div>
